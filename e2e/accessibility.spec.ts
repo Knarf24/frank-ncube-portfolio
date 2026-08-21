@@ -125,3 +125,121 @@ test("mobile hero keeps the complete globe within the first viewport", async ({
     expect(globe!.y + globe!.height).toBeLessThanOrEqual(height);
   }
 });
+
+test("primary actions are keyboard reachable", async ({
+  page,
+  browserName,
+}) => {
+  // WebKit's default Tab order excludes links (it only includes them once
+  // the OS-level "Full Keyboard Access" preference is on, matching real
+  // Safari's default and not something a page can control). Chromium and
+  // Firefox both tab through links by default, so this verifies the
+  // interaction on the engines where it reflects a real user's Tab order.
+  test.skip(
+    browserName === "webkit",
+    "WebKit excludes links from the default Tab order without the OS-level Full Keyboard Access preference enabled",
+  );
+
+  await page.goto("/");
+
+  await page.keyboard.press("Tab");
+  await expect(page.locator(":focus")).toBeVisible();
+
+  for (let i = 0; i < 12; i += 1) {
+    const text = await page.locator(":focus").textContent();
+
+    if (text?.includes("View my work")) break;
+
+    await page.keyboard.press("Tab");
+  }
+
+  await expect(page.locator(":focus")).toContainText("View my work");
+});
+
+test("mobile menu toggle is keyboard operable and exposes aria-expanded", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 375, height: 900 });
+  await page.goto("/");
+
+  const toggle = page.locator('button[aria-controls="mobile-navigation"]');
+  const toggleBox = await toggle.boundingBox();
+  expect(toggleBox!.height).toBeGreaterThanOrEqual(44);
+  expect(toggleBox!.width).toBeGreaterThanOrEqual(44);
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+
+  await toggle.focus();
+  await page.keyboard.press("Enter");
+  await expect(toggle).toHaveAttribute("aria-expanded", "true");
+
+  const nav = page.locator("#mobile-navigation");
+  await expect(nav).toBeVisible();
+
+  const workLink = nav.getByRole("link", { name: "Work", exact: true });
+  const linkBox = await workLink.boundingBox();
+  expect(linkBox!.height).toBeGreaterThanOrEqual(44);
+
+  await workLink.click();
+  await expect(toggle).toHaveAttribute("aria-expanded", "false");
+  await expect(nav).not.toBeVisible();
+});
+
+test("decorative globe is excluded from the accessibility tree", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const globe = page.getByTestId("animated-globe");
+  const allDescendantsHidden = await globe.evaluate((el) =>
+    Array.from(el.querySelectorAll("*")).every(
+      (child) => child.closest('[aria-hidden="true"]') !== null,
+    ),
+  );
+
+  expect(allDescendantsHidden).toBe(true);
+});
+
+test("Triage360 architecture flow exposes a complete plain-language label", async ({
+  page,
+}) => {
+  await page.goto("/projects/triage360");
+
+  const flow = page.getByRole("img", {
+    name: /Incoming ticket to Classification to TF-IDF retrieval to Risk evaluation to AI response to History \/ stats/i,
+  });
+
+  await expect(flow).toBeVisible();
+});
+
+test("reduced motion keeps revealed sections immediately visible", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+
+  const contact = page.locator("#contact");
+  await contact.scrollIntoViewIfNeeded();
+  await expect(contact).toBeVisible();
+
+  const opacity = await contact.evaluate(
+    (el) => getComputedStyle(el).opacity,
+  );
+  expect(Number(opacity)).toBeGreaterThan(0.9);
+});
+
+test("project archive filter buttons meet the 44px touch-target minimum", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 375, height: 900 });
+  await page.goto("/projects");
+
+  const buttons = page
+    .getByRole("group", { name: /filter projects by category/i })
+    .getByRole("button");
+  const count = await buttons.count();
+
+  for (let i = 0; i < count; i += 1) {
+    const box = await buttons.nth(i).boundingBox();
+    expect(box!.height).toBeGreaterThanOrEqual(44);
+  }
+});
