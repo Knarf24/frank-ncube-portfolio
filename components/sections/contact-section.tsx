@@ -28,7 +28,7 @@ export function ContactSection() {
   return (
     <section
       id="contact"
-      className="scroll-mt-24 px-5 py-20 sm:py-28 md:px-8 md:py-36"
+      className="scroll-mt-24 px-5 py-20 sm:py-28 md:px-8 md:py-24"
     >
       <div className="mx-auto w-full max-w-[var(--max-width)] rounded-[2rem] border border-[var(--border)] bg-[radial-gradient(circle_at_50%_0%,var(--accent-soft),transparent_60%),var(--surface)] px-6 py-14 sm:px-10 sm:py-20 md:px-16">
         <div className="max-w-2xl">

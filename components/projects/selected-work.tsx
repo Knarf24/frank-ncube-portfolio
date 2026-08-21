@@ -11,7 +11,7 @@ export function SelectedWork() {
   }
 
   return (
-    <section id="work" className="scroll-mt-24 px-5 py-20 sm:py-28 md:px-8 md:py-36">
+    <section id="work" className="scroll-mt-24 px-5 py-20 sm:py-28 md:px-8 md:py-24">
       <div className="mx-auto w-full max-w-[var(--max-width)]">
         <SectionHeading
           eyebrow="Selected work"

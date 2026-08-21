@@ -20,7 +20,7 @@ export function AboutExperience() {
   return (
     <section
       id="about"
-      className="scroll-mt-24 px-5 py-20 sm:py-28 md:px-8 md:py-36"
+      className="scroll-mt-24 px-5 py-20 sm:py-28 md:px-8 md:py-24"
     >
       <div className="mx-auto grid w-full max-w-[var(--max-width)] gap-14 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-16">
         <div>
