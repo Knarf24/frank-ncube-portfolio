@@ -118,29 +118,17 @@ test('Streetwise renders only its existing case-study sections', async ({
   ).toBeVisible()
 })
 
-test('Streetwise GitHub link stays visually secondary until repository hygiene improves', async ({
+test('Streetwise GitHub link points to the verified public repository', async ({
   page,
 }) => {
   await page.goto('/projects')
 
-  const streetwiseGithub = page.getByRole('link', {
-    name: /View Streetwise on GitHub/i,
-  })
-  const triageGithub = page.getByRole('link', {
-    name: /View Triage360 on GitHub/i,
-  })
-
-  await expect(streetwiseGithub).toHaveAttribute(
+  await expect(
+    page.getByRole('link', { name: /View Streetwise on GitHub/i }),
+  ).toHaveAttribute(
     'href',
     'https://github.com/Knarf24/streetwise-offer-ai',
   )
-
-  const [streetwiseColor, triageColor] = await Promise.all([
-    streetwiseGithub.evaluate((el) => getComputedStyle(el).color),
-    triageGithub.evaluate((el) => getComputedStyle(el).color),
-  ])
-
-  expect(streetwiseColor).not.toBe(triageColor)
 })
 
 test('an unknown project slug renders the not-found page', async ({

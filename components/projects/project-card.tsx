@@ -10,14 +10,6 @@ type ProjectCardProps = {
 const linkClassName =
   "inline-flex min-h-11 items-center text-sm font-medium text-[var(--text)] underline decoration-[var(--border)] underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:[outline-color:var(--accent)]";
 
-const secondaryLinkClassName =
-  "inline-flex min-h-11 items-center text-sm text-[var(--muted)] underline decoration-transparent underline-offset-4 transition-colors hover:text-[var(--text)] hover:decoration-[var(--border)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:[outline-color:var(--accent)]";
-
-// Streetwise's public repository still needs README/description cleanup
-// (see the design spec's "GitHub presentation" note), so its GitHub link
-// stays visually secondary to the case study until that hygiene work lands.
-const deemphasizedGithubSlugs = new Set(["streetwise"]);
-
 export function ProjectCard({ project, variant }: ProjectCardProps) {
   const isFlagship = variant === "flagship";
 
@@ -84,11 +76,7 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
               target="_blank"
               rel="noreferrer"
               aria-label={`View ${project.title} on GitHub (opens in a new tab)`}
-              className={
-                deemphasizedGithubSlugs.has(project.slug)
-                  ? secondaryLinkClassName
-                  : linkClassName
-              }
+              className={linkClassName}
             >
               GitHub <span aria-hidden="true" className="ml-1">↗</span>
             </a>

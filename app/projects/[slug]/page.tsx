@@ -9,7 +9,7 @@ import { getProjectBySlug } from "@/lib/project-utils";
 const triageArchitectureLabels = [
   "Incoming ticket",
   "Classification",
-  "TF-IDF retrieval",
+  "Document retrieval",
   "Risk evaluation",
   "AI response",
   "History / stats",
