@@ -1,5 +1,8 @@
 import { Hero } from "@/components/hero/hero";
 import { SelectedWork } from "@/components/projects/selected-work";
+import { AboutExperience } from "@/components/sections/about-experience";
+import { EducationAchievements } from "@/components/sections/education-achievements";
+import { TechnicalToolkit } from "@/components/sections/technical-toolkit";
 import { Reveal } from "@/components/reveal";
 
 export default function Home() {
@@ -8,6 +11,15 @@ export default function Home() {
       <Hero />
       <Reveal>
         <SelectedWork />
+      </Reveal>
+      <Reveal>
+        <AboutExperience />
+      </Reveal>
+      <Reveal>
+        <EducationAchievements />
+      </Reveal>
+      <Reveal>
+        <TechnicalToolkit />
       </Reveal>
     </main>
   );
