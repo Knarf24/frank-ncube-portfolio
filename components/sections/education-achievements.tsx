@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { achievements } from "@/data/achievements";
 import { education } from "@/data/education";
 import { SectionHeading } from "@/components/section-heading";
@@ -13,9 +14,21 @@ export function EducationAchievements() {
             <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent)]">
               {education.graduation}
             </p>
-            <h3 className="mt-3 text-2xl font-medium tracking-tight text-[var(--text)] sm:text-3xl">
-              {education.institution}
-            </h3>
+            <div className="mt-3 flex items-center gap-3">
+              <span className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white p-1.5 sm:h-12 sm:w-12">
+                <Image
+                  src="/logos/livingstone-college.png"
+                  alt=""
+                  aria-hidden="true"
+                  width={64}
+                  height={64}
+                  className="h-full w-full object-contain"
+                />
+              </span>
+              <h3 className="text-2xl font-medium tracking-tight text-[var(--text)] sm:text-3xl">
+                {education.institution}
+              </h3>
+            </div>
             <p className="mt-2 text-base text-[var(--muted)]">{education.degree}</p>
 
             <p className="mt-5 text-sm text-[var(--muted)]">

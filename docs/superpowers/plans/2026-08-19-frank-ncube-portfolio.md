@@ -60,7 +60,8 @@ components/
   sections/
     about-experience.tsx          # about + timeline section
     education-achievements.tsx    # approved version A
-    technical-toolkit.tsx         # grouped skill presentation
+    technical-toolkit.tsx         # logo-marquee skill presentation
+    tech-logos.tsx                 # local brand-logo SVG path data
     contact-section.tsx           # approved version B
     site-footer.tsx               # footer
   case-study/
@@ -1220,6 +1221,16 @@ Create a structured education card with institution, degree, graduation, GPA, an
 - [ ] **Step 4: Implement Technical Toolkit using version A**
 
 Render each skill group with a heading and text chips. Add a final `Currently deepening` callout with `Python engineering · Machine learning · System design`.
+
+> **Superseded at final launch:** the grouped text-chip treatment above was
+> replaced by the approved logo-marquee treatment (see "Technical toolkit
+> logo marquee" in the design spec). `TechnicalToolkit` now renders eyebrow
+> `Technical toolkit` / heading `Tools I build with`, two opposite-direction
+> CSS marquee rows built from `components/sections/tech-logos.tsx`, and a
+> `motion-reduce:` static grid fallback. `skillGroups` remains the source of
+> truth for skill *text* used elsewhere; the marquee draws from a separate
+> curated `techLogos` list limited to technologies with a safe, redistributable
+> brand-logo asset. The `Currently deepening` callout is unchanged.
 
 - [ ] **Step 5: Wire the sections into the homepage and pass the E2E test**
 

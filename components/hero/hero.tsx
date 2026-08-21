@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { AnimatedGlobe } from "@/components/hero/animated-globe";
 import { RotatingRole } from "@/components/hero/rotating-role";
 import { siteConfig } from "@/lib/site-config";
@@ -48,8 +49,20 @@ export function Hero() {
             {profileItems.map((item) => (
               <li
                 key={item}
-                className="flex items-center after:hidden after:text-[var(--border)] after:content-['/'] last:after:hidden sm:after:mx-4 sm:after:block"
+                className="flex items-center gap-2 after:hidden after:text-[var(--border)] after:content-['/'] last:after:hidden sm:after:mx-4 sm:after:block"
               >
+                {item === "Livingstone College" ? (
+                  <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white p-[3px] sm:h-6 sm:w-6">
+                    <Image
+                      src="/logos/livingstone-college.png"
+                      alt=""
+                      aria-hidden="true"
+                      width={48}
+                      height={48}
+                      className="h-full w-full object-contain"
+                    />
+                  </span>
+                ) : null}
                 {item}
               </li>
             ))}

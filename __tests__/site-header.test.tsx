@@ -11,7 +11,7 @@ describe("SiteHeader", () => {
 
     expect(screen.getByRole("link", { name: "FN" })).toHaveAttribute(
       "href",
-      "#top",
+      "/#top",
     );
 
     const navigation = screen.getByRole("navigation", {
@@ -20,18 +20,18 @@ describe("SiteHeader", () => {
 
     expect(within(navigation).getByRole("link", { name: "Work" })).toHaveAttribute(
       "href",
-      "#work",
+      "/#work",
     );
     expect(within(navigation).getByRole("link", { name: "About" })).toHaveAttribute(
       "href",
-      "#about",
+      "/#about",
     );
     expect(
       within(navigation).getByRole("link", { name: "Experience" }),
-    ).toHaveAttribute("href", "#experience");
+    ).toHaveAttribute("href", "/#experience");
     expect(
       within(navigation).getByRole("link", { name: "Contact" }),
-    ).toHaveAttribute("href", "#contact");
+    ).toHaveAttribute("href", "/#contact");
   });
 
   it("updates the mobile menu state and closes after navigation", async () => {

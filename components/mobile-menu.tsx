@@ -1,13 +1,14 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 
 const links = [
-  ["Work", "#work"],
-  ["About", "#about"],
-  ["Experience", "#experience"],
-  ["Contact", "#contact"],
+  ["Work", "/#work"],
+  ["About", "/#about"],
+  ["Experience", "/#experience"],
+  ["Contact", "/#contact"],
 ] as const;
 
 export function MobileMenu() {
@@ -39,13 +40,13 @@ export function MobileMenu() {
           <ul className="space-y-1">
             {links.map(([label, href]) => (
               <li key={href}>
-                <a
+                <Link
                   href={href}
                   onClick={() => setOpen(false)}
                   className="flex min-h-11 items-center rounded-xl px-3 py-2 text-base text-[var(--text)] transition-colors hover:bg-[var(--accent-soft)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--accent)]"
                 >
                   {label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

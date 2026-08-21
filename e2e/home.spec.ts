@@ -13,16 +13,18 @@ test('homepage presents the approved content hierarchy', async ({ page }) => {
     has: page.getByRole('heading', { name: 'Education & achievements' }),
   })
   const toolkitSection = page.locator('section', {
-    has: page.getByRole('heading', { name: 'Technical toolkit' }),
+    has: page.getByRole('heading', { name: 'Tools I build with' }),
   })
 
   await expect(
     educationSection.getByText('Livingstone College', { exact: true }),
   ).toBeVisible()
   await expect(page.getByText('Generative AI Foundations')).toBeVisible()
+  // "Python" is conveyed to sighted users via the logo marquee and stays
+  // available to assistive technology through an always-present text list.
   await expect(
     toolkitSection.getByText('Python', { exact: true }),
-  ).toBeVisible()
+  ).toBeAttached()
 
   await expect(page.locator('#about')).toBeAttached()
   await expect(page.locator('#experience')).toBeAttached()
@@ -56,6 +58,22 @@ test('contact links point to the verified profiles', async ({ page }) => {
   await expect(
     contactSection.getByRole('link', { name: /View resume/i }).first(),
   ).toHaveAttribute('href', '/resume')
+})
+
+test('header navigation from a non-home route returns to homepage sections', async ({
+  page,
+}) => {
+  await page.goto('/projects')
+
+  await page.getByRole('link', { name: 'Work', exact: true }).click()
+  await expect(page).toHaveURL(/\/#work$/)
+  await expect(page.locator('#work')).toBeAttached()
+
+  await page.goto('/resume')
+
+  await page.getByRole('link', { name: 'Contact', exact: true }).click()
+  await expect(page).toHaveURL(/\/#contact$/)
+  await expect(page.locator('#contact')).toBeAttached()
 })
 
 test('resume placeholder route is reachable', async ({ page }) => {
