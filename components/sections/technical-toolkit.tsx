@@ -34,8 +34,8 @@ const fadeMaskStyle = {
 
 function LogoChip({ logo }: { logo: TechLogo }) {
   return (
-    <div className="flex h-16 w-28 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5 text-[var(--muted)]">
-      <TechLogoIcon path={logo.path} className="h-6 w-auto" />
+    <div className="flex h-16 w-28 shrink-0 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] px-5">
+      <TechLogoIcon path={logo.path} color={logo.color} className="h-6 w-auto" />
     </div>
   );
 }
@@ -69,7 +69,7 @@ function MarqueeRow({
 
 export function TechnicalToolkit() {
   return (
-    <section className="scroll-mt-24 px-5 py-20 sm:py-28 md:px-8 md:py-36">
+    <section className="scroll-mt-24 px-5 py-20 sm:py-28 md:px-8 md:py-24">
       <div className="mx-auto w-full max-w-[var(--max-width)]">
         <SectionHeading eyebrow="Technical toolkit" title="Tools I build with" />
 
