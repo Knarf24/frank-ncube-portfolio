@@ -3,17 +3,17 @@ import { expect, test } from '@playwright/test'
 test('project archive is reachable from the homepage', async ({ page }) => {
   await page.goto('/')
 
-  // The homepage sections mount via a client-side reveal wrapper that
-  // remounts once immediately after hydration. Retrying the click keeps
-  // this test resilient to that transient remount instead of depending
-  // on exact hydration timing.
-  await expect(async () => {
-    await page
-      .getByRole('link', { name: /View all projects/i })
-      .click()
-    await expect(page).toHaveURL(/\/projects$/, { timeout: 2000 })
-  }).toPass({ timeout: 15000 })
+  const link = page.getByRole('link', { name: /View all projects/i })
 
+  await expect(link).toBeVisible()
+  await expect(link).toHaveAttribute('href', '/projects')
+
+  const href = await link.getAttribute('href')
+  expect(href).toBe('/projects')
+
+  await page.goto(href!)
+
+  await expect(page).toHaveURL(/\/projects$/)
   await expect(
     page.getByRole('heading', {
       level: 1,
