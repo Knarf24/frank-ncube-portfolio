@@ -268,6 +268,31 @@ test("technical toolkit marquee keeps technology names accessible and hides the 
   await expect(marquee).toHaveAttribute("aria-hidden", "true");
 });
 
+test("technical toolkit keeps non-logo skills visible and recruiter-readable", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const toolkitSection = page.locator("section", {
+    has: page.getByRole("heading", { name: "Tools I build with" }),
+  });
+
+  const additionalSkills = toolkitSection.getByText("Additional tools", {
+    exact: false,
+  });
+  await expect(additionalSkills).toBeVisible();
+
+  for (const skill of [
+    "AWS",
+    "VS Code",
+    "REST APIs",
+    "LLM integration",
+    "TF-IDF",
+  ]) {
+    await expect(toolkitSection.getByText(skill)).toBeVisible();
+  }
+});
+
 test("reduced motion swaps the technical toolkit marquee for a static grid", async ({
   page,
 }) => {
