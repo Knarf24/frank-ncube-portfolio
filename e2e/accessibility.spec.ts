@@ -79,9 +79,10 @@ test("narrow profile metadata wraps without slash separators", async ({
   await page.setViewportSize({ width: 320, height: 900 });
   await page.goto("/");
 
-  const college = page.getByText("Livingstone College", { exact: true });
-  const classYear = page.getByText("Class of 2029", { exact: true });
-  const focus = page.getByText("Software · AI · Cloud", { exact: true });
+  const hero = page.locator("main > section").first();
+  const college = hero.getByText("Livingstone College", { exact: true });
+  const classYear = hero.getByText("Class of 2029", { exact: true });
+  const focus = hero.getByText("Software · AI · Cloud", { exact: true });
   const [collegeBox, classYearBox, focusBox] = await Promise.all([
     college.boundingBox(),
     classYear.boundingBox(),
