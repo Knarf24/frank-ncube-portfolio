@@ -50,6 +50,8 @@ Actions: `View my work`, `GitHub`, `Resume`.
 
 Supporting information: Livingstone College, Class of 2029, Software · AI · Cloud.
 
+**Final-launch refinement:** the hero profile metadata pairs the official Livingstone College logo (small, ~22–28px visual height, subtle, original proportions preserved) with the visible "Livingstone College" text. The logo does not replace the text and must not compete with the `Frank Ncube` heading or the globe visual. Because the logo sits directly beside the visible institution name, it is treated as decorative (empty/hidden alt) to avoid duplicate screen-reader output.
+
 The hero's signature visual is an animated globe built with SVG/CSS and Motion unless testing proves a clear need for WebGL. It includes rotating rings, orbiting nodes, connection paths, subtle depth, pointer parallax on desktop, and floating labels such as `AI / ML`, `Software`, `Cloud`, and `Product builder`.
 
 One phrase can cycle between `software`, `AI systems`, `cloud tools`, and `digital products`. Use smooth transitions, not a terminal typing effect.
@@ -122,11 +124,19 @@ Livingstone College — B.S. Computer Information Sciences — expected December
 
 The displayed GPA must match the final resume before production launch.
 
+**Final-launch refinement:** the education card also carries the official Livingstone College logo, somewhat more prominent than the hero placement but still secondary to the degree/institution information, alongside the visible "Livingstone College" text (again treated as decorative for accessibility, not a text replacement). The logo is not recolored or redrawn — original institutional branding is preserved.
+
 Achievement candidates include International Presidential Scholar, AWS Academy Generative AI Foundations, HBCUniverse Campus Ambassador, and selected SWE/AI development programs.
 
 ## Technical toolkit
 
-Approved grouped-card layout (version A).
+Eyebrow: `Technical toolkit`. Heading: `Tools I build with`.
+
+**Final-launch refinement — logo marquee (supersedes the earlier grouped text-card layout):** two continuous horizontal rows of technology logos moving in opposite directions, restrained/monochrome treatment against the dark charcoal + green accent system, edge fade masks, slow enough to inspect individual logos, no visible seam. `prefers-reduced-motion` disables the continuous movement and swaps to a clean static wrapped/grid presentation of the same logos. Decorative/duplicated marquee copies are hidden from the accessibility tree; technology names remain available to assistive technology via an always-present text list so no information exists only in the animation.
+
+Logo set is limited to technologies with a safe, redistributable local SVG brand asset: Python, JavaScript, HTML, CSS, Next.js, React, Tailwind CSS, PostgreSQL, Supabase, Sanity, Vercel, Git, GitHub. AWS and VS Code are intentionally excluded from the logo marquee — their brand marks were removed from the Simple Icons open-icon set after legal takedown requests from Amazon and Microsoft, so no safe local asset exists; both remain listed as text skills in the underlying skill data. Concepts without a canonical product/brand logo (REST APIs, TF-IDF, retrieval, prompt engineering, LLM integration) are not represented as fake brand icons; they remain in portfolio copy elsewhere.
+
+Underlying skill groups (unchanged, still the source of truth for skill text, e.g. resume/other copy):
 
 Languages: Python, JavaScript, HTML, CSS.
 

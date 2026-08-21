@@ -227,6 +227,69 @@ test("reduced motion keeps revealed sections immediately visible", async ({
   expect(Number(opacity)).toBeGreaterThan(0.9);
 });
 
+test("Livingstone College logo stays decorative beside the visible institution name", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const logos = page.locator('img[src*="livingstone-college"]');
+  await expect(logos).toHaveCount(2);
+
+  const count = await logos.count();
+  for (let i = 0; i < count; i += 1) {
+    await expect(logos.nth(i)).toHaveAttribute("alt", "");
+  }
+
+  const educationSection = page.locator("section", {
+    has: page.getByRole("heading", { name: "Education & achievements" }),
+  });
+  await expect(
+    educationSection.getByText("Livingstone College", { exact: true }),
+  ).toBeVisible();
+});
+
+test("technical toolkit marquee keeps technology names accessible and hides the decorative visual", async ({
+  page,
+}) => {
+  await page.goto("/");
+
+  const toolkitSection = page.locator("section", {
+    has: page.getByRole("heading", { name: "Tools I build with" }),
+  });
+
+  await expect(
+    toolkitSection.getByText("Python", { exact: true }),
+  ).toBeAttached();
+  await expect(
+    toolkitSection.getByText("PostgreSQL", { exact: true }),
+  ).toBeAttached();
+
+  const marquee = toolkitSection.locator('[aria-hidden="true"]').first();
+  await expect(marquee).toHaveAttribute("aria-hidden", "true");
+});
+
+test("reduced motion swaps the technical toolkit marquee for a static grid", async ({
+  page,
+}) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/");
+
+  const toolkitSection = page.locator("section", {
+    has: page.getByRole("heading", { name: "Tools I build with" }),
+  });
+
+  const decorativeLayers = toolkitSection.locator('[aria-hidden="true"]');
+  const marqueeDisplay = await decorativeLayers
+    .first()
+    .evaluate((el) => getComputedStyle(el).display);
+  expect(marqueeDisplay).toBe("none");
+
+  const staticGridDisplay = await decorativeLayers
+    .nth(1)
+    .evaluate((el) => getComputedStyle(el).display);
+  expect(staticGridDisplay).not.toBe("none");
+});
+
 test("project archive filter buttons meet the 44px touch-target minimum", async ({
   page,
 }) => {
