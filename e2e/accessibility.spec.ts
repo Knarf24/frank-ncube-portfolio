@@ -205,10 +205,16 @@ test("Triage360 architecture flow exposes a complete plain-language label", asyn
   await page.goto("/projects/triage360");
 
   const flow = page.getByRole("img", {
-    name: /Incoming ticket to Classification to TF-IDF retrieval to Risk evaluation to AI response to History \/ stats/i,
+    name: /Incoming ticket to Classification to Document retrieval to Risk evaluation to AI response to History \/ stats/i,
   });
 
   await expect(flow).toBeVisible();
+
+  // The full-stack app uses keyword-overlap retrieval, not TF-IDF — only the
+  // separate Python prototype implements TF-IDF. The architecture-flow stage
+  // must not claim otherwise.
+  const flowLabel = await flow.getAttribute("aria-label");
+  expect(flowLabel).not.toMatch(/TF-IDF/i);
 });
 
 test("reduced motion keeps revealed sections immediately visible", async ({

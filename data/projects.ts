@@ -5,7 +5,7 @@ export const projects: Project[] = [
     title: "Triage360",
     slug: "triage360",
     summary:
-      "A multi-domain support triage system combining classification, TF-IDF retrieval, risk evaluation, AI-generated responses, ticket history, and operational analytics.",
+      "A multi-domain support triage system combining classification, document retrieval, risk evaluation, AI-generated responses, ticket history, and operational analytics, with a Python prototype exploring TF-IDF + semantic retrieval.",
     year: 2026,
     categories: ["AI / ML", "Software engineering"],
     technologies: [
@@ -30,7 +30,7 @@ export const projects: Project[] = [
       {
         heading: "What I built",
         body: [
-          "The project includes a Python support-triage workflow and a TypeScript application with a React interface, Express API, PostgreSQL persistence, ticket history, and statistics views.",
+          "The project includes a full-stack TypeScript application with a React interface, Express API, PostgreSQL persistence, keyword-overlap document retrieval, ticket history, and statistics views, plus an earlier Python CLI prototype using TF-IDF + semantic retrieval.",
         ],
       },
       {
@@ -71,7 +71,7 @@ export const projects: Project[] = [
     title: "Streetwise",
     slug: "streetwise",
     summary:
-      "An applied AI product focused on contextual recommendations and location-aware decision support.",
+      "An applied AI product that ranks nearby merchants from selectable situational context and generates structured, time-limited offers.",
     year: 2026,
     categories: ["AI / ML", "Product", "Web"],
     technologies: ["React", "TypeScript", "Supabase"],
@@ -89,7 +89,7 @@ export const projects: Project[] = [
       {
         heading: "What I built",
         body: [
-          "A web product that combines user context with AI-assisted recommendation flows and persistent application data.",
+          "A web product that combines selectable scenario context with merchant ranking, AI-generated offers, Supabase persistence, and redemption flows.",
         ],
       },
     ],
