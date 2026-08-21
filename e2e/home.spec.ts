@@ -53,7 +53,7 @@ test('contact links point to the verified profiles', async ({ page }) => {
 
   await expect(
     contactSection.getByRole('link', { name: 'Email me' }),
-  ).toHaveAttribute('href', 'mailto:frankdumoluhle24@gmail.com')
+  ).toHaveAttribute('href', 'mailto:FNcube83@students.livingstone.edu')
 
   await expect(
     contactSection.getByRole('link', { name: /View resume/i }).first(),
@@ -76,7 +76,9 @@ test('header navigation from a non-home route returns to homepage sections', asy
   await expect(page.locator('#contact')).toBeAttached()
 })
 
-test('resume placeholder route is reachable', async ({ page }) => {
+test('resume route offers the permanent resume PDF for viewing and download', async ({
+  page,
+}) => {
   await page.goto('/resume')
 
   await expect(
@@ -86,11 +88,21 @@ test('resume placeholder route is reachable', async ({ page }) => {
     }),
   ).toBeVisible()
 
-  await expect(
-    page.getByText(
-      'My internship resume is being updated. The final PDF will be published here before portfolio launch.',
-    ),
-  ).toBeVisible()
+  const openLink = page.getByRole('link', { name: 'Open resume PDF' })
+  await expect(openLink).toHaveAttribute(
+    'href',
+    '/resume/Frank_Dumoluhle_Ncube_Resume.pdf',
+  )
+
+  const downloadLink = page.getByRole('link', { name: 'Download PDF' })
+  await expect(downloadLink).toHaveAttribute(
+    'href',
+    '/resume/Frank_Dumoluhle_Ncube_Resume.pdf',
+  )
+  await expect(downloadLink).toHaveAttribute(
+    'download',
+    'Frank_Dumoluhle_Ncube_Resume.pdf',
+  )
 
   await expect(
     page.getByRole('link', { name: /GitHub/i }),
