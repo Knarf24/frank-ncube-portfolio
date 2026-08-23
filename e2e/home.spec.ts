@@ -31,6 +31,17 @@ test('homepage presents the approved content hierarchy', async ({ page }) => {
   await expect(page.getByRole('heading', { level: 1 })).toHaveCount(1)
 })
 
+test('hero portrait renders with meaningful alt text', async ({ page }) => {
+  await page.goto('/')
+
+  const portrait = page.getByRole('img', { name: 'Portrait of Frank Ncube' })
+  await expect(portrait).toBeVisible()
+  await expect(portrait).toHaveAttribute(
+    'src',
+    /frank-ncube-portrait\.png/,
+  )
+})
+
 test('contact links point to the verified profiles', async ({ page }) => {
   await page.goto('/')
 
@@ -104,6 +115,13 @@ test('resume route offers the permanent resume PDF for viewing and download', as
     'Frank_Dumoluhle_Ncube_Resume.pdf',
   )
 
+  const embeddedViewer = page.locator('object[type="application/pdf"]')
+  await expect(embeddedViewer).toHaveAttribute(
+    'data',
+    '/resume/Frank_Dumoluhle_Ncube_Resume.pdf',
+  )
+  await expect(embeddedViewer).toHaveAttribute('title', /resume/i)
+
   await expect(
     page.getByRole('link', { name: /GitHub/i }),
   ).toHaveAttribute(
@@ -121,4 +139,25 @@ test('resume route offers the permanent resume PDF for viewing and download', as
   await expect(
     page.getByRole('link', { name: /Back to homepage/i }),
   ).toHaveAttribute('href', '/')
+})
+
+test('resume route falls back to explicit open/download actions on narrow mobile viewports', async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 390, height: 844 })
+  await page.goto('/resume')
+
+  await expect(
+    page.locator('object[type="application/pdf"]'),
+  ).not.toBeVisible()
+
+  await expect(
+    page.getByRole('link', { name: 'Open resume PDF' }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('link', { name: 'Download PDF' }),
+  ).toBeVisible()
+  await expect(
+    page.getByText(/Inline preview isn.t available on this device/i),
+  ).toBeVisible()
 })

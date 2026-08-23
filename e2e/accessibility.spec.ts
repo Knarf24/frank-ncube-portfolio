@@ -10,30 +10,9 @@ test("hero is readable with reduced motion enabled", async ({ page }) => {
   await expect(
     page.getByText(/Computer Information Sciences student/i),
   ).toBeVisible();
-  await expect(page.getByTestId("animated-globe")).toHaveAttribute(
-    "data-reduced-motion",
-    "true",
-  );
-});
-
-test("globe orbits animate when reduced motion is not requested", async ({
-  page,
-}) => {
-  await page.goto("/");
-
-  const orbit = page
-    .getByTestId("animated-globe")
-    .locator("svg > g")
-    .first();
-  const initialTransform = await orbit.evaluate(
-    (element) => getComputedStyle(element).transform,
-  );
-
-  await expect
-    .poll(() =>
-      orbit.evaluate((element) => getComputedStyle(element).transform),
-    )
-    .not.toBe(initialTransform);
+  await expect(
+    page.getByRole("img", { name: "Portrait of Frank Ncube" }),
+  ).toBeVisible();
 });
 
 test("narrow hero gives the primary call to action its own row", async ({
@@ -42,10 +21,6 @@ test("narrow hero gives the primary call to action its own row", async ({
   await page.setViewportSize({ width: 320, height: 900 });
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
-  await expect(page.getByTestId("animated-globe")).toHaveAttribute(
-    "data-reduced-motion",
-    "false",
-  );
 
   const [primary, github, resume] = await page.locator("main").evaluate(
     (main) => {
@@ -106,23 +81,26 @@ test("narrow profile metadata wraps without slash separators", async ({
   ).toBe(320);
 });
 
-test("mobile hero keeps the complete globe within the first viewport", async ({
+test("mobile hero keeps the complete portrait within the first viewport", async ({
   page,
 }) => {
   const viewports = [
-    { width: 320, height: 900, globeSize: 280 },
-    { width: 390, height: 844, globeSize: 300 },
+    { width: 320, height: 900 },
+    { width: 390, height: 844 },
   ];
 
-  for (const { width, height, globeSize } of viewports) {
+  for (const { width, height } of viewports) {
     await page.setViewportSize({ width, height });
     await page.goto("/");
 
-    const globe = await page.getByTestId("animated-globe").boundingBox();
+    const portrait = await page
+      .getByRole("img", { name: "Portrait of Frank Ncube" })
+      .boundingBox();
 
-    expect(globe).not.toBeNull();
-    expect(globe!.height).toBe(globeSize);
-    expect(globe!.y + globe!.height).toBeLessThanOrEqual(height);
+    expect(portrait).not.toBeNull();
+    expect(portrait!.height).toBeGreaterThan(150);
+    expect(portrait!.height).toBeLessThan(400);
+    expect(portrait!.y + portrait!.height).toBeLessThanOrEqual(height);
   }
 });
 
@@ -184,19 +162,19 @@ test("mobile menu toggle is keyboard operable and exposes aria-expanded", async 
   await expect(nav).not.toBeVisible();
 });
 
-test("decorative globe is excluded from the accessibility tree", async ({
+test("hero portrait exposes meaningful alt text and is not hidden from assistive tech", async ({
   page,
 }) => {
   await page.goto("/");
 
-  const globe = page.getByTestId("animated-globe");
-  const allDescendantsHidden = await globe.evaluate((el) =>
-    Array.from(el.querySelectorAll("*")).every(
-      (child) => child.closest('[aria-hidden="true"]') !== null,
-    ),
-  );
+  const portrait = page.getByRole("img", { name: "Portrait of Frank Ncube" });
+  await expect(portrait).toBeVisible();
+  await expect(portrait).toHaveAttribute("alt", "Portrait of Frank Ncube");
 
-  expect(allDescendantsHidden).toBe(true);
+  const isAriaHidden = await portrait.evaluate(
+    (el) => el.closest('[aria-hidden="true"]') !== null,
+  );
+  expect(isAriaHidden).toBe(false);
 });
 
 test("Triage360 architecture flow exposes a complete plain-language label", async ({

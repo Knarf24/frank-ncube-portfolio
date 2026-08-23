@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { AnimatedGlobe } from "@/components/hero/animated-globe";
+import { HeroPortrait } from "@/components/hero/hero-portrait";
 import { RotatingRole } from "@/components/hero/rotating-role";
 import { siteConfig } from "@/lib/site-config";
 
@@ -69,8 +69,8 @@ export function Hero() {
           </ul>
         </div>
 
-        <div className="relative z-0 mx-auto w-full max-w-[300px] sm:max-w-[430px] lg:-translate-x-4 lg:justify-self-center xl:-translate-x-6">
-          <AnimatedGlobe />
+        <div className="relative z-0 mx-auto w-full max-w-[220px] sm:max-w-[300px] lg:max-w-[380px] lg:-translate-x-4 lg:justify-self-center xl:max-w-[420px] xl:-translate-x-6">
+          <HeroPortrait />
         </div>
       </div>
     </section>

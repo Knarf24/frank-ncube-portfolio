@@ -49,6 +49,38 @@ export default function ResumePage() {
           </a>
         </div>
 
+        <div className="mt-10 hidden sm:block">
+          <div className="overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)]">
+            <object
+              data={RESUME_PDF_PATH}
+              type="application/pdf"
+              title="Frank Ncube's resume"
+              className="h-[75vh] min-h-[600px] w-full"
+            >
+              <div className="flex h-[75vh] min-h-[600px] flex-col items-center justify-center gap-4 p-8 text-center">
+                <p className="max-w-sm text-base text-[var(--muted)]">
+                  Your browser can’t display the embedded PDF here.
+                </p>
+                <a
+                  href={RESUME_PDF_PATH}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={primaryButtonClassName}
+                >
+                  Open PDF in a new tab
+                </a>
+              </div>
+            </object>
+          </div>
+        </div>
+
+        <p className="mt-10 max-w-2xl text-sm text-[var(--muted)] sm:hidden">
+          Inline preview isn’t available on this device. Use{" "}
+          <span className="text-[var(--text)]">Open resume PDF</span> or{" "}
+          <span className="text-[var(--text)]">Download PDF</span> above to
+          view the full document.
+        </p>
+
         <div className="mt-8 flex flex-wrap gap-x-6">
           <a
             href={siteConfig.github}
