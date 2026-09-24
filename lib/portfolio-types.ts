@@ -23,6 +23,7 @@ export type Project = {
   status: "Live" | "In development" | "Completed";
   githubUrl?: string;
   liveUrl?: string;
+  devpostUrl?: string;
   caseStudy: CaseStudySection[];
 };
 
