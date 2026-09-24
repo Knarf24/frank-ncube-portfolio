@@ -131,7 +131,7 @@ test('Streetwise GitHub link points to the verified public repository', async ({
   )
 })
 
-test('Horizon Desk case study links to Devpost and the live demo without a GitHub link', async ({
+test('Horizon Desk case study links to Devpost without a GitHub link or the unavailable live demo', async ({
   page,
 }) => {
   await page.goto('/projects/horizon-desk')
@@ -147,8 +147,8 @@ test('Horizon Desk case study links to Devpost and the live demo without a GitHu
     page.getByRole('link', { name: /Horizon Desk on Devpost/i }),
   ).toHaveAttribute('href', 'https://devpost.com/software/nexa-j9g8ys')
   await expect(
-    page.getByRole('link', { name: /live Horizon Desk demo/i }),
-  ).toHaveAttribute('href', 'https://horizon-desk.netlify.app/?view=data')
+    page.getByRole('link', { name: /live Horizon Desk/i }),
+  ).toHaveCount(0)
   await expect(
     page.getByRole('link', { name: /GitHub/i }),
   ).toHaveCount(0)

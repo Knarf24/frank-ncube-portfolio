@@ -112,8 +112,10 @@ export const projects: Project[] = [
     featured: true,
     featuredOrder: 4,
     status: "Completed",
-    liveUrl: "https://horizon-desk.netlify.app/?view=data",
-    liveKind: "demo",
+    // Live demo temporarily removed: https://horizon-desk.netlify.app/?view=data
+    // returned a Netlify 503 usage_exceeded error. To restore, re-add:
+    //   liveUrl: "https://horizon-desk.netlify.app/?view=data",
+    //   liveKind: "demo",
     devpostUrl: "https://devpost.com/software/nexa-j9g8ys",
     caseStudy: [
       {

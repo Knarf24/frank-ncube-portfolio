@@ -50,15 +50,15 @@ describe('ProjectFilter', () => {
     ).toBeInTheDocument()
   })
 
-  it('shows Horizon Desk with Devpost and live demo links', () => {
+  it('shows Horizon Desk with a Devpost link and no live demo while the demo is unavailable', () => {
     render(<ProjectFilter projects={projects} />)
 
     expect(
       screen.getByRole('link', { name: /View Horizon Desk on Devpost/i }),
     ).toHaveAttribute('href', 'https://devpost.com/software/nexa-j9g8ys')
     expect(
-      screen.getByRole('link', { name: /View the live Horizon Desk demo/i }),
-    ).toHaveAttribute('href', 'https://horizon-desk.netlify.app/?view=data')
+      screen.queryByRole('link', { name: /live Horizon Desk/i }),
+    ).not.toBeInTheDocument()
     expect(
       screen.queryByRole('link', { name: /View Horizon Desk on GitHub/i }),
     ).not.toBeInTheDocument()
