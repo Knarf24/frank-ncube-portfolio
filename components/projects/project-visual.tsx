@@ -14,6 +14,39 @@ const triageSteps = [
 
 const commerceSystems = ["Orders", "Inventory", "Payments", "Analytics"];
 
+
+function HorizonDeskVisual() {
+  const stages = ["Scan liquidity", "Compliant outreach", "Customer response", "Banker handoff"];
+
+  return (
+    <div className="relative flex h-full w-full flex-col justify-center p-5 sm:p-7">
+      <div className="mb-6 flex items-center justify-between gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
+        <span className="inline-flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-[var(--accent)] shadow-[0_0_14px_var(--accent)]" />
+          AI relationship desk
+        </span>
+        <span>SteelHacks XIII</span>
+      </div>
+      <ol className="grid gap-3 sm:grid-cols-4">
+        {stages.map((stage, index) => (
+          <li
+            key={stage}
+            className="relative rounded-xl border border-[var(--border)] bg-[color:rgba(9,11,10,0.72)] px-3 py-4 text-center text-xs leading-5 text-[var(--text)]"
+          >
+            <span className="mb-2 block font-mono text-[10px] text-[var(--accent)]">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            {stage}
+          </li>
+        ))}
+      </ol>
+      <p className="mt-5 text-center text-[11px] leading-5 text-[var(--muted)]">
+        Deterministic financial guardrails + generative AI messaging + human-in-the-loop lending
+      </p>
+    </div>
+  );
+}
+
 function TriageVisual() {
   return (
     <div className="relative flex h-full w-full items-center p-5 sm:p-7">
@@ -121,6 +154,7 @@ export function ProjectVisual({ slug }: ProjectVisualProps) {
     >
       <div className="absolute inset-0 bg-[linear-gradient(color-mix(in_srgb,var(--border)_32%,transparent)_1px,transparent_1px),linear-gradient(90deg,color-mix(in_srgb,var(--border)_32%,transparent)_1px,transparent_1px)] bg-[size:32px_32px] opacity-25" />
       <div className="relative h-full min-h-[250px]">
+        {slug === "horizon-desk" ? <HorizonDeskVisual /> : null}
         {slug === "triage360" ? <TriageVisual /> : null}
         {slug === "commerce-platform" ? <CommerceVisual /> : null}
         {slug === "streetwise" ? <StreetwiseVisual /> : null}
