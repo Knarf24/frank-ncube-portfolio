@@ -32,28 +32,51 @@ export function ProjectGlance({ project }: ProjectGlanceProps) {
   return (
     <dl
       aria-label={`${project.title} at a glance`}
-      className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 sm:px-5 lg:grid lg:grid-cols-[repeat(auto-fit,minmax(9rem,1fr))] lg:gap-x-6 lg:py-4"
+      className="mt-8 rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 sm:px-5 md:flex md:flex-wrap md:gap-x-5 md:gap-y-4 md:py-4"
     >
-      {items.map((item) => (
-        <div
-          key={item.label}
-          className="grid grid-cols-[5rem_minmax(0,1fr)] gap-3 border-t border-[var(--border)] py-3 first:border-t-0 sm:grid-cols-[6rem_minmax(0,1fr)] lg:block lg:border-t-0 lg:py-0"
-        >
-          <dt className="pt-0.5 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
-            {item.label}
-          </dt>
-          <dd className="text-sm leading-6 text-[var(--text)] lg:mt-1.5">
-            {item.label === "Stack"
-              ? item.value.split(" · ").map((technology, index) => (
-                  <span key={technology}>
-                    {index > 0 ? " · " : null}
-                    <span className="whitespace-nowrap">{technology}</span>
-                  </span>
-                ))
-              : item.value}
-          </dd>
-        </div>
-      ))}
+      {items.map((item) => {
+        const isStack = item.label === "Stack";
+
+        return (
+          <div
+            key={item.label}
+            className={`grid grid-cols-[5rem_minmax(0,1fr)] gap-3 border-t border-[var(--border)] py-3 first:border-t-0 sm:grid-cols-[6rem_minmax(0,1fr)] md:block md:border-t-0 md:py-0 ${
+              isStack
+                ? "md:min-w-[18rem] md:flex-1 md:basis-[29rem]"
+                : "md:max-w-[15rem] md:flex-none"
+            }`}
+          >
+            <dt className="pt-0.5 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
+              {item.label}
+            </dt>
+            <dd className="text-sm leading-6 text-[var(--text)] md:mt-1.5">
+              {isStack ? <StackList value={item.value} /> : item.value}
+            </dd>
+          </div>
+        );
+      })}
     </dl>
+  );
+}
+
+// Each technology is a non-breaking unit. The middle-dot separator is drawn
+// in the gap before every item except the first, and the list clips anything
+// pushed outside its left edge, so a wrapped line never starts (or ends) with
+// a stray separator.
+function StackList({ value }: { value: string }) {
+  return (
+    <ul
+      role="list"
+      className="flex flex-wrap gap-x-[1.25em] overflow-hidden"
+    >
+      {value.split(" · ").map((technology) => (
+        <li
+          key={technology}
+          className="relative whitespace-nowrap before:absolute before:-left-[0.625em] before:-translate-x-1/2 before:content-['·'] first:before:content-none"
+        >
+          {technology}
+        </li>
+      ))}
+    </ul>
   );
 }

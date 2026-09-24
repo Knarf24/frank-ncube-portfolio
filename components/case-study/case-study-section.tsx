@@ -1,3 +1,5 @@
+import { noBreakTerms } from "@/components/case-study/no-break-terms";
+
 type CaseStudySectionProps = {
   heading: string;
   body: string[];
@@ -15,7 +17,7 @@ export function CaseStudySection({ heading, body }: CaseStudySectionProps) {
             key={paragraph}
             className="text-sm leading-7 text-[var(--muted)] sm:text-base sm:leading-8"
           >
-            {paragraph}
+            {noBreakTerms(paragraph)}
           </p>
         ))}
       </div>

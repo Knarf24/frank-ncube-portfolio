@@ -1,3 +1,4 @@
+import { noBreakTerms } from "@/components/case-study/no-break-terms";
 import type { EngineeringDecision } from "@/lib/portfolio-types";
 
 type EngineeringDecisionsProps = {
@@ -28,10 +29,10 @@ export function EngineeringDecisions({
               {String(index + 1).padStart(2, "0")}
             </p>
             <h3 className="mt-2 text-base font-medium text-[var(--text)]">
-              {decision.title}
+              {noBreakTerms(decision.title)}
             </h3>
             <p className="mt-2 text-sm leading-7 text-[var(--muted)] sm:text-base sm:leading-8">
-              {decision.body}
+              {noBreakTerms(decision.body)}
             </p>
           </li>
         ))}

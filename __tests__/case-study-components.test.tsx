@@ -8,7 +8,9 @@ import {
   getGlanceItems,
   ProjectGlance,
 } from "@/components/case-study/project-glance";
+import { noBreakTerms } from "@/components/case-study/no-break-terms";
 import { ScopeLimits } from "@/components/case-study/scope-limits";
+import { ArchitectureFlow } from "@/components/case-study/architecture-flow";
 import type { Project } from "@/lib/portfolio-types";
 
 afterEach(cleanup);
@@ -229,5 +231,60 @@ describe("CaseStudyFooter", () => {
     expect(
       screen.getByRole("link", { name: /submission on Devpost/ }),
     ).toHaveAttribute("href", "https://devpost.com/software/z");
+  });
+});
+
+describe("Stack list separators", () => {
+  it("renders each technology as its own non-breaking list item without literal dots", () => {
+    render(<ProjectGlance project={baseProject} />);
+
+    const stack = screen.getByRole("list");
+    const items = within(stack).getAllByRole("listitem");
+
+    expect(items.map((item) => item.textContent)).toEqual(["A", "B", "C", "D", "E"]);
+    for (const item of items) {
+      expect(item.className).toContain("whitespace-nowrap");
+    }
+    expect(stack.textContent).not.toContain("·");
+    expect(stack.className).toContain("overflow-hidden");
+  });
+});
+
+describe("noBreakTerms", () => {
+  it("wraps TF-IDF in a non-breaking span and leaves other text alone", () => {
+    const { container } = render(
+      <p>{noBreakTerms("uses TF-IDF + semantic retrieval")}</p>,
+    );
+
+    const span = container.querySelector("span.whitespace-nowrap");
+
+    expect(span).toHaveTextContent("TF-IDF");
+    expect(container).toHaveTextContent("uses TF-IDF + semantic retrieval");
+  });
+
+  it("returns plain text when no protected term is present", () => {
+    const { container } = render(<p>{noBreakTerms("nothing special")}</p>);
+
+    expect(container.querySelector("span")).toBeNull();
+    expect(container).toHaveTextContent("nothing special");
+  });
+});
+
+describe("ArchitectureFlow", () => {
+  it("keeps the plain-language label and only renders vertical connectors for phones", () => {
+    const { container } = render(<ArchitectureFlow labels={["One", "Two", "Three"]} />);
+
+    expect(screen.getByRole("img")).toHaveAttribute("aria-label", "One to Two to Three");
+    expect(container.querySelectorAll("[data-flow-step]")).toHaveLength(3);
+
+    const connectors = Array.from(container.querySelectorAll('[aria-hidden="true"]')).filter(
+      (el) => el.textContent === "↓" || el.textContent === "→",
+    );
+
+    expect(connectors).toHaveLength(2);
+    for (const connector of connectors) {
+      expect(connector.textContent).toBe("↓");
+      expect(connector.className).toContain("sm:hidden");
+    }
   });
 });

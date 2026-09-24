@@ -6,6 +6,7 @@ import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
 import { CaseStudySection } from "@/components/case-study/case-study-section";
 import { ContributionSection } from "@/components/case-study/contribution-section";
 import { EngineeringDecisions } from "@/components/case-study/engineering-decisions";
+import { noBreakTerms } from "@/components/case-study/no-break-terms";
 import { ProductPreview } from "@/components/case-study/product-preview";
 import { ProjectGlance } from "@/components/case-study/project-glance";
 import { ScopeLimits } from "@/components/case-study/scope-limits";
@@ -59,7 +60,7 @@ export default async function ProjectCaseStudyPage(
           {project.title}
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">
-          {project.summary}
+          {noBreakTerms(project.summary)}
         </p>
 
         <ProjectGlance project={project} />
