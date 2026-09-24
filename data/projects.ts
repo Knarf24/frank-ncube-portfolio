@@ -94,4 +94,48 @@ export const projects: Project[] = [
       },
     ],
   },
+  {
+    title: "Horizon Desk",
+    slug: "horizon-desk",
+    summary:
+      "Built with a three-person team at SteelHacks XIII, Horizon Desk uses synthetic banking data and AI-assisted outreach to identify customer opportunities, with deterministic eligibility checks and human review for credit decisions.",
+    year: 2026,
+    categories: ["AI / ML", "Web", "Product"],
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Claude 3.5 Sonnet",
+      "ElevenLabs",
+      "Python",
+      "Vitest",
+    ],
+    featured: true,
+    featuredOrder: 4,
+    status: "Completed",
+    liveUrl: "https://horizon-desk.netlify.app/?view=data",
+    liveKind: "demo",
+    devpostUrl: "https://devpost.com/software/nexa-j9g8ys",
+    caseStudy: [
+      {
+        heading: "Problem",
+        body: [
+          "Retail banks can hold large balances in low- or zero-interest checking accounts, and branch bankers have limited ways to spot which customers may have surplus liquidity and reach them in a compliant, personal way.",
+        ],
+      },
+      {
+        heading: "The team prototype",
+        body: [
+          "Our team built Horizon Desk for SteelHacks XIII. The prototype analyzes synthetic retail-banking customer data, identifies potential surplus liquidity using deterministic financial eligibility checks, and drafts personalized AI-assisted outreach. It also simulates customer responses and outreach cooldowns, and routes credit opportunities to human bankers rather than automatically approving loans.",
+          "All customer records and financial projections in the prototype are synthetic or simulated. Integration with core banking systems was a planned next step and was not implemented.",
+        ],
+      },
+      {
+        heading: "My contribution",
+        body: [
+          "I helped originate the project concept, worked primarily on the frontend, and contributed to some of the backend development.",
+          "Horizon Desk was built by a team of three: Gamuchirai Mubayiwa, Sumon Mondal, and me. The prototype’s functionality reflects shared team work rather than any one contributor.",
+        ],
+      },
+    ],
+  },
 ];

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ProjectVisual } from "@/components/projects/project-visual";
+import { getProjectNumber } from "@/lib/project-utils";
 import type { Project } from "@/lib/portfolio-types";
 
 type ProjectCardProps = {
@@ -35,7 +36,7 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
       >
         <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
           <span className="text-[var(--accent)]">
-            {isFlagship ? "01" : String(project.featuredOrder).padStart(2, "0")}
+            {isFlagship ? "01" : String(getProjectNumber(project)).padStart(2, "0")}
           </span>
           <span>{project.status}</span>
         </div>
@@ -86,10 +87,21 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
               href={project.liveUrl}
               target="_blank"
               rel="noreferrer"
-              aria-label={`View the live ${project.title} project (opens in a new tab)`}
+              aria-label={`View the live ${project.title} ${project.liveKind ?? "project"} (opens in a new tab)`}
               className={linkClassName}
             >
-              Live project <span aria-hidden="true" className="ml-1">↗</span>
+              {project.liveKind === "demo" ? "Live demo" : "Live project"} <span aria-hidden="true" className="ml-1">↗</span>
+            </a>
+          ) : null}
+          {project.devpostUrl ? (
+            <a
+              href={project.devpostUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`View ${project.title} on Devpost (opens in a new tab)`}
+              className={linkClassName}
+            >
+              Devpost <span aria-hidden="true" className="ml-1">↗</span>
             </a>
           ) : null}
         </div>

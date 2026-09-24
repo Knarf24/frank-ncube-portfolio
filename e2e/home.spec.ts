@@ -63,6 +63,10 @@ test('contact links point to the verified profiles', async ({ page }) => {
   ).toHaveAttribute('href', 'https://github.com/Knarf24')
 
   await expect(
+    contactSection.getByRole('link', { name: /Devpost/i }).first(),
+  ).toHaveAttribute('href', 'https://devpost.com/Knarf24')
+
+  await expect(
     contactSection.getByRole('link', { name: 'Email me' }),
   ).toHaveAttribute('href', 'mailto:FNcube83@students.livingstone.edu')
 
@@ -135,6 +139,10 @@ test('resume route offers the permanent resume PDF for viewing and download', as
     'href',
     'https://www.linkedin.com/in/frank-ncube-417a52338',
   )
+
+  await expect(
+    page.getByRole('link', { name: /Devpost/i }),
+  ).toHaveAttribute('href', 'https://devpost.com/Knarf24')
 
   await expect(
     page.getByRole('link', { name: /Back to homepage/i }),

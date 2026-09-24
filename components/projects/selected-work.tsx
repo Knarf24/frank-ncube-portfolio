@@ -22,7 +22,7 @@ export function SelectedWork() {
           <ProjectCard project={flagship} variant="flagship" />
         </div>
 
-        <div className="mt-5 grid gap-5 md:grid-cols-2">
+        <div className="mt-5 grid gap-5 md:grid-cols-2 md:[&>*:last-child:nth-child(odd)]:col-span-2 lg:grid-cols-3 lg:[&>*:last-child:nth-child(odd)]:col-span-1">
           {secondary.map((project) => (
             <ProjectCard
               key={project.slug}

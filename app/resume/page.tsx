@@ -100,6 +100,15 @@ export default function ResumePage() {
           >
             LinkedIn <span aria-hidden="true" className="ml-1">↗</span>
           </a>
+          <a
+            href={siteConfig.devpost}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Devpost (opens in a new tab)"
+            className={linkClassName}
+          >
+            Devpost <span aria-hidden="true" className="ml-1">↗</span>
+          </a>
         </div>
       </div>
     </main>

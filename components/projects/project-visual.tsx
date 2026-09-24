@@ -113,6 +113,37 @@ function StreetwiseVisual() {
   );
 }
 
+function HorizonDeskVisual() {
+  const steps = [
+    "Synthetic customer data",
+    "Eligibility checks",
+    "AI-drafted outreach",
+    "Human banker review",
+  ];
+
+  return (
+    <div className="relative flex h-full w-full items-center p-5 sm:p-7">
+      <ol className="mx-auto grid w-full max-w-sm gap-5">
+        {steps.map((step, index) => (
+          <li
+            key={step}
+            className={`relative rounded-xl border px-4 py-3 text-center text-xs ${
+              index === 1 || index === 3
+                ? "border-[color:rgba(116,247,154,0.42)] bg-[var(--accent-soft)] text-[var(--text)]"
+                : "border-[var(--border)] bg-[color:rgba(9,11,10,0.7)] text-[var(--muted)]"
+            }`}
+          >
+            {step}
+            {index < steps.length - 1 ? (
+              <span className="absolute -bottom-5 left-1/2 h-5 w-px -translate-x-1/2 bg-[var(--accent)] opacity-45" />
+            ) : null}
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
 export function ProjectVisual({ slug }: ProjectVisualProps) {
   return (
     <div
@@ -124,6 +155,7 @@ export function ProjectVisual({ slug }: ProjectVisualProps) {
         {slug === "triage360" ? <TriageVisual /> : null}
         {slug === "commerce-platform" ? <CommerceVisual /> : null}
         {slug === "streetwise" ? <StreetwiseVisual /> : null}
+        {slug === "horizon-desk" ? <HorizonDeskVisual /> : null}
       </div>
     </div>
   );

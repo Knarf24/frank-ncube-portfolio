@@ -33,7 +33,7 @@ describe('ProjectFilter', () => {
     ).not.toBeInTheDocument()
   })
 
-  it('renders all three projects by default', () => {
+  it('renders all four projects by default', () => {
     render(<ProjectFilter projects={projects} />)
 
     expect(
@@ -45,6 +45,23 @@ describe('ProjectFilter', () => {
     expect(
       screen.getByRole('heading', { name: 'Streetwise' }),
     ).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Horizon Desk' }),
+    ).toBeInTheDocument()
+  })
+
+  it('shows Horizon Desk with Devpost and live demo links', () => {
+    render(<ProjectFilter projects={projects} />)
+
+    expect(
+      screen.getByRole('link', { name: /View Horizon Desk on Devpost/i }),
+    ).toHaveAttribute('href', 'https://devpost.com/software/nexa-j9g8ys')
+    expect(
+      screen.getByRole('link', { name: /View the live Horizon Desk demo/i }),
+    ).toHaveAttribute('href', 'https://horizon-desk.netlify.app/?view=data')
+    expect(
+      screen.queryByRole('link', { name: /View Horizon Desk on GitHub/i }),
+    ).not.toBeInTheDocument()
   })
 
   it('marks the active category with aria-pressed', async () => {

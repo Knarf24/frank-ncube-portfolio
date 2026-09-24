@@ -131,6 +131,37 @@ test('Streetwise GitHub link points to the verified public repository', async ({
   )
 })
 
+test('Horizon Desk case study links to Devpost and the live demo without a GitHub link', async ({
+  page,
+}) => {
+  await page.goto('/projects/horizon-desk')
+
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'Horizon Desk' }),
+  ).toBeVisible()
+  await expect(page.getByRole('heading', { name: 'Problem' })).toBeVisible()
+  await expect(
+    page.getByRole('heading', { name: 'My contribution' }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('link', { name: /Horizon Desk on Devpost/i }),
+  ).toHaveAttribute('href', 'https://devpost.com/software/nexa-j9g8ys')
+  await expect(
+    page.getByRole('link', { name: /live Horizon Desk demo/i }),
+  ).toHaveAttribute('href', 'https://horizon-desk.netlify.app/?view=data')
+  await expect(
+    page.getByRole('link', { name: /GitHub/i }),
+  ).toHaveCount(0)
+})
+
+test('the archive lists Horizon Desk', async ({ page }) => {
+  await page.goto('/projects')
+
+  await expect(
+    page.getByRole('heading', { name: 'Horizon Desk' }),
+  ).toBeVisible()
+})
+
 test('an unknown project slug renders the not-found page', async ({
   page,
 }) => {

@@ -15,7 +15,7 @@ describe("SelectedWork", () => {
       { level: 3 },
     );
 
-    expect(projectHeadings).toHaveLength(3);
+    expect(projectHeadings).toHaveLength(4);
     expect(projectHeadings[0]).toHaveTextContent("Triage360");
     expect(
       within(section as HTMLElement).getByRole("heading", {
@@ -25,6 +25,12 @@ describe("SelectedWork", () => {
     expect(
       within(section as HTMLElement).getByRole("heading", {
         name: "Streetwise",
+      }),
+    ).toBeInTheDocument();
+
+    expect(
+      within(section as HTMLElement).getByRole("heading", {
+        name: "Horizon Desk",
       }),
     ).toBeInTheDocument();
 

@@ -101,10 +101,21 @@ export default async function ProjectCaseStudyPage(
               href={project.liveUrl}
               target="_blank"
               rel="noreferrer"
-              aria-label={`View the live ${project.title} project (opens in a new tab)`}
+              aria-label={`View the live ${project.title} ${project.liveKind ?? "project"} (opens in a new tab)`}
               className={linkClassName}
             >
-              Live project <span aria-hidden="true" className="ml-1">↗</span>
+              {project.liveKind === "demo" ? "Live demo" : "Live project"} <span aria-hidden="true" className="ml-1">↗</span>
+            </a>
+          ) : null}
+          {project.devpostUrl ? (
+            <a
+              href={project.devpostUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`View ${project.title} on Devpost (opens in a new tab)`}
+              className={linkClassName}
+            >
+              Devpost <span aria-hidden="true" className="ml-1">↗</span>
             </a>
           ) : null}
         </div>

@@ -4,6 +4,7 @@ import {
   filterProjects,
   getFeaturedProjects,
   getProjectBySlug,
+  getProjectNumber,
 } from "@/lib/project-utils";
 
 describe("project utilities", () => {
@@ -12,11 +13,18 @@ describe("project utilities", () => {
       "triage360",
       "commerce-platform",
       "streetwise",
+      "horizon-desk",
     ]);
   });
 
   it("finds a project by slug", () => {
     expect(getProjectBySlug("streetwise")?.title).toBe("Streetwise");
+  });
+
+  it("numbers projects by featured order, falling back to archive position", () => {
+    const horizon = getProjectBySlug("horizon-desk");
+
+    expect(horizon && getProjectNumber(horizon)).toBe(4);
   });
 
   it("returns undefined for an unknown project slug", () => {
@@ -26,7 +34,7 @@ describe("project utilities", () => {
   it("filters projects by category", () => {
     expect(
       filterProjects(projects, "AI / ML").map((project) => project.slug),
-    ).toEqual(["triage360", "streetwise"]);
+    ).toEqual(["triage360", "streetwise", "horizon-desk"]);
   });
 
   it("returns every project when the All category is selected", () => {

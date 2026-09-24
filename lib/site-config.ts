@@ -7,5 +7,6 @@ export const siteConfig = {
   email: "FNcube83@students.livingstone.edu",
   github: "https://github.com/Knarf24",
   linkedin: "https://www.linkedin.com/in/frank-ncube-417a52338",
+  devpost: "https://devpost.com/Knarf24",
   location: "Salisbury, North Carolina",
 } as const;

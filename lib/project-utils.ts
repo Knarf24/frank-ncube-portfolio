@@ -18,3 +18,10 @@ export function getFeaturedProjects(): Project[] {
     .filter((project) => project.featured)
     .sort((a, b) => (a.featuredOrder ?? 99) - (b.featuredOrder ?? 99));
 }
+
+export function getProjectNumber(project: Project): number {
+  return (
+    project.featuredOrder ??
+    projects.findIndex((item) => item.slug === project.slug) + 1
+  );
+}
