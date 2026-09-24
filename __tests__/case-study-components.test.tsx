@@ -9,6 +9,7 @@ import {
   ProjectGlance,
 } from "@/components/case-study/project-glance";
 import { noBreakTerms } from "@/components/case-study/no-break-terms";
+import { EventSection } from "@/components/case-study/event-section";
 import { ScopeLimits } from "@/components/case-study/scope-limits";
 import { ArchitectureFlow } from "@/components/case-study/architecture-flow";
 import type { Project } from "@/lib/portfolio-types";
@@ -285,6 +286,57 @@ describe("ArchitectureFlow", () => {
     for (const connector of connectors) {
       expect(connector.textContent).toBe("↓");
       expect(connector.className).toContain("sm:hidden");
+    }
+  });
+});
+
+describe("EventSection", () => {
+  const event = {
+    title: "Built at Some Event",
+    subtitle: "Somewhere · 2026",
+    banner: {
+      src: "/images/projects/x/banner.webp",
+      alt: "A banner photo.",
+      width: 1600,
+      height: 1200,
+      objectPosition: "50% 10%",
+    },
+    team: {
+      src: "/images/projects/x/team.webp",
+      alt: "A team photo.",
+      width: 1000,
+      height: 1400,
+      caption: "The team at the event.",
+    },
+  };
+
+  it("renders nothing when there is no event data", () => {
+    const { container } = render(<EventSection />);
+
+    expect(container).toBeEmptyDOMElement();
+  });
+
+  it("renders the banner heading as real text and both images with alt text and captions", () => {
+    render(<EventSection event={event} />);
+
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Built at Some Event" }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Somewhere · 2026")).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "A banner photo." })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "A team photo." })).toBeInTheDocument();
+    expect(screen.getByText("The team at the event.")).toBeInTheDocument();
+    expect(screen.queryByText("Team")).not.toBeInTheDocument();
+    expect(screen.getAllByRole("figure")).toHaveLength(2);
+  });
+
+  it("does not make the images headings and does not mark either as priority", () => {
+    const { container } = render(<EventSection event={event} />);
+
+    expect(container.querySelector("h2 img, h3 img")).toBeNull();
+    for (const img of Array.from(container.querySelectorAll("img"))) {
+      expect(img.getAttribute("fetchpriority")).not.toBe("high");
+      expect(img.getAttribute("loading")).not.toBe("eager");
     }
   });
 });

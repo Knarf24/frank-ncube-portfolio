@@ -37,6 +37,25 @@ export type ProjectPreview = {
   caption: string;
 };
 
+export type ProjectEvent = {
+  title: string;
+  subtitle: string;
+  banner: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    objectPosition?: string;
+  };
+  team: {
+    src: string;
+    alt: string;
+    width: number;
+    height: number;
+    caption: string;
+  };
+};
+
 export type ProjectArchitecture = {
   caption: string;
   steps: string[];
@@ -63,6 +82,8 @@ export type Project = {
   // Optional override for the glance strip; defaults to all technologies.
   primaryStack?: string[];
   contribution?: ProjectContribution;
+  // Optional hackathon/event visuals shown between contribution and architecture.
+  event?: ProjectEvent;
   architecture?: ProjectArchitecture;
   // At most three are rendered.
   decisions?: EngineeringDecision[];

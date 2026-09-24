@@ -1,4 +1,4 @@
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync, statSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { projects } from "@/data/projects";
@@ -102,6 +102,52 @@ describe("case-study data accuracy guards", () => {
         expect(project.preview.alt.length).toBeGreaterThan(20);
         expect(existsSync(join(process.cwd(), "public", project.preview.src))).toBe(true);
       }
+    }
+  });
+});
+
+describe("Horizon Desk event visuals", () => {
+  const horizon = getProjectBySlug("horizon-desk");
+
+  it("uses the approved banner copy, team caption, and alt text", () => {
+    expect(horizon?.event?.title).toBe("Built at SteelHacks XIII");
+    expect(horizon?.event?.subtitle).toBe("University of Pittsburgh · 2026");
+    expect(horizon?.event?.banner.alt).toBe(
+      "SteelHacks XIII participants gathered in the auditorium before the closing ceremony.",
+    );
+    expect(horizon?.event?.team.caption).toBe(
+      "The Horizon Desk team at SteelHacks XIII.",
+    );
+    expect(horizon?.event?.team).not.toHaveProperty("copy");
+  });
+
+  it("points at optimized WebP files that exist and stay small", () => {
+    for (const image of [horizon!.event!.banner, horizon!.event!.team]) {
+      const file = join(process.cwd(), "public", image.src);
+
+      expect(image.src).toMatch(/^\/images\/projects\/horizon-desk\/.+\.webp$/);
+      expect(existsSync(file)).toBe(true);
+      expect(statSync(file).size).toBeLessThan(400 * 1024);
+      expect(image.alt.length).toBeGreaterThan(20);
+    }
+  });
+
+  it("ships no original PNG screenshots in the repo image folder", () => {
+    const dir = join(process.cwd(), "public/images/projects/horizon-desk");
+
+    expect(readdirSync(dir).filter((name) => /\.(png|jpe?g)$/i.test(name))).toEqual([]);
+  });
+
+  it("does not name or order the people in the alt text or caption, and invents no outcomes", () => {
+    const text = JSON.stringify(horizon?.event);
+
+    expect(text).not.toMatch(/Frank|Gamuchirai|Sumon/);
+    expect(text).not.toMatch(/left|right|award|prize|winner|placed|finalist/i);
+  });
+
+  it("only Horizon Desk has event visuals", () => {
+    for (const project of projects) {
+      expect(Boolean(project.event)).toBe(project.slug === "horizon-desk");
     }
   });
 });

@@ -193,6 +193,24 @@ export const projects: Project[] = [
       teamNote:
         "Horizon Desk was built by a team of three. The prototype’s functionality reflects shared team work rather than any one contributor.",
     },
+    event: {
+      title: "Built at SteelHacks XIII",
+      subtitle: "University of Pittsburgh · 2026",
+      banner: {
+        src: "/images/projects/horizon-desk/steelhacks-auditorium.webp",
+        alt: "SteelHacks XIII participants gathered in the auditorium before the closing ceremony.",
+        width: 1596,
+        height: 1273,
+        objectPosition: "50% 12%",
+      },
+      team: {
+        src: "/images/projects/horizon-desk/horizon-desk-team.webp",
+        alt: "The three Horizon Desk team members standing with the event mascot in front of a large window.",
+        width: 1080,
+        height: 1434,
+        caption: "The Horizon Desk team at SteelHacks XIII.",
+      },
+    },
     architecture: {
       caption:
         "A simplified view of the prototype’s main workflow. Customer records, responses, and outcomes are synthetic or simulated.",

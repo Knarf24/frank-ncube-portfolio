@@ -187,15 +187,130 @@ test('Triage360 architecture describes web-app retrieval as keyword-overlap', as
   await expect(page.getByRole('listitem').filter({ hasText: /Rule-based escalation/ })).toHaveCount(1)
 })
 
-test('no project renders a product preview until real screenshots are added', async ({
+test('no project renders a product preview, and only Horizon Desk shows event photos', async ({
   page,
 }) => {
   for (const slug of slugs) {
     await page.goto(`/projects/${slug}`)
-    await expect(page.getByRole('figure')).toHaveCount(0)
-    await expect(page.locator('main img')).toHaveCount(0)
+
+    if (slug === 'horizon-desk') {
+      const event = page.locator('section[aria-labelledby="event-heading"]')
+      await expect(event.locator('img')).toHaveCount(2)
+      await expect(event.getByRole('figure')).toHaveCount(2)
+      // Nothing outside the event section: no product preview / screenshots.
+      await expect(page.locator('main img')).toHaveCount(2)
+      await expect(page.getByRole('figure')).toHaveCount(2)
+    } else {
+      await expect(page.getByRole('figure')).toHaveCount(0)
+      await expect(page.locator('main img')).toHaveCount(0)
+      await expect(page.locator('section[aria-labelledby="event-heading"]')).toHaveCount(0)
+    }
   }
 })
+
+test('Horizon Desk event section: heading, copy, alt text, captions, order, and real loaded WebP images', async ({
+  page,
+}) => {
+  await page.goto('/projects/horizon-desk')
+
+  const event = page.locator('section[aria-labelledby="event-heading"]')
+  await expect(
+    event.getByRole('heading', { level: 2, name: 'Built at SteelHacks XIII' }),
+  ).toBeVisible()
+  await expect(event).toContainText('University of Pittsburgh · 2026')
+  await expect(
+    event.getByRole('img', {
+      name: 'SteelHacks XIII participants gathered in the auditorium before the closing ceremony.',
+    }),
+  ).toHaveCount(1)
+  await expect(event.getByRole('img', { name: /three Horizon Desk team members/ })).toHaveCount(1)
+  await expect(event.locator('figcaption', { hasText: 'The Horizon Desk team at SteelHacks XIII.' })).toBeVisible()
+  // The redundant "Team" label and supporting sentence were removed.
+  await expect(event.getByText('Horizon Desk was developed by our three-person team')).toHaveCount(0)
+  await expect(event.getByText('Team', { exact: true })).toHaveCount(0)
+  await expect(event.locator('figcaption')).toHaveCount(2)
+
+  // Placement: My contribution -> event section -> Architecture -> Engineering decisions.
+  const order = await page.locator('main h2').allTextContents()
+  const idx = (name: string) => order.indexOf(name)
+  expect(idx('My contribution')).toBeGreaterThan(-1)
+  expect(idx('Built at SteelHacks XIII')).toBe(idx('My contribution') + 1)
+  expect(idx('Architecture')).toBe(idx('Built at SteelHacks XIII') + 1)
+  expect(idx('Engineering decisions')).toBeGreaterThan(idx('Architecture'))
+
+  // Images load (optimized by next/image) and neither is distorted.
+  const images = event.locator('img')
+  for (let i = 0; i < 2; i++) {
+    const img = images.nth(i)
+    await img.scrollIntoViewIfNeeded()
+    await expect
+      .poll(() => img.evaluate((el) => (el as HTMLImageElement).complete && (el as HTMLImageElement).naturalWidth))
+      .toBeGreaterThan(0)
+    await expect(img).toHaveAttribute('src', /_next\/image\?url=.*\.webp/)
+  }
+
+  // The portrait is never cropped: rendered ratio matches the source ratio.
+  const team = images.nth(1)
+  const ratio = await team.evaluate((el) => {
+    const r = el.getBoundingClientRect()
+    return r.width / r.height
+  })
+  expect(Math.abs(ratio - 1080 / 1434)).toBeLessThan(0.01)
+  // The portrait stays modest and centered under the banner.
+  const box = await team.evaluate((el) => {
+    const r = el.getBoundingClientRect()
+    const banner = document.querySelector('section[aria-labelledby="event-heading"] img')!.getBoundingClientRect()
+    return { width: r.width, centerX: r.left + r.width / 2, bannerCenterX: banner.left + banner.width / 2 }
+  })
+  expect(box.width).toBeLessThanOrEqual(290)
+  expect(Math.abs(box.centerX - box.bannerCenterX)).toBeLessThan(2)
+  await expect(images.nth(0)).toHaveCSS('object-fit', 'cover')
+})
+
+test('Horizon Desk keeps every Phase 1 attribution guard alongside the event photos', async ({
+  page,
+}) => {
+  await page.goto('/projects/horizon-desk')
+
+  await expect(page.getByText('Team project')).toBeVisible()
+  await expect(page.getByRole('list', { name: 'Team members' }).getByRole('listitem')).toHaveText([
+    'Frank Ncube',
+    'Gamuchirai Mubayiwa',
+    'Sumon Mondal',
+  ])
+  await expect(page.getByText('I helped originate the project concept', { exact: false })).toBeVisible()
+  await expect(page.getByRole('link', { name: /GitHub/i })).toHaveCount(0)
+  await expect(page.locator('a[href*="netlify"]')).toHaveCount(0)
+  await expect(page.getByText(/142/)).toHaveCount(0)
+  await expect(page.getByText(/Individual project/i)).toHaveCount(0)
+  await expect(page.getByText('All customer records and financial projections in the prototype are synthetic or simulated.')).toBeVisible()
+  await expect(page.locator('a[href="https://devpost.com/software/nexa-j9g8ys"]').first()).toBeVisible()
+})
+
+for (const width of [320, 375, 768, 1024, 1280, 1440]) {
+  test(`Horizon Desk event images stay inside the page and undistorted at ${width}px`, async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width, height: 900 })
+    await page.goto('/projects/horizon-desk')
+    await page.evaluate(() => document.fonts.ready)
+
+    const result = await page.locator('section[aria-labelledby="event-heading"] img').evaluateAll((imgs) =>
+      imgs.map((el) => {
+        const img = el as HTMLImageElement
+        const r = img.getBoundingClientRect()
+        return { left: r.left, right: r.right, width: r.width, height: r.height }
+      }),
+    )
+
+    expect(await hasHorizontalOverflow(page)).toBe(false)
+    for (const image of result) {
+      expect(image.left).toBeGreaterThanOrEqual(0)
+      expect(image.right).toBeLessThanOrEqual(width + 0.5)
+      expect(image.width).toBeGreaterThan(200)
+    }
+  })
+}
 
 test('Triage360 and Streetwise no longer use the What I built heading', async ({
   page,

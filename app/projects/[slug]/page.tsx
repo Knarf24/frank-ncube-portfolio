@@ -5,6 +5,7 @@ import { ArchitectureFlow } from "@/components/case-study/architecture-flow";
 import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
 import { CaseStudySection } from "@/components/case-study/case-study-section";
 import { ContributionSection } from "@/components/case-study/contribution-section";
+import { EventSection } from "@/components/case-study/event-section";
 import { EngineeringDecisions } from "@/components/case-study/engineering-decisions";
 import { noBreakTerms } from "@/components/case-study/no-break-terms";
 import { ProductPreview } from "@/components/case-study/product-preview";
@@ -113,6 +114,8 @@ export default async function ProjectCaseStudyPage(
           ))}
 
           <ContributionSection contribution={project.contribution} />
+
+          <EventSection event={project.event} />
 
           {project.architecture ? (
             <div>
