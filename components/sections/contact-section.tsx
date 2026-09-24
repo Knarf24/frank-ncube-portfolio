@@ -18,6 +18,11 @@ const cards = [
     href: siteConfig.linkedin,
   },
   {
+    label: "Devpost",
+    value: "@Knarf24",
+    href: siteConfig.devpost,
+  },
+  {
     label: "Resume",
     value: "View resume",
     href: "/resume",
@@ -67,12 +72,21 @@ export function ContactSection() {
           >
             GitHub
           </a>
+          <a
+            href={siteConfig.devpost}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Devpost (opens in a new tab)"
+            className={secondaryActionClassName}
+          >
+            Devpost
+          </a>
           <a href="/resume" className={secondaryActionClassName}>
             View resume
           </a>
         </div>
 
-        <div className="mt-12 grid gap-3 sm:mt-16 sm:grid-cols-3">
+        <div className="mt-12 grid gap-3 sm:mt-16 sm:grid-cols-4">
           {cards.map((card) => (
             <a
               key={card.label}
