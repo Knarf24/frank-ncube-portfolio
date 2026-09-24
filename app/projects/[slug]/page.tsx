@@ -96,6 +96,17 @@ export default async function ProjectCaseStudyPage(
               GitHub <span aria-hidden="true" className="ml-1">↗</span>
             </a>
           ) : null}
+          {project.devpostUrl ? (
+            <a
+              href={project.devpostUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`View ${project.title} on Devpost (opens in a new tab)`}
+              className={linkClassName}
+            >
+              Devpost <span aria-hidden="true" className="ml-1">↗</span>
+            </a>
+          ) : null}
           {project.liveUrl ? (
             <a
               href={project.liveUrl}
