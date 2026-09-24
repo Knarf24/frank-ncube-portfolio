@@ -28,16 +28,36 @@ export const projects: Project[] = [
         ],
       },
       {
-        heading: "What I built",
+        heading: "The system",
         body: [
           "The project includes a full-stack TypeScript application with a React interface, Express API, PostgreSQL persistence, keyword-overlap document retrieval, ticket history, and statistics views, plus an earlier Python CLI prototype using TF-IDF + semantic retrieval.",
         ],
       },
+    ],
+    architecture: {
+      caption:
+        "Each ticket is classified, checked for escalation risk, and matched to documentation before a response is generated or the ticket is routed to a human. In the web application, retrieval is keyword-overlap scoring over per-domain documentation. Results are persisted so the UI can show ticket history and stats.",
+      steps: [
+        "Incoming ticket",
+        "Domain classification",
+        "Risk evaluation",
+        "Documentation retrieval",
+        "AI-assisted response or human escalation",
+        "Persistence and history",
+      ],
+    },
+    decisions: [
       {
-        heading: "Architecture",
-        body: [
-          "Incoming tickets move through classification, domain retrieval, risk evaluation, response generation, and persistence so the UI can expose both individual results and operational history.",
-        ],
+        title: "Rule-based escalation before AI generation",
+        body: "Tickets are checked against six risk categories (fraud, billing disputes, account access, platform bugs, legal or compliance, and safety-critical language) before any reply is generated, so risky cases go to a human instead of receiving an automated answer.",
+      },
+      {
+        title: "Responses grounded in retrieved documentation",
+        body: "Replies are generated from support documents retrieved for the classified domain, and the retrieved sources are stored with each ticket so an answer can be traced back to its documentation.",
+      },
+      {
+        title: "Keeping the retrieval prototype separate from the web app",
+        body: "The earlier Python CLI explored TF-IDF with semantic retrieval. The TypeScript web application uses simpler keyword-overlap retrieval over the same corpus, and the two are described separately rather than as one system.",
       },
     ],
   },
@@ -52,6 +72,7 @@ export const projects: Project[] = [
     featured: true,
     featuredOrder: 2,
     status: "In development",
+    glance: [{ label: "Role", value: "Product & Software Development" }],
     caseStudy: [
       {
         heading: "Problem",
@@ -65,6 +86,9 @@ export const projects: Project[] = [
           "A single-codebase multi-tenant platform with tenant-scoped commerce features and a product architecture designed to grow with multiple businesses.",
         ],
       },
+    ],
+    limits: [
+      "This is a private project that is still in development, so it is described at a high level. The capabilities above are goals for the platform, not a shipped product.",
     ],
   },
   {
@@ -87,10 +111,34 @@ export const projects: Project[] = [
         ],
       },
       {
-        heading: "What I built",
+        heading: "The system",
         body: [
           "A web product that combines selectable scenario context with merchant ranking, AI-generated offers, Supabase persistence, and redemption flows.",
         ],
+      },
+    ],
+    architecture: {
+      caption:
+        "Merchants are ranked in the client from the selected scenario. The top match and the context go to a Supabase Edge Function that generates one structured offer, which the user can accept and redeem.",
+      steps: [
+        "Scenario context",
+        "Merchant ranking",
+        "AI offer generation",
+        "Redemption",
+      ],
+    },
+    decisions: [
+      {
+        title: "Structured AI output instead of free text",
+        body: "Offers are generated through structured function-calling, so every offer has the same fields (headline, description, discount, validity window, call to action, and reason) that the interface can render and store.",
+      },
+      {
+        title: "Server-side discount limit",
+        body: "The discount is clamped on the server to the merchant's configured maximum, whatever the model returns, so a generated offer cannot exceed the limit a merchant set.",
+      },
+      {
+        title: "Row-Level Security in the database",
+        body: "Supabase Row-Level Security policies scope merchant data to its owner and offers to their user, so access rules are enforced in the database rather than only in the client.",
       },
     ],
   },
@@ -117,6 +165,12 @@ export const projects: Project[] = [
     //   liveUrl: "https://horizon-desk.netlify.app/?view=data",
     //   liveKind: "demo",
     devpostUrl: "https://devpost.com/software/nexa-j9g8ys",
+    statusLabel: "Completed prototype",
+    glance: [
+      { label: "Role", value: "Frontend + supporting backend" },
+      { label: "Team", value: "3 developers" },
+      { label: "Event", value: "SteelHacks XIII" },
+    ],
     caseStudy: [
       {
         heading: "Problem",
@@ -128,16 +182,45 @@ export const projects: Project[] = [
         heading: "The team prototype",
         body: [
           "Our team built Horizon Desk for SteelHacks XIII. The prototype analyzes synthetic retail-banking customer data, identifies potential surplus liquidity using deterministic financial eligibility checks, and drafts personalized AI-assisted outreach. It also simulates customer responses and outreach cooldowns, and routes credit opportunities to human bankers rather than automatically approving loans.",
-          "All customer records and financial projections in the prototype are synthetic or simulated. Integration with core banking systems was a planned next step and was not implemented.",
         ],
+      },
+    ],
+    contribution: {
+      mode: "team",
+      summary:
+        "I helped originate the project concept, worked primarily on the frontend, and contributed to some of the backend development.",
+      team: ["Frank Ncube", "Gamuchirai Mubayiwa", "Sumon Mondal"],
+      teamNote:
+        "Horizon Desk was built by a team of three. The prototype’s functionality reflects shared team work rather than any one contributor.",
+    },
+    architecture: {
+      caption:
+        "A simplified view of the prototype’s main workflow. Customer records, responses, and outcomes are synthetic or simulated.",
+      steps: [
+        "Synthetic customer data",
+        "Deterministic eligibility checks",
+        "AI-assisted outreach",
+        "Simulated responses and cooldowns",
+        "Human banker review for credit opportunities",
+      ],
+    },
+    decisions: [
+      {
+        title: "Deterministic eligibility before AI-assisted outreach",
+        body: "Potential surplus liquidity is identified with deterministic financial eligibility checks rather than a language model, so who is contacted follows explicit criteria. AI-assisted drafting comes afterwards.",
       },
       {
-        heading: "My contribution",
-        body: [
-          "I helped originate the project concept, worked primarily on the frontend, and contributed to some of the backend development.",
-          "Horizon Desk was built by a team of three: Gamuchirai Mubayiwa, Sumon Mondal, and me. The prototype’s functionality reflects shared team work rather than any one contributor.",
-        ],
+        title: "Human review for credit opportunities",
+        body: "Credit opportunities are routed to human bankers instead of being approved automatically, which keeps lending decisions with people.",
       },
+      {
+        title: "Synthetic data and modeled outcomes stay labeled",
+        body: "The prototype runs on synthetic customer data and simulated responses, and it is presented as modeled behavior, not as real customer activity or results.",
+      },
+    ],
+    limits: [
+      "All customer records and financial projections in the prototype are synthetic or simulated.",
+      "Integration with core banking systems was a planned next step and was not implemented.",
     ],
   },
 ];

@@ -25,3 +25,30 @@ export function getProjectNumber(project: Project): number {
     projects.findIndex((item) => item.slug === project.slug) + 1
   );
 }
+
+export function getOrderedProjects(): Project[] {
+  return projects
+    .map((project, index) => ({ project, index }))
+    .sort(
+      (a, b) =>
+        (a.project.featuredOrder ?? Number.MAX_SAFE_INTEGER) -
+          (b.project.featuredOrder ?? Number.MAX_SAFE_INTEGER) ||
+        a.index - b.index,
+    )
+    .map(({ project }) => project);
+}
+
+export function getAdjacentProjects(slug: string): {
+  previous: Project;
+  next: Project;
+} | null {
+  const ordered = getOrderedProjects();
+  const index = ordered.findIndex((project) => project.slug === slug);
+
+  if (index === -1 || ordered.length < 2) return null;
+
+  return {
+    previous: ordered[(index - 1 + ordered.length) % ordered.length],
+    next: ordered[(index + 1) % ordered.length],
+  };
+}

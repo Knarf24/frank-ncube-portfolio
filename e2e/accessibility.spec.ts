@@ -183,7 +183,7 @@ test("Triage360 architecture flow exposes a complete plain-language label", asyn
   await page.goto("/projects/triage360");
 
   const flow = page.getByRole("img", {
-    name: /Incoming ticket to Classification to Document retrieval to Risk evaluation to AI response to History \/ stats/i,
+    name: /Incoming ticket to Domain classification to Risk evaluation to Documentation retrieval to AI-assisted response or human escalation to Persistence and history/i,
   });
 
   await expect(flow).toBeVisible();

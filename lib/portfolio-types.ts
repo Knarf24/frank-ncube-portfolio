@@ -11,6 +11,37 @@ export type CaseStudySection = {
   body: string[];
 };
 
+export type GlanceItem = {
+  label: string;
+  value: string;
+};
+
+export type ProjectContribution = {
+  // "individual" is only used once individual ownership is explicitly confirmed.
+  mode: "individual" | "team";
+  summary: string;
+  team?: string[];
+  teamNote?: string;
+};
+
+export type EngineeringDecision = {
+  title: string;
+  body: string;
+};
+
+export type ProjectPreview = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  caption: string;
+};
+
+export type ProjectArchitecture = {
+  caption: string;
+  steps: string[];
+};
+
 export type Project = {
   title: string;
   slug: string;
@@ -25,6 +56,18 @@ export type Project = {
   liveUrl?: string;
   liveKind?: "project" | "demo";
   devpostUrl?: string;
+  // Extra verified facts for "Project at a glance" (Role, Team, Event, ...).
+  glance?: GlanceItem[];
+  // Overrides the displayed status, e.g. "Completed prototype".
+  statusLabel?: string;
+  // Optional override for the glance strip; defaults to all technologies.
+  primaryStack?: string[];
+  contribution?: ProjectContribution;
+  architecture?: ProjectArchitecture;
+  // At most three are rendered.
+  decisions?: EngineeringDecision[];
+  preview?: ProjectPreview;
+  limits?: string[];
   caseStudy: CaseStudySection[];
 };
 

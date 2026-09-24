@@ -61,7 +61,7 @@ test('Triage360 has a dedicated engineering case study', async ({ page }) => {
   ).toBeVisible()
 
   await expect(
-    page.getByRole('link', { name: /GitHub/i }),
+    page.getByRole('link', { name: /View Triage360 on GitHub/i }),
   ).toHaveAttribute(
     'href',
     'https://github.com/Knarf24/support-triangle-agent',
@@ -114,7 +114,7 @@ test('Streetwise renders only its existing case-study sections', async ({
     page.getByRole('heading', { name: 'Problem' }),
   ).toBeVisible()
   await expect(
-    page.getByRole('heading', { name: 'What I built' }),
+    page.getByRole('heading', { name: 'The system' }),
   ).toBeVisible()
 })
 

@@ -2,18 +2,15 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ArchitectureFlow } from "@/components/case-study/architecture-flow";
+import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
 import { CaseStudySection } from "@/components/case-study/case-study-section";
+import { ContributionSection } from "@/components/case-study/contribution-section";
+import { EngineeringDecisions } from "@/components/case-study/engineering-decisions";
+import { ProductPreview } from "@/components/case-study/product-preview";
+import { ProjectGlance } from "@/components/case-study/project-glance";
+import { ScopeLimits } from "@/components/case-study/scope-limits";
 import { projects } from "@/data/projects";
 import { getProjectBySlug } from "@/lib/project-utils";
-
-const triageArchitectureLabels = [
-  "Incoming ticket",
-  "Classification",
-  "Document retrieval",
-  "Risk evaluation",
-  "AI response",
-  "History / stats",
-];
 
 const linkClassName =
   "inline-flex min-h-11 items-center text-sm font-medium text-[var(--text)] underline decoration-[var(--border)] underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:[outline-color:var(--accent)]";
@@ -58,33 +55,16 @@ export default async function ProjectCaseStudyPage(
           <span aria-hidden="true" className="mr-1">←</span> Back to projects
         </Link>
 
-        <div className="mt-8 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
-          <span className="text-[var(--accent)]">{project.status}</span>
-          <span>{project.year}</span>
-        </div>
-
-        <h1 className="mt-3 text-4xl font-medium tracking-tight text-[var(--text)] md:text-5xl">
+        <h1 className="mt-8 text-4xl font-medium tracking-tight text-[var(--text)] md:text-5xl">
           {project.title}
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">
           {project.summary}
         </p>
 
-        <ul
-          className="mt-6 flex flex-wrap gap-2"
-          aria-label={`${project.title} technologies`}
-        >
-          {project.technologies.map((technology) => (
-            <li
-              key={technology}
-              className="rounded-full border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-1.5 text-xs text-[var(--muted)]"
-            >
-              {technology}
-            </li>
-          ))}
-        </ul>
+        <ProjectGlance project={project} />
 
-        <div className="mt-6 flex flex-wrap gap-x-6">
+        <div className="mt-4 flex flex-wrap gap-x-6">
           {project.githubUrl ? (
             <a
               href={project.githubUrl}
@@ -120,19 +100,36 @@ export default async function ProjectCaseStudyPage(
           ) : null}
         </div>
 
+        <ProductPreview preview={project.preview} />
+
         <div className="mt-14 space-y-12 sm:mt-16">
           {project.caseStudy.map((section) => (
-            <div key={section.heading}>
-              <CaseStudySection heading={section.heading} body={section.body} />
-              {project.slug === "triage360" &&
-              section.heading === "Architecture" ? (
-                <div className="mt-6 max-w-[var(--max-width)]">
-                  <ArchitectureFlow labels={triageArchitectureLabels} />
-                </div>
-              ) : null}
-            </div>
+            <CaseStudySection
+              key={section.heading}
+              heading={section.heading}
+              body={section.body}
+            />
           ))}
+
+          <ContributionSection contribution={project.contribution} />
+
+          {project.architecture ? (
+            <div>
+              <CaseStudySection
+                heading="Architecture"
+                body={[project.architecture.caption]}
+              />
+              <div className="mt-6 max-w-[var(--max-width)]">
+                <ArchitectureFlow labels={project.architecture.steps} />
+              </div>
+            </div>
+          ) : null}
+
+          <EngineeringDecisions decisions={project.decisions} />
+          <ScopeLimits limits={project.limits} />
         </div>
+
+        <CaseStudyFooter project={project} />
       </div>
     </main>
   );
