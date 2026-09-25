@@ -13,15 +13,15 @@ export const experience: ExperienceItem[] = [
     title: "Wi-Fi hotspot founder & operator",
     organization: "Community hotspot business",
     location: "Gweru, Zimbabwe",
-    period: "Entrepreneurship",
+    period: "2024 — Present",
     kind: "Entrepreneurship",
     summary:
-      "Worked on network deployment, voucher-based access, operations, monitoring, and a small team supporting community connectivity.",
+      "Worked on network deployment, voucher-based access, operations, and monitoring, while coordinating approximately 30 people across sales, marketing, installation, and maintenance to support community connectivity.",
   },
   {
     title: "Math & science tutor",
     organization: "Livingstone College",
-    period: "Campus",
+    period: "2026 — Present",
     kind: "Campus",
     summary:
       "Supporting students through academic problem-solving, structured explanations, and one-on-one learning.",

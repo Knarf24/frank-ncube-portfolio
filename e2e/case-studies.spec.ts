@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-const slugs = ['triage360', 'commerce-platform', 'streetwise', 'horizon-desk']
+const slugs = ['triage360', 'streetwise', 'horizon-desk', 'commerce-platform']
 const widths = [320, 375, 768, 1024, 1280, 1440]
 
 async function hasHorizontalOverflow(page: Page) {
@@ -84,7 +84,7 @@ test('previous/next navigation goes to deterministic neighbours', async ({
   ).toHaveAttribute('href', '/projects/horizon-desk')
   await expect(
     page.locator('main footer').getByRole('link', { name: /Previous project/ }),
-  ).toHaveAttribute('href', '/projects/commerce-platform')
+  ).toHaveAttribute('href', '/projects/triage360')
 
   await page.locator('main footer').getByRole('link', { name: /Next project/ }).click()
   await expect(page).toHaveURL(/\/projects\/horizon-desk$/)

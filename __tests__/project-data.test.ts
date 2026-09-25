@@ -14,27 +14,27 @@ describe("project ordering helpers", () => {
 
     expect(slugs).toEqual([
       "triage360",
-      "commerce-platform",
       "streetwise",
       "horizon-desk",
+      "commerce-platform",
     ]);
     expect(getOrderedProjects().map((project) => project.slug)).toEqual(slugs);
   });
 
   it("returns previous and next neighbours", () => {
     expect(getAdjacentProjects("streetwise")).toMatchObject({
-      previous: { slug: "commerce-platform" },
+      previous: { slug: "triage360" },
       next: { slug: "horizon-desk" },
     });
   });
 
   it("wraps around at both ends so every case study has both links", () => {
     expect(getAdjacentProjects("triage360")).toMatchObject({
-      previous: { slug: "horizon-desk" },
-      next: { slug: "commerce-platform" },
+      previous: { slug: "commerce-platform" },
+      next: { slug: "streetwise" },
     });
-    expect(getAdjacentProjects("horizon-desk")).toMatchObject({
-      previous: { slug: "streetwise" },
+    expect(getAdjacentProjects("commerce-platform")).toMatchObject({
+      previous: { slug: "horizon-desk" },
       next: { slug: "triage360" },
     });
   });

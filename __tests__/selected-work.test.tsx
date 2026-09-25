@@ -16,7 +16,12 @@ describe("SelectedWork", () => {
     );
 
     expect(projectHeadings).toHaveLength(4);
-    expect(projectHeadings[0]).toHaveTextContent("Triage360");
+    expect(projectHeadings.map((heading) => heading.textContent)).toEqual([
+      "Triage360",
+      "Streetwise",
+      "Horizon Desk",
+      "Commerce platform",
+    ]);
     expect(
       within(section as HTMLElement).getByRole("heading", {
         name: "Commerce platform",

@@ -101,3 +101,46 @@ test('homepage exposes an icon link to the generated icon route', async ({
 
   expect(href).toContain('/icon')
 })
+
+const pageMeta = [
+  { path: '/', title: 'Frank Ncube | Software Engineering, AI & Product Development' },
+  { path: '/projects', title: 'Projects | Frank Ncube' },
+  { path: '/projects/triage360', title: 'Triage360 | Frank Ncube' },
+  { path: '/projects/streetwise', title: 'Streetwise | Frank Ncube' },
+  { path: '/projects/horizon-desk', title: 'Horizon Desk | Frank Ncube' },
+  { path: '/projects/commerce-platform', title: 'Commerce platform | Frank Ncube' },
+  { path: '/resume', title: 'Resume | Frank Ncube' },
+]
+
+for (const { path, title } of pageMeta) {
+  test(`${path} has its own title, canonical, and Open Graph metadata`, async ({
+    page,
+  }) => {
+    await page.goto(path)
+
+    const expectedUrl = path === '/' ? expectedSiteUrl : `${expectedSiteUrl}${path}`
+
+    await expect(page).toHaveTitle(title)
+    await expect(page.locator('meta[name="description"]')).toHaveAttribute(
+      'content',
+      /\S/,
+    )
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(
+      'href',
+      expectedUrl,
+    )
+    await expect(page.locator('meta[property="og:url"]')).toHaveAttribute(
+      'content',
+      expectedUrl,
+    )
+    await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
+      'content',
+      title,
+    )
+    await expect(
+      page.locator('meta[property="og:description"]'),
+    ).toHaveAttribute('content', /\S/)
+    // The existing generated image is still inherited on every route.
+    await expect(page.locator('meta[property="og:image"]')).toHaveCount(1)
+  })
+}

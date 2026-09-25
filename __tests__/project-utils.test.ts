@@ -11,9 +11,9 @@ describe("project utilities", () => {
   it("returns featured projects in the approved order", () => {
     expect(getFeaturedProjects().map((project) => project.slug)).toEqual([
       "triage360",
-      "commerce-platform",
       "streetwise",
       "horizon-desk",
+      "commerce-platform",
     ]);
   });
 
@@ -23,8 +23,10 @@ describe("project utilities", () => {
 
   it("numbers projects by featured order, falling back to archive position", () => {
     const horizon = getProjectBySlug("horizon-desk");
+    const commerce = getProjectBySlug("commerce-platform");
 
-    expect(horizon && getProjectNumber(horizon)).toBe(4);
+    expect(horizon && getProjectNumber(horizon)).toBe(3);
+    expect(commerce && getProjectNumber(commerce)).toBe(4);
   });
 
   it("returns undefined for an unknown project slug", () => {

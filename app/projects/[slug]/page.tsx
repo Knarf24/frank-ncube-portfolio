@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import { ArchitectureFlow } from "@/components/case-study/architecture-flow";
 import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
@@ -13,6 +13,7 @@ import { ProductWalkthrough } from "@/components/case-study/product-walkthrough"
 import { ProjectGlance } from "@/components/case-study/project-glance";
 import { ScopeLimits } from "@/components/case-study/scope-limits";
 import { projects } from "@/data/projects";
+import { pageMetadata } from "@/lib/page-metadata";
 import { getProjectBySlug } from "@/lib/project-utils";
 
 const linkClassName =
@@ -24,6 +25,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata(
   props: PageProps<"/projects/[slug]">,
+  parent: ResolvingMetadata,
 ): Promise<Metadata> {
   const { slug } = await props.params;
   const project = getProjectBySlug(slug);
@@ -32,10 +34,14 @@ export async function generateMetadata(
     return { title: "Project not found | Frank Ncube" };
   }
 
-  return {
-    title: `${project.title} | Frank Ncube`,
-    description: project.summary,
-  };
+  return pageMetadata(
+    {
+      title: `${project.title} | Frank Ncube`,
+      description: project.summary,
+      path: `/projects/${project.slug}`,
+    },
+    parent,
+  );
 }
 
 export default async function ProjectCaseStudyPage(

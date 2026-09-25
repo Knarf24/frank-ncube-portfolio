@@ -14,6 +14,7 @@ export const projects: Project[] = [
       "React",
       "Express",
       "PostgreSQL",
+      "Claude API",
       "TF-IDF",
     ],
     featured: true,
@@ -93,7 +94,7 @@ export const projects: Project[] = [
     categories: ["Software engineering", "Cloud", "Product"],
     technologies: ["Next.js", "PostgreSQL", "Supabase", "Vercel"],
     featured: true,
-    featuredOrder: 2,
+    featuredOrder: 4,
     status: "In development",
     glance: [{ label: "Role", value: "Product & Software Development" }],
     caseStudy: [
@@ -123,7 +124,7 @@ export const projects: Project[] = [
     categories: ["AI / ML", "Product", "Web"],
     technologies: ["React", "TypeScript", "Supabase"],
     featured: true,
-    featuredOrder: 3,
+    featuredOrder: 2,
     status: "Completed",
     statusLabel: "Archived prototype",
     githubUrl: "https://github.com/Knarf24/streetwise-offer-ai",
@@ -185,7 +186,7 @@ export const projects: Project[] = [
       "Vitest",
     ],
     featured: true,
-    featuredOrder: 4,
+    featuredOrder: 3,
     status: "Completed",
     // Live demo temporarily removed: https://horizon-desk.netlify.app/?view=data
     // returned a Netlify 503 usage_exceeded error. To restore, re-add:

@@ -1,6 +1,23 @@
 import Link from "next/link";
+import type { Metadata, ResolvingMetadata } from "next";
 import { ProjectFilter } from "@/components/projects/project-filter";
 import { projects } from "@/data/projects";
+import { pageMetadata } from "@/lib/page-metadata";
+
+export function generateMetadata(
+  _props: unknown,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  return pageMetadata(
+    {
+      title: "Projects | Frank Ncube",
+      description:
+        "A collection of software, AI, cloud, and product work focused on practical problems and real systems.",
+      path: "/projects",
+    },
+    parent,
+  );
+}
 
 export default function ProjectsPage() {
   return (

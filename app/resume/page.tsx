@@ -1,5 +1,22 @@
 import Link from "next/link";
+import type { Metadata, ResolvingMetadata } from "next";
+import { pageMetadata } from "@/lib/page-metadata";
 import { siteConfig } from "@/lib/site-config";
+
+export function generateMetadata(
+  _props: unknown,
+  parent: ResolvingMetadata,
+): Promise<Metadata> {
+  return pageMetadata(
+    {
+      title: "Resume | Frank Ncube",
+      description:
+        "View or download the current internship resume of Frank Ncube, a Computer Information Sciences student at Livingstone College.",
+      path: "/resume",
+    },
+    parent,
+  );
+}
 
 const linkClassName =
   "inline-flex min-h-11 items-center text-sm font-medium text-[var(--text)] underline decoration-[var(--border)] underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:[outline-color:var(--accent)]";

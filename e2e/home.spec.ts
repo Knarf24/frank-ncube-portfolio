@@ -169,3 +169,32 @@ test('resume route falls back to explicit open/download actions on narrow mobile
     page.getByText(/Inline preview isn.t available on this device/i),
   ).toBeVisible()
 })
+
+test('homepage lists projects in the recruiter-facing order', async ({
+  page,
+}) => {
+  await page.goto('/')
+
+  await expect(page.locator('section#work h3')).toHaveText([
+    'Triage360',
+    'Streetwise',
+    'Horizon Desk',
+    'Commerce platform',
+  ])
+})
+
+test('experience entries show their dates', async ({ page }) => {
+  await page.goto('/')
+
+  const experience = page.locator('#experience')
+  await expect(experience.getByText('2024 — Present')).toBeVisible()
+  await expect(experience.getByText('2026 — Present').first()).toBeVisible()
+})
+
+test('the footer links to the portfolio source repository', async ({ page }) => {
+  await page.goto('/')
+
+  await expect(
+    page.locator('footer').getByRole('link', { name: /source code on GitHub/i }),
+  ).toHaveAttribute('href', 'https://github.com/Knarf24/frank-ncube-portfolio')
+})
