@@ -10,6 +10,7 @@ import {
 } from "@/components/case-study/project-glance";
 import { noBreakTerms } from "@/components/case-study/no-break-terms";
 import { EventSection } from "@/components/case-study/event-section";
+import { ProductWalkthrough } from "@/components/case-study/product-walkthrough";
 import { ScopeLimits } from "@/components/case-study/scope-limits";
 import { ArchitectureFlow } from "@/components/case-study/architecture-flow";
 import type { Project } from "@/lib/portfolio-types";
@@ -337,6 +338,79 @@ describe("EventSection", () => {
     for (const img of Array.from(container.querySelectorAll("img"))) {
       expect(img.getAttribute("fetchpriority")).not.toBe("high");
       expect(img.getAttribute("loading")).not.toBe("eager");
+    }
+  });
+});
+
+describe("ProductWalkthrough", () => {
+  const walkthrough = {
+    heading: "Product walkthrough",
+    intro: "Sample screens.",
+    items: [
+      {
+        src: "/images/projects/x/one.webp",
+        alt: "First screen.",
+        width: 2880,
+        height: 1800,
+        caption: "First caption.",
+      },
+      {
+        src: "/images/projects/x/two.webp",
+        alt: "Second screen.",
+        width: 2880,
+        height: 1800,
+        caption: "Second caption.",
+      },
+    ],
+  };
+
+  it("renders nothing without walkthrough data or without items", () => {
+    const { container, rerender } = render(<ProductWalkthrough />);
+
+    expect(container).toBeEmptyDOMElement();
+
+    rerender(<ProductWalkthrough walkthrough={{ ...walkthrough, items: [] }} />);
+
+    expect(container).toBeEmptyDOMElement();
+  });
+
+  it("reuses ProductPreview for each screenshot with its alt text and caption", () => {
+    render(<ProductWalkthrough walkthrough={walkthrough} />);
+
+    expect(
+      screen.getByRole("heading", { level: 2, name: "Product walkthrough" }),
+    ).toBeInTheDocument();
+    expect(screen.getByText("Sample screens.")).toBeInTheDocument();
+    expect(screen.getAllByRole("figure")).toHaveLength(2);
+    expect(screen.getByRole("img", { name: "First screen." })).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: "Second screen." })).toBeInTheDocument();
+    expect(screen.getByText("First caption.")).toBeInTheDocument();
+    expect(screen.getByText("Second caption.")).toBeInTheDocument();
+  });
+
+  it("does not draw decorative window dots around walkthrough screenshots, but ProductPreview still can", () => {
+    const { container, rerender } = render(
+      <ProductWalkthrough walkthrough={walkthrough} />,
+    );
+
+    expect(container.querySelectorAll('[aria-hidden="true"] .rounded-full')).toHaveLength(0);
+
+    rerender(<ProductPreview preview={walkthrough.items[0]} />);
+
+    expect(container.querySelectorAll('[aria-hidden="true"] .rounded-full')).toHaveLength(3);
+
+    rerender(<ProductPreview preview={walkthrough.items[0]} showChrome={false} />);
+
+    expect(container.querySelectorAll('[aria-hidden="true"] .rounded-full')).toHaveLength(0);
+  });
+
+  it("serves the text-heavy screenshots as-is and lazy-loads them", () => {
+    const { container } = render(<ProductWalkthrough walkthrough={walkthrough} />);
+
+    for (const img of Array.from(container.querySelectorAll("img"))) {
+      expect(img.getAttribute("src")).toMatch(/^\/images\/projects\/x\/.+\.webp$/);
+      expect(img.getAttribute("loading")).not.toBe("eager");
+      expect(img.getAttribute("fetchpriority")).not.toBe("high");
     }
   });
 });

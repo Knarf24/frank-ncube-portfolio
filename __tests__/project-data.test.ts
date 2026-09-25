@@ -151,3 +151,75 @@ describe("Horizon Desk event visuals", () => {
     }
   });
 });
+
+describe("Triage360 product walkthrough", () => {
+  const triage = getProjectBySlug("triage360");
+  const items = triage?.walkthrough?.items ?? [];
+
+  it("has exactly two screenshots with the approved captions and alt text", () => {
+    expect(triage?.walkthrough?.heading).toBe("Product walkthrough");
+    expect(items).toHaveLength(2);
+    expect(items[0].caption).toBe(
+      "High-risk tickets are flagged for human review instead of receiving an automated reply.",
+    );
+    expect(items[0].alt).toBe(
+      "Triage360 escalation result for a synthetic Visa fraud support ticket.",
+    );
+    expect(items[1].caption).toBe(
+      "The audit log records each triaged ticket with its domain, classification confidence, escalation status and retrieved-source count, with search, filters and CSV export.",
+    );
+    expect(items[1].alt).toBe(
+      "Triage360 audit log showing five synthetic support tickets with domains, confidence and escalation status.",
+    );
+  });
+
+  it("points at lossless WebP files that exist at native size and stay small", () => {
+    for (const item of items) {
+      const file = join(process.cwd(), "public", item.src);
+
+      expect(item.src).toMatch(/^\/images\/projects\/triage360\/.+\.webp$/);
+      expect(existsSync(file)).toBe(true);
+      expect(statSync(file).size).toBeLessThan(200 * 1024);
+    }
+
+    // Escalation screen: full 16:10 frame. History: same frame with only the empty lower canvas trimmed.
+    expect(items[0].width).toBe(2880);
+    expect(items[0].height).toBe(1800);
+    expect(items[1].width).toBe(2880);
+    expect(items[1].height).toBe(1200);
+  });
+
+  it("ships no original PNG screenshots in the Triage360 image folder", () => {
+    const dir = join(process.cwd(), "public/images/projects/triage360");
+
+    expect(readdirSync(dir).filter((name) => /\.(png|jpe?g)$/i.test(name))).toEqual([]);
+  });
+
+  it("does not claim AI detected the fraud, use production wording, or mention TF-IDF next to the screenshots", () => {
+    const text = JSON.stringify(triage?.walkthrough);
+
+    expect(text).not.toMatch(/AI (detected|identified|decided)/i);
+    expect(text).not.toMatch(/AI confidence/i);
+    expect(text).not.toMatch(/production|customer interactions|real customers/i);
+    expect(text).not.toMatch(/TF-IDF/i);
+    expect(text).toMatch(/sample support tickets/);
+  });
+
+  it("keeps the web-app versus Python-prototype retrieval distinction intact", () => {
+    expect(triage?.architecture?.caption).toMatch(/keyword-overlap/);
+    expect(triage?.architecture?.caption).not.toMatch(/TF-IDF/);
+    expect(
+      triage?.decisions?.some((decision) =>
+        /Python CLI explored TF-IDF/.test(decision.body) &&
+        /web application uses simpler keyword-overlap/.test(decision.body),
+      ),
+    ).toBe(true);
+  });
+
+  it("only Triage360 has a walkthrough, and no project uses the single header preview", () => {
+    for (const project of projects) {
+      expect(Boolean(project.walkthrough)).toBe(project.slug === "triage360");
+      expect(project.preview).toBeUndefined();
+    }
+  });
+});

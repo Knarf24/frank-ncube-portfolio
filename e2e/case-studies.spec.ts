@@ -187,25 +187,135 @@ test('Triage360 architecture describes web-app retrieval as keyword-overlap', as
   await expect(page.getByRole('listitem').filter({ hasText: /Rule-based escalation/ })).toHaveCount(1)
 })
 
-test('no project renders a product preview, and only Horizon Desk shows event photos', async ({
+test('only Triage360 shows a product walkthrough and only Horizon Desk shows event photos', async ({
   page,
 }) => {
   for (const slug of slugs) {
     await page.goto(`/projects/${slug}`)
 
+    const event = page.locator('section[aria-labelledby="event-heading"]')
+    const walkthrough = page.locator('section[aria-labelledby="walkthrough-heading"]')
+
     if (slug === 'horizon-desk') {
-      const event = page.locator('section[aria-labelledby="event-heading"]')
       await expect(event.locator('img')).toHaveCount(2)
-      await expect(event.getByRole('figure')).toHaveCount(2)
-      // Nothing outside the event section: no product preview / screenshots.
+      await expect(walkthrough).toHaveCount(0)
+      await expect(page.locator('main img')).toHaveCount(2)
+      await expect(page.getByRole('figure')).toHaveCount(2)
+    } else if (slug === 'triage360') {
+      await expect(walkthrough.locator('img')).toHaveCount(2)
+      await expect(walkthrough.getByRole('figure')).toHaveCount(2)
+      await expect(event).toHaveCount(0)
       await expect(page.locator('main img')).toHaveCount(2)
       await expect(page.getByRole('figure')).toHaveCount(2)
     } else {
       await expect(page.getByRole('figure')).toHaveCount(0)
       await expect(page.locator('main img')).toHaveCount(0)
-      await expect(page.locator('section[aria-labelledby="event-heading"]')).toHaveCount(0)
+      await expect(event).toHaveCount(0)
+      await expect(walkthrough).toHaveCount(0)
     }
   }
+})
+
+test('Triage360 walkthrough: heading, order, captions, alt text, and legible native-size images', async ({
+  page,
+}) => {
+  await page.goto('/projects/triage360')
+
+  const walkthrough = page.locator('section[aria-labelledby="walkthrough-heading"]')
+  await expect(
+    walkthrough.getByRole('heading', { level: 2, name: 'Product walkthrough' }),
+  ).toBeVisible()
+  await expect(walkthrough).toContainText(
+    'The web application running locally, using sample support tickets from the project repository.',
+  )
+
+  // Placement: The system -> Product walkthrough -> Architecture -> Engineering decisions.
+  const order = await page.locator('main h2').allTextContents()
+  const idx = (name: string) => order.indexOf(name)
+  expect(idx('The system')).toBeGreaterThan(-1)
+  expect(idx('Product walkthrough')).toBe(idx('The system') + 1)
+  expect(idx('Architecture')).toBe(idx('Product walkthrough') + 1)
+  expect(idx('Engineering decisions')).toBeGreaterThan(idx('Architecture'))
+
+  await expect(
+    walkthrough.getByRole('img', {
+      name: 'Triage360 escalation result for a synthetic Visa fraud support ticket.',
+    }),
+  ).toHaveCount(1)
+  await expect(
+    walkthrough.getByRole('img', {
+      name: 'Triage360 audit log showing five synthetic support tickets with domains, confidence and escalation status.',
+    }),
+  ).toHaveCount(1)
+  await expect(
+    walkthrough.locator('figcaption', {
+      hasText: 'High-risk tickets are flagged for human review instead of receiving an automated reply.',
+    }),
+  ).toBeVisible()
+  await expect(
+    walkthrough.locator('figcaption', {
+      hasText: 'The audit log records each triaged ticket with its domain, classification confidence, escalation status and retrieved-source count, with search, filters and CSV export.',
+    }),
+  ).toBeVisible()
+
+  // Images load at native size, are served as-is (not re-encoded), and keep their true aspect ratios
+  // (escalation 16:10, history 2.4:1 after trimming only its empty lower canvas).
+  const expectedRatios = [1.6, 2.4]
+  const images = walkthrough.locator('img')
+  for (let i = 0; i < 2; i++) {
+    const img = images.nth(i)
+    await img.scrollIntoViewIfNeeded()
+    await expect
+      .poll(() => img.evaluate((el) => (el as HTMLImageElement).complete && (el as HTMLImageElement).naturalWidth))
+      .toBe(2880)
+    await expect(img).toHaveAttribute('src', /^\/images\/projects\/triage360\/triage360-(escalation|history)\.webp$/)
+    const ratio = await img.evaluate((el) => {
+      const r = el.getBoundingClientRect()
+      return r.width / r.height
+    })
+    expect(Math.abs(ratio - expectedRatios[i])).toBeLessThan(0.01)
+  }
+
+  // No fake window dots around the real interface screenshots.
+  await expect(walkthrough.locator('.rounded-full')).toHaveCount(0)
+
+  // The primary (escalation) screenshot is visually heavier than the supporting history screenshot.
+  const heights = await walkthrough.locator('img').evaluateAll((els) =>
+    els.map((el) => el.getBoundingClientRect().height),
+  )
+  expect(heights[0]).toBeGreaterThan(heights[1] * 1.3)
+
+  // Each caption sits directly under its own image.
+  const gaps = await walkthrough.locator('figure').evaluateAll((figs) =>
+    figs.map((fig) => {
+      const img = fig.querySelector('img')!.getBoundingClientRect()
+      const cap = fig.querySelector('figcaption')!.getBoundingClientRect()
+      return cap.top - img.bottom
+    }),
+  )
+  for (const gap of gaps) expect(gap).toBeLessThan(40)
+})
+
+test('Triage360 keeps the honest wording: rule-based escalation, keyword-overlap web retrieval, no production claims', async ({
+  page,
+}) => {
+  await page.goto('/projects/triage360')
+
+  const walkthrough = page.locator('section[aria-labelledby="walkthrough-heading"]')
+  await expect(walkthrough).not.toContainText(/AI (detected|identified|decided)/i)
+  await expect(walkthrough).not.toContainText(/AI confidence/i)
+  await expect(walkthrough).not.toContainText(/production|real customers/i)
+  await expect(walkthrough).not.toContainText(/TF-IDF/)
+  await expect(page.getByText('Individual project')).toHaveCount(0)
+
+  const architecture = page
+    .getByRole('heading', { name: 'Architecture' })
+    .locator('xpath=ancestor::div[1]')
+  await expect(architecture).toContainText('keyword-overlap')
+  await expect(architecture).not.toContainText('TF-IDF')
+  await expect(
+    page.getByText('The earlier Python CLI explored TF-IDF with semantic retrieval.', { exact: false }),
+  ).toBeVisible()
 })
 
 test('Horizon Desk event section: heading, copy, alt text, captions, order, and real loaded WebP images', async ({

@@ -34,6 +34,29 @@ export const projects: Project[] = [
         ],
       },
     ],
+    walkthrough: {
+      heading: "Product walkthrough",
+      intro:
+        "The web application running locally, using sample support tickets from the project repository.",
+      items: [
+        {
+          src: "/images/projects/triage360/triage360-escalation.webp",
+          alt: "Triage360 escalation result for a synthetic Visa fraud support ticket.",
+          width: 2880,
+          height: 1800,
+          caption:
+            "High-risk tickets are flagged for human review instead of receiving an automated reply.",
+        },
+        {
+          src: "/images/projects/triage360/triage360-history.webp",
+          alt: "Triage360 audit log showing five synthetic support tickets with domains, confidence and escalation status.",
+          width: 2880,
+          height: 1200,
+          caption:
+            "The audit log records each triaged ticket with its domain, classification confidence, escalation status and retrieved-source count, with search, filters and CSV export.",
+        },
+      ],
+    },
     architecture: {
       caption:
         "Each ticket is classified, checked for escalation risk, and matched to documentation before a response is generated or the ticket is routed to a human. In the web application, retrieval is keyword-overlap scoring over per-domain documentation. Results are persisted so the UI can show ticket history and stats.",

@@ -9,6 +9,7 @@ import { EventSection } from "@/components/case-study/event-section";
 import { EngineeringDecisions } from "@/components/case-study/engineering-decisions";
 import { noBreakTerms } from "@/components/case-study/no-break-terms";
 import { ProductPreview } from "@/components/case-study/product-preview";
+import { ProductWalkthrough } from "@/components/case-study/product-walkthrough";
 import { ProjectGlance } from "@/components/case-study/project-glance";
 import { ScopeLimits } from "@/components/case-study/scope-limits";
 import { projects } from "@/data/projects";
@@ -116,6 +117,8 @@ export default async function ProjectCaseStudyPage(
           <ContributionSection contribution={project.contribution} />
 
           <EventSection event={project.event} />
+
+          <ProductWalkthrough walkthrough={project.walkthrough} />
 
           {project.architecture ? (
             <div>

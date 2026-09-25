@@ -37,6 +37,12 @@ export type ProjectPreview = {
   caption: string;
 };
 
+export type ProjectWalkthrough = {
+  heading: string;
+  intro: string;
+  items: ProjectPreview[];
+};
+
 export type ProjectEvent = {
   title: string;
   subtitle: string;
@@ -88,6 +94,8 @@ export type Project = {
   // At most three are rendered.
   decisions?: EngineeringDecision[];
   preview?: ProjectPreview;
+  // Real interface screenshots, shown in their own section before Architecture.
+  walkthrough?: ProjectWalkthrough;
   limits?: string[];
   caseStudy: CaseStudySection[];
 };
