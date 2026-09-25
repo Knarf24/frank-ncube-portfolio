@@ -118,13 +118,14 @@ export const projects: Project[] = [
     title: "Streetwise",
     slug: "streetwise",
     summary:
-      "An applied AI product that ranks nearby merchants from selectable situational context and generates structured, time-limited offers.",
+      "A prototype that ranks nearby merchants from selectable situational context and generates structured, time-limited offers.",
     year: 2026,
     categories: ["AI / ML", "Product", "Web"],
     technologies: ["React", "TypeScript", "Supabase"],
     featured: true,
     featuredOrder: 3,
     status: "Completed",
+    statusLabel: "Archived prototype",
     githubUrl: "https://github.com/Knarf24/streetwise-offer-ai",
     caseStudy: [
       {
@@ -136,13 +137,13 @@ export const projects: Project[] = [
       {
         heading: "The system",
         body: [
-          "A web product that combines selectable scenario context with merchant ranking, AI-generated offers, Supabase persistence, and redemption flows.",
+          "A web prototype that combined selectable scenario context with client-side merchant ranking, AI-generated offers, Supabase persistence, and a redemption flow with a QR code.",
         ],
       },
     ],
     architecture: {
       caption:
-        "Merchants are ranked in the client from the selected scenario. The top match and the context go to a Supabase Edge Function that generates one structured offer, which the user can accept and redeem.",
+        "Merchants were ranked in the client. The top match and the selected context went to a Supabase Edge Function that generated one structured offer, which the user could accept and redeem.",
       steps: [
         "Scenario context",
         "Merchant ranking",
@@ -153,16 +154,19 @@ export const projects: Project[] = [
     decisions: [
       {
         title: "Structured AI output instead of free text",
-        body: "Offers are generated through structured function-calling, so every offer has the same fields (headline, description, discount, validity window, call to action, and reason) that the interface can render and store.",
+        body: "Offers were generated through structured function-calling, so every offer had the same fields (headline, description, discount, validity window, call to action, and reason) that the interface could render and store.",
       },
       {
-        title: "Server-side discount limit",
-        body: "The discount is clamped on the server to the merchant's configured maximum, whatever the model returns, so a generated offer cannot exceed the limit a merchant set.",
+        title: "Discount limits",
+        body: "The Edge Function clamped the model's discount before an offer was stored. A later review identified that the authoritative merchant limit should come from the database rather than the request, and I implemented and tested that stronger enforcement separately.",
       },
       {
-        title: "Row-Level Security in the database",
-        body: "Supabase Row-Level Security policies scope merchant data to its owner and offers to their user, so access rules are enforced in the database rather than only in the client.",
+        title: "Row-Level Security policies",
+        body: "Supabase Row-Level Security policies controlled who could create and change merchants, offers and redemptions. A later review tightened the read policies for offers and profiles as part of separate hardening work.",
       },
+    ],
+    limits: [
+      "Streetwise was built on a managed Lovable/Supabase backend that is no longer maintained. This case study describes the implementation preserved in the repository; there is no hosted demo.",
     ],
   },
   {

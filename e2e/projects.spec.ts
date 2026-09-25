@@ -118,6 +118,47 @@ test('Streetwise renders only its existing case-study sections', async ({
   ).toBeVisible()
 })
 
+test('Streetwise is presented as an archived prototype with no live demo, media, or overclaims', async ({
+  page,
+}) => {
+  await page.goto('/projects/streetwise')
+
+  await expect(page.locator('main')).toContainText('Archived prototype')
+  await expect(
+    page.getByRole('heading', { name: 'Discount limits' }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('heading', { name: 'Row-Level Security policies' }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('heading', { name: 'Server-side discount limit' }),
+  ).toHaveCount(0)
+  await expect(
+    page.getByRole('heading', { name: 'Row-Level Security in the database' }),
+  ).toHaveCount(0)
+  await expect(
+    page.getByRole('heading', { name: 'Scope and limits' }),
+  ).toBeVisible()
+
+  await expect(page.getByRole('link', { name: /live demo/i })).toHaveCount(0)
+  await expect(
+    page.locator('section[aria-labelledby="walkthrough-heading"]'),
+  ).toHaveCount(0)
+  await expect(page.locator('main img')).toHaveCount(0)
+
+  const text = (await page.locator('main').innerText()).toLowerCase()
+  for (const banned of [
+    'production-ready',
+    'currently deployed',
+    'actively hosted',
+    'fully isolated',
+    'live product',
+  ]) {
+    expect(text).not.toContain(banned)
+  }
+  expect(await page.locator('main a[href*="feature/"]').count()).toBe(0)
+})
+
 test('Streetwise GitHub link points to the verified public repository', async ({
   page,
 }) => {
