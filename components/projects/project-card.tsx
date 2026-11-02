@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { ImageCaption, ImageLabel } from "@/components/projects/image-caption";
 import { ProjectVisual } from "@/components/projects/project-visual";
 import { getProjectNumber } from "@/lib/project-utils";
 import type { Project } from "@/lib/portfolio-types";
@@ -36,17 +37,9 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
               className="object-cover"
               style={{ objectPosition: project.cardImage.objectPosition }}
             />
-          {project.cardImage.caption ? (
-            <span className="absolute left-3 top-3 hidden max-w-[calc(100%-1.5rem)] rounded-full bg-[color:rgba(12,11,9,0.82)] px-2.5 py-1 text-xs text-[var(--text)] sm:block">
-              {project.cardImage.caption}
-            </span>
-          ) : null}
+          <ImageLabel caption={project.cardImage.caption} />
           </div>
-          {project.cardImage.caption ? (
-            <p className="mt-2 text-xs leading-5 text-[var(--muted)] sm:hidden">
-              {project.cardImage.caption}
-            </p>
-          ) : null}
+          <ImageCaption caption={project.cardImage.caption} />
           </>
         ) : (
           <ProjectVisual slug={project.slug} />

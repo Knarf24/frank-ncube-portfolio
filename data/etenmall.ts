@@ -109,7 +109,7 @@ export const etenMall: Project = {
     "EtenMall is in development. A production environment exists and was activated through staged, approval-gated releases, but the platform has not launched commercially and is not serving paying merchants.",
     "Payments are not live. The default storefront payment provider is a stub, and the Paynow integration has only been exercised in Paynow’s test mode. Live payments are not authorized.",
     "No reporting dashboards, SMS notifications or customer accounts exist yet.",
-    "Screenshots are not shown. The platform has not been demonstrated with synthetic data in a safe public environment, so this page uses a labelled architectural illustration instead.",
+    "Screenshots are not shown here; this page uses a labelled architectural illustration instead.",
   ],
   roadmap: [
     "Basic sales and inventory reporting for retailers.",
