@@ -68,7 +68,7 @@ test('contact links point to the verified profiles', async ({ page }) => {
 
   await expect(
     contactSection.getByRole('link', { name: 'Email me' }),
-  ).toHaveAttribute('href', 'mailto:FNcube83@students.livingstone.edu')
+  ).toHaveAttribute('href', 'mailto:frankdumoluhle24@gmail.com')
 
   await expect(
     contactSection.getByRole('link', { name: /View resume/i }).first(),

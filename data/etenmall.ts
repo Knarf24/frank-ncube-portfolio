@@ -17,7 +17,7 @@ export const etenMall: Project = {
   featuredOrder: 4,
   status: "In development",
   glance: [
-    { label: "Role", value: "Founder and platform developer" },
+    { label: "Role", value: "Founder; requirements, architecture, and releases" },
     { label: "Market", value: "Zimbabwe and other African markets" },
     { label: "Payments", value: "Test mode only; not live" },
   ],
@@ -45,8 +45,8 @@ export const etenMall: Project = {
     {
       heading: "My role",
       body: [
-        "I am the founder and the platform developer. I set the product direction and write the specifications and architecture decisions, and I authorize each release step.",
-        "Much of the implementation was carried out with AI coding assistants working inside written governance: specifications, work packages and approval gates that I define and review. The repository’s agent operating model and commit history record this.",
+        "I am the founder of EtenMall. My work is defining the platform requirements, making the architectural decisions, directing development, reviewing the implementation results, and authorizing releases.",
+        "Development is assisted by AI coding tools working inside written governance: specifications, work packages and approval gates that I define and review. I did not personally implement every component. The repository’s agent operating model and commit history record this workflow.",
       ],
     },
     {

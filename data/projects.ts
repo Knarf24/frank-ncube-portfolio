@@ -44,6 +44,7 @@ export const projects: Project[] = [
       width: 2880,
       height: 1800,
       objectPosition: "50% 0%",
+      caption: "Local screenshot, synthetic data",
     },
     walkthrough: {
       heading: "Product walkthrough",

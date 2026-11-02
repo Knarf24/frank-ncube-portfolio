@@ -3,8 +3,8 @@ import type { Project } from "@/lib/portfolio-types";
 const shots = "/images/projects/shopaccess-ai";
 
 // Every statement below is taken from the public ShopAccess AI repository
-// (README.md, docs/judges.md, extension/README.md). The individual
-// contribution section is intentionally absent until the author confirms it.
+// (README.md, docs/judges.md, extension/README.md). The contribution wording
+// was confirmed by the author: a solo entry, AI-assisted development.
 export const shopAccessAi: Project = {
   title: "ShopAccess AI",
   slug: "shopaccess-ai",
@@ -46,9 +46,15 @@ export const shopAccessAi: Project = {
     width: 1280,
     height: 1000,
     objectPosition: "50% 0%",
+    caption: "Local screenshot, synthetic data",
+  },
+  contribution: {
+    mode: "individual",
+    summary:
+      "ShopAccess AI was my solo entry in the PayPal AI Hackathon. I led the project and made the product and technical decisions. It was built through AI-assisted software development under my direction: I directed implementation with Claude Code and used Codex for independent code review and verification. I did not manually write every line of code.",
   },
   glance: [
-    { label: "Event", value: "PayPal AI Hackathon (submitted)" },
+    { label: "Event", value: "PayPal AI Hackathon (submitted, solo entry)" },
     { label: "Languages", value: "English and Spanish" },
     { label: "Payments", value: "Simulated; optional PayPal Sandbox" },
   ],

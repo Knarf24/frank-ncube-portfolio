@@ -46,9 +46,14 @@ describe("project ordering helpers", () => {
 });
 
 describe("case-study data accuracy guards", () => {
-  it("never labels a project as individual work until that is confirmed", () => {
+  it("labels a project as individual work only where the author confirmed it", () => {
+    // Confirmed solo entry: ShopAccess AI (author confirmation, Nov 2026).
+    const confirmedIndividual = ["shopaccess-ai"];
+
     for (const project of projects) {
-      expect(project.contribution?.mode).not.toBe("individual");
+      if (project.contribution?.mode === "individual") {
+        expect(confirmedIndividual).toContain(project.slug);
+      }
     }
   });
 
@@ -265,11 +270,15 @@ describe("ShopAccess AI case study", () => {
     expect(shop?.liveUrl).toBeUndefined();
   });
 
-  it("makes no unverified claims about awards, production payments, or authorship", () => {
+  it("makes no unverified claims about awards or production payments, and states AI-assisted authorship", () => {
     expect(text).not.toMatch(/\b(award|prize|winner|won|placed|finalist)\b/i);
     expect(text).not.toMatch(/passphrase["\s:]+[A-Za-z0-9-]{8,}/);
     expect(text).toMatch(/Production payments are not implemented/);
-    expect(shop?.contribution).toBeUndefined();
-    expect(shop?.glance?.some((item) => /role|team/i.test(item.label))).toBe(false);
+    expect(shop?.contribution?.mode).toBe("individual");
+    expect(shop?.contribution?.summary).toMatch(/solo entry/);
+    expect(shop?.contribution?.summary).toMatch(/Claude Code/);
+    expect(shop?.contribution?.summary).toMatch(/Codex/);
+    expect(shop?.contribution?.summary).toMatch(/not manually write every line/);
+    expect(shop?.contribution?.team).toBeUndefined();
   });
 });

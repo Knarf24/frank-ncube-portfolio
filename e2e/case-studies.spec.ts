@@ -49,12 +49,20 @@ for (const slug of slugs) {
     )
   })
 
-  test(`/projects/${slug} never claims to be an individual project`, async ({
+  test(`/projects/${slug} claims individual authorship only where the author confirmed it`, async ({
     page,
   }) => {
     await page.goto(`/projects/${slug}`)
 
-    await expect(page.getByText('Individual project')).toHaveCount(0)
+    if (slug === 'shopaccess-ai') {
+      // Confirmed solo entry, described as AI-assisted development.
+      await expect(page.getByText('Individual project')).toHaveCount(1)
+      await expect(page.getByText(/Claude Code/).first()).toBeVisible()
+      await expect(page.getByText(/Codex/).first()).toBeVisible()
+      await expect(page.getByText(/did not manually write every line/)).toBeVisible()
+    } else {
+      await expect(page.getByText('Individual project')).toHaveCount(0)
+    }
   })
 }
 
@@ -164,7 +172,7 @@ test('EtenMall is labelled in development, links no private repo, and covers the
   await page.goto('/projects/etenmall')
 
   const glance = page.locator('dl[aria-label$="at a glance"]')
-  await expect(glance).toContainText('Founder and platform developer')
+  await expect(glance).toContainText('Founder; requirements, architecture, and releases')
   await expect(glance).toContainText('In development')
   await expect(glance).toContainText('Test mode only; not live')
   await expect(page.locator('main a[href*="github.com"]')).toHaveCount(0)

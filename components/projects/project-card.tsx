@@ -36,7 +36,7 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
               style={{ objectPosition: project.cardImage.objectPosition }}
             />
           {project.cardImage.caption ? (
-            <span className="absolute bottom-3 left-3 max-w-[calc(100%-1.5rem)] rounded-full bg-[color:rgba(12,11,9,0.82)] px-3 py-1.5 text-xs text-[var(--text)]">
+            <span className="absolute left-3 top-3 max-w-[calc(100%-1.5rem)] rounded-full bg-[color:rgba(12,11,9,0.82)] px-2.5 py-1 text-xs text-[var(--text)]">
               {project.cardImage.caption}
             </span>
           ) : null}
