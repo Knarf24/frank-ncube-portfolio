@@ -11,6 +11,7 @@ import { noBreakTerms } from "@/components/case-study/no-break-terms";
 import { ProductPreview } from "@/components/case-study/product-preview";
 import { ProductWalkthrough } from "@/components/case-study/product-walkthrough";
 import { ProjectGlance } from "@/components/case-study/project-glance";
+import { VideoLink } from "@/components/case-study/video-link";
 import { ScopeLimits } from "@/components/case-study/scope-limits";
 import { projects } from "@/data/projects";
 import { pageMetadata } from "@/lib/page-metadata";
@@ -64,7 +65,7 @@ export default async function ProjectCaseStudyPage(
           <span aria-hidden="true" className="mr-1">←</span> Back to projects
         </Link>
 
-        <h1 className="mt-8 text-4xl font-medium tracking-tight text-[var(--text)] md:text-5xl">
+        <h1 className="mt-8 font-serif text-5xl font-normal tracking-tight text-[var(--text)] md:text-7xl">
           {project.title}
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">
@@ -96,6 +97,17 @@ export default async function ProjectCaseStudyPage(
               {project.liveKind === "demo" ? "Live demo" : "Live project"} <span aria-hidden="true" className="ml-1">↗</span>
             </a>
           ) : null}
+          {project.gatedDemoUrl ? (
+            <a
+              href={project.gatedDemoUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Hosted demo (passphrase required) for ${project.title} (opens in a new tab)`}
+              className={linkClassName}
+            >
+              Hosted demo (passphrase required) <span aria-hidden="true" className="ml-1">↗</span>
+            </a>
+          ) : null}
           {project.devpostUrl ? (
             <a
               href={project.devpostUrl}
@@ -108,6 +120,8 @@ export default async function ProjectCaseStudyPage(
             </a>
           ) : null}
         </div>
+
+        <VideoLink video={project.video} />
 
         <ProductPreview preview={project.preview} />
 

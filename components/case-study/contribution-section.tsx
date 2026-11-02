@@ -24,7 +24,7 @@ export function ContributionSection({
         {contribution.summary}
       </p>
 
-      <p className="mt-6 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent)]">
+      <p className="mt-6 font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">
         {isTeam ? "Team project" : "Individual project"}
       </p>
 

@@ -12,7 +12,7 @@ export function SectionHeading({
   return (
     <div className="max-w-3xl">
       <p className="text-sm text-[var(--accent)]">{eyebrow}</p>
-      <h2 className="mt-2 text-3xl font-medium tracking-tight md:text-4xl">
+      <h2 className="mt-2 font-serif text-4xl font-normal tracking-tight md:text-5xl">
         {title}
       </h2>
       {description ? (

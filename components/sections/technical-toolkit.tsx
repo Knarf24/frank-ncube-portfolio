@@ -99,7 +99,7 @@ export function TechnicalToolkit() {
 
         {additionalSkills.length > 0 ? (
           <div className="mt-8 sm:mt-10">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
               Additional tools &amp; systems
             </p>
             <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--muted)] sm:text-base sm:leading-7">
@@ -108,8 +108,8 @@ export function TechnicalToolkit() {
           </div>
         ) : null}
 
-        <div className="mt-6 rounded-2xl border border-[color:rgba(116,247,154,0.35)] bg-[var(--accent-soft)] px-5 py-5 sm:px-6">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent)]">
+        <div className="mt-6 rounded-2xl border border-[color:rgba(120,224,156,0.35)] bg-[var(--accent-soft)] px-5 py-5 sm:px-6">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">
             Currently deepening
           </p>
           <p className="mt-2 text-sm text-[var(--text)] sm:text-base">

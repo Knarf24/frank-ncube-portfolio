@@ -25,7 +25,7 @@ export function EngineeringDecisions({
       <ol className="mt-5 divide-y divide-[var(--border)] border-t border-[var(--border)]">
         {items.map((decision, index) => (
           <li key={decision.title} className="py-5">
-            <p className="font-mono text-[10px] text-[var(--accent)]">
+            <p className="font-mono text-xs text-[var(--accent)]">
               {String(index + 1).padStart(2, "0")}
             </p>
             <h3 className="mt-2 text-base font-medium text-[var(--text)]">

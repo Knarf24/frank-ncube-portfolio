@@ -176,8 +176,8 @@ test('homepage lists projects in the recruiter-facing order', async ({
   await page.goto('/')
 
   await expect(page.locator('section#work h3')).toHaveText([
+    'ShopAccess AI',
     'Triage360',
-    'Streetwise',
     'Horizon Desk',
     'Commerce platform',
   ])

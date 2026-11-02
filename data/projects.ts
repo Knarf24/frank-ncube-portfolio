@@ -1,6 +1,8 @@
 import type { Project } from "@/lib/portfolio-types";
+import { shopAccessAi } from "@/data/shopaccess-ai";
 
 export const projects: Project[] = [
+  shopAccessAi,
   {
     title: "Triage360",
     slug: "triage360",
@@ -18,7 +20,7 @@ export const projects: Project[] = [
       "TF-IDF",
     ],
     featured: true,
-    featuredOrder: 1,
+    featuredOrder: 2,
     status: "Completed",
     githubUrl: "https://github.com/Knarf24/support-triangle-agent",
     caseStudy: [
@@ -35,6 +37,13 @@ export const projects: Project[] = [
         ],
       },
     ],
+    cardImage: {
+      src: "/images/projects/triage360/triage360-escalation.webp",
+      alt: "Triage360 escalation result for a synthetic Visa fraud support ticket.",
+      width: 2880,
+      height: 1800,
+      objectPosition: "50% 0%",
+    },
     walkthrough: {
       heading: "Product walkthrough",
       intro:
@@ -123,8 +132,8 @@ export const projects: Project[] = [
     year: 2026,
     categories: ["AI / ML", "Product", "Web"],
     technologies: ["React", "TypeScript", "Supabase"],
-    featured: true,
-    featuredOrder: 2,
+    featured: false,
+    featuredOrder: 5,
     status: "Completed",
     statusLabel: "Archived prototype",
     githubUrl: "https://github.com/Knarf24/streetwise-offer-ai",
@@ -194,6 +203,13 @@ export const projects: Project[] = [
     //   liveKind: "demo",
     devpostUrl: "https://devpost.com/software/nexa-j9g8ys",
     statusLabel: "Completed prototype",
+    cardImage: {
+      src: "/images/projects/horizon-desk/horizon-desk-team.webp",
+      alt: "The three Horizon Desk team members standing with the event mascot in front of a large window.",
+      width: 1080,
+      height: 1434,
+      objectPosition: "50% 22%",
+    },
     glance: [
       { label: "Role", value: "Frontend + supporting backend" },
       { label: "Team", value: "3 developers" },

@@ -59,7 +59,7 @@ export function AboutExperience() {
                 />
 
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                  <span className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--accent)]">
+                  <span className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-2.5 py-0.5 font-mono text-xs uppercase tracking-[0.16em] text-[var(--accent)]">
                     {kindLabel[item.kind]}
                   </span>
                   <span className="text-xs text-[var(--muted)]">{item.period}</span>

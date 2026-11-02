@@ -21,7 +21,7 @@ export default function Image() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          backgroundColor: "#090b0a",
+          backgroundColor: "#0d0c0a",
           padding: "96px",
         }}
       >
@@ -32,7 +32,7 @@ export default function Image() {
               width: 18,
               height: 18,
               borderRadius: 5,
-              backgroundColor: "#74f79a",
+              backgroundColor: "#7ee3a0",
               marginRight: 16,
             }}
           />
@@ -40,7 +40,7 @@ export default function Image() {
             style={{
               display: "flex",
               fontSize: 28,
-              color: "#74f79a",
+              color: "#7ee3a0",
               letterSpacing: 6,
             }}
           >

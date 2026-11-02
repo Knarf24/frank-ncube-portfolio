@@ -62,6 +62,7 @@ test('sitemap includes every current public content route', async ({
     '/',
     '/projects',
     '/resume',
+    '/projects/shopaccess-ai',
     '/projects/triage360',
     '/projects/commerce-platform',
     '/projects/streetwise',
@@ -105,6 +106,7 @@ test('homepage exposes an icon link to the generated icon route', async ({
 const pageMeta = [
   { path: '/', title: 'Frank Ncube | Software Engineering, AI & Product Development' },
   { path: '/projects', title: 'Projects | Frank Ncube' },
+  { path: '/projects/shopaccess-ai', title: 'ShopAccess AI | Frank Ncube' },
   { path: '/projects/triage360', title: 'Triage360 | Frank Ncube' },
   { path: '/projects/streetwise', title: 'Streetwise | Frank Ncube' },
   { path: '/projects/horizon-desk', title: 'Horizon Desk | Frank Ncube' },

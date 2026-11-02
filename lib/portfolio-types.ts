@@ -43,6 +43,22 @@ export type ProjectWalkthrough = {
   items: ProjectPreview[];
 };
 
+export type ProjectCardImage = {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  // CSS object-position for the cropped bento frame.
+  objectPosition?: string;
+};
+
+export type ProjectVideo = {
+  url: string;
+  label: string;
+  // Local screenshot used as the poster; no third-party image is loaded.
+  poster: ProjectPreview;
+};
+
 export type ProjectEvent = {
   title: string;
   subtitle: string;
@@ -81,6 +97,12 @@ export type Project = {
   liveUrl?: string;
   liveKind?: "project" | "demo";
   devpostUrl?: string;
+  // Passphrase-protected hosted demo. Linked with an explicit "passphrase
+  // required" label and never presented as an open live demo.
+  gatedDemoUrl?: string;
+  video?: ProjectVideo;
+  // Real image shown on the homepage bento and archive card.
+  cardImage?: ProjectCardImage;
   // Extra verified facts for "Project at a glance" (Role, Team, Event, ...).
   glance?: GlanceItem[];
   // Overrides the displayed status, e.g. "Completed prototype".

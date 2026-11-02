@@ -13,29 +13,30 @@ describe("project ordering helpers", () => {
     const slugs = getOrderedProjects().map((project) => project.slug);
 
     expect(slugs).toEqual([
+      "shopaccess-ai",
       "triage360",
-      "streetwise",
       "horizon-desk",
       "commerce-platform",
+      "streetwise",
     ]);
     expect(getOrderedProjects().map((project) => project.slug)).toEqual(slugs);
   });
 
   it("returns previous and next neighbours", () => {
-    expect(getAdjacentProjects("streetwise")).toMatchObject({
-      previous: { slug: "triage360" },
+    expect(getAdjacentProjects("triage360")).toMatchObject({
+      previous: { slug: "shopaccess-ai" },
       next: { slug: "horizon-desk" },
     });
   });
 
   it("wraps around at both ends so every case study has both links", () => {
-    expect(getAdjacentProjects("triage360")).toMatchObject({
-      previous: { slug: "commerce-platform" },
-      next: { slug: "streetwise" },
-    });
-    expect(getAdjacentProjects("commerce-platform")).toMatchObject({
-      previous: { slug: "horizon-desk" },
+    expect(getAdjacentProjects("shopaccess-ai")).toMatchObject({
+      previous: { slug: "streetwise" },
       next: { slug: "triage360" },
+    });
+    expect(getAdjacentProjects("streetwise")).toMatchObject({
+      previous: { slug: "commerce-platform" },
+      next: { slug: "shopaccess-ai" },
     });
   });
 
@@ -218,8 +219,49 @@ describe("Triage360 product walkthrough", () => {
 
   it("only Triage360 has a walkthrough, and no project uses the single header preview", () => {
     for (const project of projects) {
-      expect(Boolean(project.walkthrough)).toBe(project.slug === "triage360");
+      expect(Boolean(project.walkthrough)).toBe(
+        project.slug === "triage360" || project.slug === "shopaccess-ai",
+      );
       expect(project.preview).toBeUndefined();
     }
+  });
+});
+
+describe("ShopAccess AI case study", () => {
+  const shop = getProjectBySlug("shopaccess-ai");
+  const text = JSON.stringify(shop);
+
+  it("is featured first and keeps Streetwise out of the homepage set", () => {
+    expect(shop?.featuredOrder).toBe(1);
+    expect(getProjectBySlug("streetwise")?.featured).toBe(false);
+    expect(getProjectBySlug("streetwise")?.statusLabel).toBe("Archived prototype");
+  });
+
+  it("uses only screenshots and video poster files that exist", () => {
+    const files = [
+      shop!.cardImage!.src,
+      shop!.video!.poster.src,
+      ...shop!.walkthrough!.items.map((item) => item.src),
+    ];
+
+    for (const src of files) {
+      expect(src).toMatch(/^\/images\/projects\/shopaccess-ai\/.+\.webp$/);
+      expect(existsSync(join(process.cwd(), "public", src))).toBe(true);
+      expect(statSync(join(process.cwd(), "public", src)).size).toBeLessThan(150 * 1024);
+    }
+  });
+
+  it("links the video and labels the hosted demo as passphrase protected", () => {
+    expect(shop?.video?.url).toBe("https://youtu.be/p4ItKN35qSY");
+    expect(shop?.gatedDemoUrl).toBe("https://shopaccess-ai.onrender.com");
+    expect(shop?.liveUrl).toBeUndefined();
+  });
+
+  it("makes no unverified claims about awards, production payments, or authorship", () => {
+    expect(text).not.toMatch(/\b(award|prize|winner|won|placed|finalist)\b/i);
+    expect(text).not.toMatch(/passphrase["\s:]+[A-Za-z0-9-]{8,}/);
+    expect(text).toMatch(/Production payments are not implemented/);
+    expect(shop?.contribution).toBeUndefined();
+    expect(shop?.glance?.some((item) => /role|team/i.test(item.label))).toBe(false);
   });
 });

@@ -213,3 +213,45 @@ test('an unknown project slug renders the not-found page', async ({
     page.getByRole('heading', { name: 'Problem' }),
   ).not.toBeVisible()
 })
+
+test('homepage leads with ShopAccess AI and moves Streetwise to the archive', async ({
+  page,
+}) => {
+  await page.goto('/')
+
+  const work = page.locator('#work')
+  const titles = await work.getByRole('heading', { level: 3 }).allTextContents()
+
+  expect(titles).toEqual([
+    'ShopAccess AI',
+    'Triage360',
+    'Horizon Desk',
+    'Commerce platform',
+  ])
+
+  await page.goto('/projects')
+  await expect(page.getByRole('heading', { name: 'Streetwise' })).toBeVisible()
+  await expect(page.getByText('Archived prototype').first()).toBeVisible()
+})
+
+test('ShopAccess AI case study links the video and labels the gated demo', async ({
+  page,
+}) => {
+  await page.goto('/projects/shopaccess-ai')
+
+  await expect(
+    page.getByRole('heading', { level: 1, name: 'ShopAccess AI' }),
+  ).toBeVisible()
+  await expect(
+    page.getByRole('link', { name: /Watch the demo video on YouTube/i }),
+  ).toHaveAttribute('href', 'https://youtu.be/p4ItKN35qSY')
+  await expect(
+    page.getByRole('link', { name: /Hosted demo \(passphrase required\)/i }).first(),
+  ).toHaveAttribute('href', 'https://shopaccess-ai.onrender.com')
+  await expect(page.getByRole('link', { name: /View ShopAccess AI on GitHub/i }).first()).toHaveAttribute(
+    'href',
+    'https://github.com/Knarf24/shopaccess-ai',
+  )
+  await expect(page.locator('iframe')).toHaveCount(0)
+  await expect(page.getByText(/Production payments are not implemented/).first()).toBeVisible()
+})

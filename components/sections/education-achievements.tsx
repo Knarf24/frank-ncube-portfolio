@@ -11,7 +11,7 @@ export function EducationAchievements() {
 
         <div className="mt-10 grid gap-6 sm:mt-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-8">
           <div className="rounded-[1.75rem] border border-[var(--border)] bg-[var(--surface)] p-6 sm:p-8">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent)]">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">
               {education.graduation}
             </p>
             <div className="mt-3 flex items-center gap-3">

@@ -81,13 +81,13 @@ test('previous/next navigation goes to deterministic neighbours', async ({
 
   await expect(
     page.locator('main footer').getByRole('link', { name: /Next project/ }),
-  ).toHaveAttribute('href', '/projects/horizon-desk')
+  ).toHaveAttribute('href', '/projects/shopaccess-ai')
   await expect(
     page.locator('main footer').getByRole('link', { name: /Previous project/ }),
-  ).toHaveAttribute('href', '/projects/triage360')
+  ).toHaveAttribute('href', '/projects/commerce-platform')
 
   await page.locator('main footer').getByRole('link', { name: /Next project/ }).click()
-  await expect(page).toHaveURL(/\/projects\/horizon-desk$/)
+  await expect(page).toHaveURL(/\/projects\/shopaccess-ai$/)
 })
 
 test('the footer can be reached and activated with the keyboard', async ({
@@ -107,7 +107,7 @@ test('the footer can be reached and activated with the keyboard', async ({
   expect(focused).toBe(true)
 
   await page.keyboard.press('Enter')
-  await expect(page).toHaveURL(/\/projects\/horizon-desk$/)
+  await expect(page).toHaveURL(/\/projects\/shopaccess-ai$/)
 })
 
 test('Horizon Desk lists all three teammates and no GitHub or live-demo link', async ({

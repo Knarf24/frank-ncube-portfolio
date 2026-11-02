@@ -198,7 +198,7 @@ describe("CaseStudyFooter", () => {
     ).toHaveAttribute("href", "/projects/horizon-desk");
     expect(screen.getByRole("link", { name: /Next project/ })).toHaveAttribute(
       "href",
-      "/projects/triage360",
+      "/projects/streetwise",
     );
     expect(screen.getByRole("link", { name: "All projects" })).toHaveAttribute(
       "href",

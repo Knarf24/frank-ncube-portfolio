@@ -46,7 +46,7 @@ export function ProjectGlance({ project }: ProjectGlanceProps) {
                 : "md:max-w-[15rem] md:flex-none"
             }`}
           >
-            <dt className="pt-0.5 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
+            <dt className="pt-0.5 font-mono text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
               {item.label}
             </dt>
             <dd className="text-sm leading-6 text-[var(--text)] md:mt-1.5">

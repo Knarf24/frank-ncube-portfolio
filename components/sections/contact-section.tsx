@@ -93,9 +93,9 @@ export function ContactSection() {
               href={card.href}
               target={card.href.startsWith("/") ? undefined : "_blank"}
               rel={card.href.startsWith("/") ? undefined : "noreferrer"}
-              className="rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)] px-5 py-4 transition-[border-color,transform] hover:-translate-y-0.5 hover:border-[color:rgba(116,247,154,0.38)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--accent)]"
+              className="rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)] px-5 py-4 transition-[border-color,transform] hover:-translate-y-0.5 hover:border-[color:rgba(120,224,156,0.38)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--accent)]"
             >
-              <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
+              <p className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
                 {card.label}
               </p>
               <p className="mt-2 text-sm font-medium text-[var(--text)]">
