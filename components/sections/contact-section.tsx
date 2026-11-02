@@ -6,29 +6,6 @@ const primaryActionClassName =
 const secondaryActionClassName =
   "inline-flex min-h-11 items-center justify-center rounded-xl border border-[var(--border)] bg-transparent px-5 py-3 text-sm font-medium text-[var(--text)] transition-[border-color,background-color,transform] hover:-translate-y-0.5 hover:border-[var(--accent)] hover:bg-[var(--accent-soft)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--accent)]";
 
-const cards = [
-  {
-    label: "GitHub",
-    value: "@Knarf24",
-    href: siteConfig.github,
-  },
-  {
-    label: "LinkedIn",
-    value: "Frank Ncube",
-    href: siteConfig.linkedin,
-  },
-  {
-    label: "Devpost",
-    value: "@Knarf24",
-    href: siteConfig.devpost,
-  },
-  {
-    label: "Resume",
-    value: "View resume",
-    href: "/resume",
-  },
-] as const;
-
 export function ContactSection() {
   return (
     <section
@@ -84,25 +61,6 @@ export function ContactSection() {
           <a href="/resume" className={secondaryActionClassName}>
             View resume
           </a>
-        </div>
-
-        <div className="mt-12 grid gap-3 sm:mt-16 sm:grid-cols-2 lg:grid-cols-4">
-          {cards.map((card) => (
-            <a
-              key={card.label}
-              href={card.href}
-              target={card.href.startsWith("/") ? undefined : "_blank"}
-              rel={card.href.startsWith("/") ? undefined : "noreferrer"}
-              className="rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)] px-5 py-4 transition-[border-color,transform] hover:-translate-y-0.5 hover:border-[color:rgba(120,224,156,0.38)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--accent)]"
-            >
-              <p className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
-                {card.label}
-              </p>
-              <p className="mt-2 text-sm font-medium text-[var(--text)]">
-                {card.value}
-              </p>
-            </a>
-          ))}
         </div>
       </div>
     </section>
