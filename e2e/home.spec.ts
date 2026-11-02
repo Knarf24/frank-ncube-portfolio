@@ -48,22 +48,21 @@ test('contact links point to the verified profiles', async ({ page }) => {
   const contactSection = page.locator('#contact')
   await expect(contactSection).toBeAttached()
 
-  // The compact GitHub/LinkedIn/Resume cards repeat the same labels as the
-  // primary actions above them, so multiple matches are expected inside
-  // this section — both point to the identical verified href.
+  // Each action appears exactly once, so these locators are strict: a
+  // duplicate link would make them fail.
   await expect(
-    contactSection.getByRole('link', { name: /LinkedIn/i }).first(),
+    contactSection.getByRole('link', { name: /LinkedIn/i }),
   ).toHaveAttribute(
     'href',
     'https://www.linkedin.com/in/frank-ncube-417a52338',
   )
 
   await expect(
-    contactSection.getByRole('link', { name: /GitHub/i }).first(),
+    contactSection.getByRole('link', { name: /GitHub/i }),
   ).toHaveAttribute('href', 'https://github.com/Knarf24')
 
   await expect(
-    contactSection.getByRole('link', { name: /Devpost/i }).first(),
+    contactSection.getByRole('link', { name: /Devpost/i }),
   ).toHaveAttribute('href', 'https://devpost.com/Knarf24')
 
   await expect(
@@ -71,7 +70,7 @@ test('contact links point to the verified profiles', async ({ page }) => {
   ).toHaveAttribute('href', 'mailto:frankdumoluhle24@gmail.com')
 
   await expect(
-    contactSection.getByRole('link', { name: /View resume/i }).first(),
+    contactSection.getByRole('link', { name: /View resume/i }),
   ).toHaveAttribute('href', '/resume')
 })
 
