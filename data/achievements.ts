@@ -5,7 +5,7 @@ export const achievements: Achievement[] = [
   {
     title: "Advanced AI & MLOps Bootcamp",
     issuer: "Datafrik",
-    status: "In progress",
+    status: "In progress (11-week program)",
   },
   {
     title: "International Presidential Scholar",

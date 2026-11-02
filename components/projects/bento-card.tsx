@@ -43,6 +43,7 @@ export function BentoCard({
           <ProjectVisual slug={project.slug} />
         </div>
       ) : image ? (
+        <>
         <div
           className={`relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)] ${frames[variant]}`}
         >
@@ -60,11 +61,17 @@ export function BentoCard({
             style={{ objectPosition: image.objectPosition }}
           />
           {image.caption ? (
-            <span className="absolute left-3 top-3 max-w-[calc(100%-1.5rem)] rounded-full bg-[color:rgba(12,11,9,0.82)] px-2.5 py-1 text-xs text-[var(--text)]">
+            <span className="absolute left-3 top-3 hidden max-w-[calc(100%-1.5rem)] rounded-full bg-[color:rgba(12,11,9,0.82)] px-2.5 py-1 text-xs text-[var(--text)] sm:block">
               {image.caption}
             </span>
           ) : null}
         </div>
+        {image.caption ? (
+          <p className="mt-2 text-xs leading-5 text-[var(--muted)] sm:hidden">
+            {image.caption}
+          </p>
+        ) : null}
+        </>
       ) : (
         <ProjectVisual slug={project.slug} />
       )}

@@ -26,6 +26,7 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
     >
       <div className={isFlagship ? "order-2 mt-4 md:order-1 md:mt-0" : ""}>
         {project.cardImage ? (
+          <>
           <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)]">
             <Image
               src={project.cardImage.src}
@@ -36,11 +37,17 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
               style={{ objectPosition: project.cardImage.objectPosition }}
             />
           {project.cardImage.caption ? (
-            <span className="absolute left-3 top-3 max-w-[calc(100%-1.5rem)] rounded-full bg-[color:rgba(12,11,9,0.82)] px-2.5 py-1 text-xs text-[var(--text)]">
+            <span className="absolute left-3 top-3 hidden max-w-[calc(100%-1.5rem)] rounded-full bg-[color:rgba(12,11,9,0.82)] px-2.5 py-1 text-xs text-[var(--text)] sm:block">
               {project.cardImage.caption}
             </span>
           ) : null}
           </div>
+          {project.cardImage.caption ? (
+            <p className="mt-2 text-xs leading-5 text-[var(--muted)] sm:hidden">
+              {project.cardImage.caption}
+            </p>
+          ) : null}
+          </>
         ) : (
           <ProjectVisual slug={project.slug} />
         )}
