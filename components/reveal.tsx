@@ -15,21 +15,23 @@ export function Reveal({ children }: { children: ReactNode }) {
     getServerHydrationSnapshot,
   );
   // Failsafe: if the in-view observer never fires (print, full-page capture,
-  // an unusual scroller), show the content anyway after a short delay.
+  // an unusual scroller), show the content anyway after a short delay. It
+  // only changes what the wrapper animates to. It must never change the
+  // wrapper's `key`, because that would remount the children and drop
+  // keyboard focus.
   const [forceShow, setForceShow] = useState(false);
   useEffect(() => {
     const timer = window.setTimeout(() => setForceShow(true), 2500);
     return () => window.clearTimeout(timer);
   }, []);
-  const shouldReduceMotion = !hasHydrated || Boolean(reduceMotion) || forceShow;
+  const isStatic = !hasHydrated || Boolean(reduceMotion);
 
   return (
     <motion.div
-      key={shouldReduceMotion ? "static" : "motion"}
-      initial={shouldReduceMotion ? false : { opacity: 0, y: 18 }}
-      whileInView={
-        shouldReduceMotion ? undefined : { opacity: 1, y: 0 }
-      }
+      key={isStatic ? "static" : "motion"}
+      initial={isStatic ? false : { opacity: 0, y: 18 }}
+      whileInView={isStatic ? undefined : { opacity: 1, y: 0 }}
+      animate={forceShow && !isStatic ? { opacity: 1, y: 0 } : undefined}
       viewport={{ once: true, amount: 0.18 }}
       transition={{ duration: 0.45, ease: "easeOut" }}
     >
