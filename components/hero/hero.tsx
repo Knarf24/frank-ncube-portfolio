@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { HeroPortrait } from "@/components/hero/hero-portrait";
 import { RotatingRole } from "@/components/hero/rotating-role";
 import { siteConfig } from "@/lib/site-config";
@@ -16,7 +17,7 @@ const secondaryLinkClassName =
 
 export function Hero() {
   return (
-    <section className="relative overflow-hidden px-5 pb-12 pt-8 sm:pb-20 sm:pt-16 md:px-8 md:pb-28 md:pt-20 lg:min-h-[calc(100svh-76px)] lg:py-20">
+    <section className="relative overflow-hidden px-5 pb-10 pt-8 sm:pb-14 sm:pt-14 md:px-8 md:pb-16 md:pt-16 lg:py-16">
       <div className="mx-auto grid w-full max-w-[var(--max-width)] items-center gap-11 sm:gap-14 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] lg:gap-8 xl:gap-14">
         <div className="relative z-10 max-w-3xl">
           <p className="text-sm font-medium tracking-wide text-[var(--muted)]">
@@ -44,6 +45,15 @@ export function Hero() {
               Resume
             </a>
           </div>
+
+          <Link
+            href="/projects/shopaccess-ai"
+            className="mt-8 hidden min-h-11 sm:inline-flex items-center gap-3 rounded-full border border-[var(--border)] bg-[var(--surface)] py-2 pl-4 pr-5 text-sm text-[var(--muted)] transition-colors hover:border-[var(--accent)] hover:text-[var(--text)]"
+          >
+            <span className="h-2 w-2 rounded-full bg-[var(--accent)]" aria-hidden="true" />
+            Latest: ShopAccess AI, a PayPal AI Hackathon prototype
+            <span aria-hidden="true">→</span>
+          </Link>
 
           <ul className="mt-6 flex flex-wrap gap-x-5 gap-y-1 border-t border-[var(--border)] pt-4 text-sm text-[var(--muted)] sm:mt-9 sm:gap-0 sm:pt-5">
             {profileItems.map((item) => (

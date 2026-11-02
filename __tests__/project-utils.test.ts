@@ -10,10 +10,10 @@ import {
 describe("project utilities", () => {
   it("returns featured projects in the approved order", () => {
     expect(getFeaturedProjects().map((project) => project.slug)).toEqual([
+      "shopaccess-ai",
       "triage360",
-      "streetwise",
       "horizon-desk",
-      "commerce-platform",
+      "etenmall",
     ]);
   });
 
@@ -23,7 +23,7 @@ describe("project utilities", () => {
 
   it("numbers projects by featured order, falling back to archive position", () => {
     const horizon = getProjectBySlug("horizon-desk");
-    const commerce = getProjectBySlug("commerce-platform");
+    const commerce = getProjectBySlug("etenmall");
 
     expect(horizon && getProjectNumber(horizon)).toBe(3);
     expect(commerce && getProjectNumber(commerce)).toBe(4);
@@ -36,7 +36,7 @@ describe("project utilities", () => {
   it("filters projects by category", () => {
     expect(
       filterProjects(projects, "AI / ML").map((project) => project.slug),
-    ).toEqual(["triage360", "streetwise", "horizon-desk"]);
+    ).toEqual(["shopaccess-ai", "triage360", "streetwise", "horizon-desk"]);
   });
 
   it("returns every project when the All category is selected", () => {

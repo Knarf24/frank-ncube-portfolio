@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test'
 
-const slugs = ['triage360', 'streetwise', 'horizon-desk', 'commerce-platform']
+const slugs = ['shopaccess-ai', 'triage360', 'streetwise', 'horizon-desk', 'etenmall']
 const widths = [320, 375, 768, 1024, 1280, 1440]
 
 async function hasHorizontalOverflow(page: Page) {
@@ -49,12 +49,20 @@ for (const slug of slugs) {
     )
   })
 
-  test(`/projects/${slug} never claims to be an individual project`, async ({
+  test(`/projects/${slug} claims individual authorship only where the author confirmed it`, async ({
     page,
   }) => {
     await page.goto(`/projects/${slug}`)
 
-    await expect(page.getByText('Individual project')).toHaveCount(0)
+    if (slug === 'shopaccess-ai') {
+      // Confirmed solo entry, described as AI-assisted development.
+      await expect(page.getByText('Individual project')).toHaveCount(1)
+      await expect(page.getByText(/Claude Code/).first()).toBeVisible()
+      await expect(page.getByText(/Codex/).first()).toBeVisible()
+      await expect(page.getByText(/did not manually write every line/)).toBeVisible()
+    } else {
+      await expect(page.getByText('Individual project')).toHaveCount(0)
+    }
   })
 }
 
@@ -81,18 +89,27 @@ test('previous/next navigation goes to deterministic neighbours', async ({
 
   await expect(
     page.locator('main footer').getByRole('link', { name: /Next project/ }),
-  ).toHaveAttribute('href', '/projects/horizon-desk')
+  ).toHaveAttribute('href', '/projects/shopaccess-ai')
   await expect(
     page.locator('main footer').getByRole('link', { name: /Previous project/ }),
-  ).toHaveAttribute('href', '/projects/triage360')
+  ).toHaveAttribute('href', '/projects/etenmall')
 
   await page.locator('main footer').getByRole('link', { name: /Next project/ }).click()
-  await expect(page).toHaveURL(/\/projects\/horizon-desk$/)
+  await expect(page).toHaveURL(/\/projects\/shopaccess-ai$/)
 })
 
 test('the footer can be reached and activated with the keyboard', async ({
   page,
+  browserName,
 }) => {
+  // macOS WebKit follows Safari: plain Tab skips links (only form controls
+  // are focusable) and Option+Tab moves through every link. The assertion is
+  // unchanged; only the key that means "next focusable link" differs.
+  const nextKey =
+    browserName === 'webkit' && process.platform === 'darwin'
+      ? 'Alt+Tab'
+      : 'Tab'
+
   await page.goto('/projects/streetwise')
 
   const next = page
@@ -101,13 +118,13 @@ test('the footer can be reached and activated with the keyboard', async ({
 
   let focused = false
   for (let i = 0; i < 80 && !focused; i++) {
-    await page.keyboard.press('Tab')
+    await page.keyboard.press(nextKey)
     focused = await next.evaluate((el) => el === document.activeElement)
   }
   expect(focused).toBe(true)
 
   await page.keyboard.press('Enter')
-  await expect(page).toHaveURL(/\/projects\/horizon-desk$/)
+  await expect(page).toHaveURL(/\/projects\/shopaccess-ai$/)
 })
 
 test('Horizon Desk lists all three teammates and no GitHub or live-demo link', async ({
@@ -149,25 +166,43 @@ test('Horizon Desk lists all three teammates and no GitHub or live-demo link', a
   ).toBeVisible()
 })
 
-test('Commerce platform is private: in development, no repo link, preview, or architecture', async ({
+test('EtenMall is labelled in development, links no private repo, and covers the ten required sections', async ({
   page,
 }) => {
-  await page.goto('/projects/commerce-platform')
+  await page.goto('/projects/etenmall')
 
-  await expect(page.locator('dl[aria-label$="at a glance"]')).toContainText(
-    'Product & Software Development',
-  )
-  await expect(page.locator('dl[aria-label$="at a glance"]')).toContainText(
-    'In development',
-  )
+  const glance = page.locator('dl[aria-label$="at a glance"]')
+  await expect(glance).toContainText('Founder; requirements, architecture, and releases')
+  await expect(glance).toContainText('In development')
+  await expect(glance).toContainText('Test mode only; not live')
   await expect(page.locator('main a[href*="github.com"]')).toHaveCount(0)
-  await expect(page.getByRole('figure')).toHaveCount(0)
-  await expect(
-    page.getByRole('heading', { name: 'Architecture' }),
-  ).toHaveCount(0)
-  await expect(
-    page.getByRole('heading', { name: 'Engineering decisions' }),
-  ).toHaveCount(0)
+  await expect(page.locator('main a[href*="project-atlas"]')).toHaveCount(0)
+
+  for (const name of [
+    'Overview and intended users',
+    'The retail problem',
+    'My role',
+    'Technology stack',
+    'Verified implemented capabilities',
+    'Architecture',
+    'Engineering decisions',
+    'Development and testing evidence',
+    'Scope and limits',
+    'Future development roadmap',
+  ]) {
+    await expect(page.getByRole('heading', { name })).toBeVisible()
+  }
+
+  const illustration = page.getByRole('figure').filter({
+    hasText: 'Architectural illustration',
+  })
+  await expect(illustration).toBeVisible()
+  await expect(page.locator('main img')).toHaveCount(0)
+})
+
+test('the old Commerce platform URL redirects to EtenMall', async ({ page }) => {
+  await page.goto('/projects/commerce-platform')
+  await expect(page).toHaveURL(/\/projects\/etenmall$/)
 })
 
 test('Triage360 architecture describes web-app retrieval as keyword-overlap', async ({
@@ -187,7 +222,7 @@ test('Triage360 architecture describes web-app retrieval as keyword-overlap', as
   await expect(page.getByRole('listitem').filter({ hasText: /Rule-based escalation/ })).toHaveCount(1)
 })
 
-test('only Triage360 shows a product walkthrough and only Horizon Desk shows event photos', async ({
+test('only ShopAccess AI and Triage360 show a product walkthrough, only Horizon Desk shows event photos, and EtenMall shows one labelled illustration', async ({
   page,
 }) => {
   for (const slug of slugs) {
@@ -201,6 +236,17 @@ test('only Triage360 shows a product walkthrough and only Horizon Desk shows eve
       await expect(walkthrough).toHaveCount(0)
       await expect(page.locator('main img')).toHaveCount(2)
       await expect(page.getByRole('figure')).toHaveCount(2)
+    } else if (slug === 'shopaccess-ai') {
+      await expect(walkthrough.locator('img')).toHaveCount(6)
+      await expect(walkthrough.getByRole('figure')).toHaveCount(6)
+      await expect(event).toHaveCount(0)
+      // six screenshots plus the decorative video poster, and a figure for each
+      await expect(page.getByRole('figure')).toHaveCount(7)
+    } else if (slug === 'etenmall') {
+      await expect(page.getByRole('figure')).toHaveCount(1)
+      await expect(page.locator('main img')).toHaveCount(0)
+      await expect(event).toHaveCount(0)
+      await expect(walkthrough).toHaveCount(0)
     } else if (slug === 'triage360') {
       await expect(walkthrough.locator('img')).toHaveCount(2)
       await expect(walkthrough.getByRole('figure')).toHaveCount(2)
@@ -432,8 +478,8 @@ test('Triage360 and Streetwise no longer use the What I built heading', async ({
   }
   await page.goto('/projects/horizon-desk')
   await expect(page.getByRole('heading', { name: 'The team prototype' })).toBeVisible()
-  await page.goto('/projects/commerce-platform')
-  await expect(page.getByRole('heading', { name: 'What I am building' })).toBeVisible()
+  await page.goto('/projects/etenmall')
+  await expect(page.getByRole('heading', { name: 'Overview and intended users' })).toBeVisible()
 })
 
 for (const slug of ['triage360', 'streetwise', 'horizon-desk']) {

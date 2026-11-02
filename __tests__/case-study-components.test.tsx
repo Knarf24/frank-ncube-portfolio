@@ -189,7 +189,7 @@ describe("CaseStudyFooter", () => {
   it("links to neighbouring projects, the archive, and contact", () => {
     render(
       <CaseStudyFooter
-        project={{ ...baseProject, slug: "commerce-platform", title: "Commerce platform" }}
+        project={{ ...baseProject, slug: "etenmall", title: "EtenMall" }}
       />,
     );
 
@@ -198,7 +198,7 @@ describe("CaseStudyFooter", () => {
     ).toHaveAttribute("href", "/projects/horizon-desk");
     expect(screen.getByRole("link", { name: /Next project/ })).toHaveAttribute(
       "href",
-      "/projects/triage360",
+      "/projects/streetwise",
     );
     expect(screen.getByRole("link", { name: "All projects" })).toHaveAttribute(
       "href",

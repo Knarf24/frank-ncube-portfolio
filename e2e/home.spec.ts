@@ -68,7 +68,7 @@ test('contact links point to the verified profiles', async ({ page }) => {
 
   await expect(
     contactSection.getByRole('link', { name: 'Email me' }),
-  ).toHaveAttribute('href', 'mailto:FNcube83@students.livingstone.edu')
+  ).toHaveAttribute('href', 'mailto:frankdumoluhle24@gmail.com')
 
   await expect(
     contactSection.getByRole('link', { name: /View resume/i }).first(),
@@ -176,10 +176,10 @@ test('homepage lists projects in the recruiter-facing order', async ({
   await page.goto('/')
 
   await expect(page.locator('section#work h3')).toHaveText([
+    'ShopAccess AI',
     'Triage360',
-    'Streetwise',
     'Horizon Desk',
-    'Commerce platform',
+    'EtenMall',
   ])
 })
 

@@ -41,8 +41,8 @@ export function ProjectFilter({ projects }: ProjectFilterProps) {
               onClick={() => setActive(category)}
               className={`min-h-11 rounded-full border px-4 py-2 text-sm font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--accent)] ${
                 isActive
-                  ? "border-[color:rgba(116,247,154,0.45)] bg-[var(--accent-soft)] text-[var(--text)]"
-                  : "border-[var(--border)] bg-transparent text-[var(--muted)] hover:border-[color:rgba(116,247,154,0.35)] hover:text-[var(--text)]"
+                  ? "border-[color:rgba(120,224,156,0.45)] bg-[var(--accent-soft)] text-[var(--text)]"
+                  : "border-[var(--border)] bg-transparent text-[var(--muted)] hover:border-[color:rgba(120,224,156,0.35)] hover:text-[var(--text)]"
               }`}
             >
               {category}

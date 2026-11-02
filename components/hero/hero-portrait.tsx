@@ -20,11 +20,11 @@ export function HeroPortrait() {
 
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 rounded-3xl bg-[linear-gradient(180deg,transparent_60%,rgba(9,11,10,0.35)_100%)]"
+          className="pointer-events-none absolute inset-0 rounded-3xl bg-[linear-gradient(180deg,transparent_60%,rgba(12,11,9,0.35)_100%)]"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-inset ring-[color:rgba(116,247,154,0.18)]"
+          className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-inset ring-[color:rgba(120,224,156,0.18)]"
         />
       </div>
     </div>

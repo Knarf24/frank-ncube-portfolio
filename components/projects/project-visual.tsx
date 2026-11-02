@@ -18,7 +18,7 @@ function TriageVisual() {
   return (
     <div className="relative flex h-full w-full items-center p-5 sm:p-7">
       <div className="w-full">
-        <div className="mb-7 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
+        <div className="mb-7 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
           <span className="h-2 w-2 rounded-full bg-[var(--accent)] shadow-[0_0_14px_var(--accent)]" />
           Support routing pipeline
         </div>
@@ -27,9 +27,9 @@ function TriageVisual() {
           {triageSteps.map((step, index) => (
             <li
               key={step}
-              className="relative flex min-h-12 items-center rounded-xl border border-[var(--border)] bg-[color:rgba(9,11,10,0.72)] px-3 py-2.5 text-xs leading-4 text-[var(--text)] sm:min-h-20 sm:justify-center sm:px-2 sm:text-center sm:text-[11px]"
+              className="relative flex min-h-12 items-center rounded-xl border border-[var(--border)] bg-[color:rgba(12,11,9,0.72)] px-3 py-2.5 text-xs leading-4 text-[var(--text)] sm:min-h-20 sm:justify-center sm:px-2 sm:text-center sm:text-xs"
             >
-              <span className="mr-3 font-mono text-[10px] text-[var(--accent)] sm:absolute sm:left-2.5 sm:top-2 sm:mr-0">
+              <span className="mr-3 font-mono text-xs text-[var(--accent)] sm:absolute sm:left-2.5 sm:top-2 sm:mr-0">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <span>{step}</span>
@@ -52,7 +52,7 @@ function CommerceVisual() {
           {['Tenant A', 'Tenant B'].map((tenant) => (
             <div
               key={tenant}
-              className="rounded-lg border border-[var(--border)] bg-[color:rgba(9,11,10,0.7)] px-3 py-3 text-center font-mono text-[11px] text-[var(--muted)]"
+              className="rounded-lg border border-[var(--border)] bg-[color:rgba(12,11,9,0.7)] px-3 py-3 text-center font-mono text-xs text-[var(--muted)]"
             >
               {tenant}
             </div>
@@ -68,7 +68,7 @@ function CommerceVisual() {
           <path d="m27 43 5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
 
-        <div className="rounded-xl border border-[color:rgba(116,247,154,0.42)] bg-[var(--accent-soft)] px-3 py-5 text-center text-sm font-medium text-[var(--text)]">
+        <div className="rounded-xl border border-[color:rgba(120,224,156,0.42)] bg-[var(--accent-soft)] px-3 py-5 text-center text-sm font-medium text-[var(--text)]">
           Shared platform
         </div>
       </div>
@@ -77,7 +77,7 @@ function CommerceVisual() {
         {commerceSystems.map((system) => (
           <div
             key={system}
-            className="rounded-lg border border-[var(--border)] bg-[color:rgba(9,11,10,0.62)] px-2 py-2 text-center font-mono text-[10px] text-[var(--muted)]"
+            className="rounded-lg border border-[var(--border)] bg-[color:rgba(12,11,9,0.62)] px-2 py-2 text-center font-mono text-xs text-[var(--muted)]"
           >
             {system}
           </div>
@@ -98,8 +98,8 @@ function StreetwiseVisual() {
             key={step}
             className={`relative rounded-xl border px-4 py-3 text-center text-xs ${
               index === 1
-                ? "border-[color:rgba(116,247,154,0.42)] bg-[var(--accent-soft)] text-[var(--text)]"
-                : "border-[var(--border)] bg-[color:rgba(9,11,10,0.7)] text-[var(--muted)]"
+                ? "border-[color:rgba(120,224,156,0.42)] bg-[var(--accent-soft)] text-[var(--text)]"
+                : "border-[var(--border)] bg-[color:rgba(12,11,9,0.7)] text-[var(--muted)]"
             }`}
           >
             {step}
@@ -129,8 +129,8 @@ function HorizonDeskVisual() {
             key={step}
             className={`relative rounded-xl border px-4 py-3 text-center text-xs ${
               index === 1 || index === 3
-                ? "border-[color:rgba(116,247,154,0.42)] bg-[var(--accent-soft)] text-[var(--text)]"
-                : "border-[var(--border)] bg-[color:rgba(9,11,10,0.7)] text-[var(--muted)]"
+                ? "border-[color:rgba(120,224,156,0.42)] bg-[var(--accent-soft)] text-[var(--text)]"
+                : "border-[var(--border)] bg-[color:rgba(12,11,9,0.7)] text-[var(--muted)]"
             }`}
           >
             {step}
@@ -153,7 +153,7 @@ export function ProjectVisual({ slug }: ProjectVisualProps) {
       <div className="absolute inset-0 bg-[linear-gradient(color-mix(in_srgb,var(--border)_32%,transparent)_1px,transparent_1px),linear-gradient(90deg,color-mix(in_srgb,var(--border)_32%,transparent)_1px,transparent_1px)] bg-[size:32px_32px] opacity-25" />
       <div className="relative h-full min-h-[250px]">
         {slug === "triage360" ? <TriageVisual /> : null}
-        {slug === "commerce-platform" ? <CommerceVisual /> : null}
+        {slug === "etenmall" ? <CommerceVisual /> : null}
         {slug === "streetwise" ? <StreetwiseVisual /> : null}
         {slug === "horizon-desk" ? <HorizonDeskVisual /> : null}
       </div>

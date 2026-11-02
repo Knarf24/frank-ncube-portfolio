@@ -24,7 +24,7 @@ export function EventSection({ event }: EventSectionProps) {
           />
           <div
             aria-hidden="true"
-            className="absolute inset-0 bg-[linear-gradient(to_top,rgba(9,11,10,0.94)_0%,rgba(9,11,10,0.62)_28%,rgba(9,11,10,0.1)_62%,transparent_100%)]"
+            className="absolute inset-0 bg-[linear-gradient(to_top,rgba(12,11,9,0.94)_0%,rgba(12,11,9,0.62)_28%,rgba(12,11,9,0.1)_62%,transparent_100%)]"
           />
           <figcaption className="absolute inset-x-0 bottom-0 p-5 sm:p-8">
             <h2
@@ -33,7 +33,7 @@ export function EventSection({ event }: EventSectionProps) {
             >
               {event.title}
             </h2>
-            <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--accent)]">
+            <p className="mt-2 font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">
               {event.subtitle}
             </p>
           </figcaption>

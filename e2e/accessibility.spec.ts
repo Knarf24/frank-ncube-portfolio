@@ -261,10 +261,10 @@ test("technical toolkit keeps non-logo skills visible and recruiter-readable", a
     has: page.getByRole("heading", { name: "Tools I build with" }),
   });
 
-  const additionalSkills = toolkitSection.getByText("Additional tools", {
-    exact: false,
-  });
-  await expect(additionalSkills).toBeVisible();
+  // Every skill group is a visible, labelled row, not only the logo marquee.
+  for (const group of ["Languages", "AI & data systems", "Currently deepening"]) {
+    await expect(toolkitSection.getByText(group, { exact: true })).toBeVisible();
+  }
 
   for (const skill of [
     "AWS",
@@ -273,7 +273,7 @@ test("technical toolkit keeps non-logo skills visible and recruiter-readable", a
     "LLM integration",
     "TF-IDF",
   ]) {
-    await expect(toolkitSection.getByText(skill)).toBeVisible();
+    await expect(toolkitSection.getByText(skill, { exact: true })).toBeVisible();
   }
 });
 

@@ -17,22 +17,21 @@ describe("SelectedWork", () => {
 
     expect(projectHeadings).toHaveLength(4);
     expect(projectHeadings.map((heading) => heading.textContent)).toEqual([
+      "ShopAccess AI",
       "Triage360",
-      "Streetwise",
       "Horizon Desk",
-      "Commerce platform",
+      "EtenMall",
     ]);
     expect(
-      within(section as HTMLElement).getByRole("heading", {
-        name: "Commerce platform",
-      }),
-    ).toBeInTheDocument();
-    expect(
-      within(section as HTMLElement).getByRole("heading", {
+      within(section as HTMLElement).queryByRole("heading", {
         name: "Streetwise",
       }),
+    ).not.toBeInTheDocument();
+    expect(
+      within(section as HTMLElement).getByRole("heading", {
+        name: "EtenMall",
+      }),
     ).toBeInTheDocument();
-
     expect(
       within(section as HTMLElement).getByRole("heading", {
         name: "Horizon Desk",
@@ -40,7 +39,7 @@ describe("SelectedWork", () => {
     ).toBeInTheDocument();
 
     const flagship = within(section as HTMLElement)
-      .getByRole("heading", { name: "Triage360" })
+      .getByRole("heading", { name: "ShopAccess AI" })
       .closest("article");
 
     expect(flagship).toHaveAttribute("data-project-variant", "flagship");

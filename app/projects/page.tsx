@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata, ResolvingMetadata } from "next";
 import { ProjectFilter } from "@/components/projects/project-filter";
-import { projects } from "@/data/projects";
+import { getOrderedProjects } from "@/lib/project-utils";
 import { pageMetadata } from "@/lib/page-metadata";
 
 export function generateMetadata(
@@ -40,7 +40,7 @@ export default function ProjectsPage() {
         </p>
 
         <div className="mt-10 sm:mt-14">
-          <ProjectFilter projects={projects} />
+          <ProjectFilter projects={getOrderedProjects()} />
         </div>
       </div>
     </main>

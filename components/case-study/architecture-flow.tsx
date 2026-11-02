@@ -20,9 +20,9 @@ export function ArchitectureFlow({ labels }: ArchitectureFlowProps) {
           >
             <div
               data-flow-box=""
-              className="flex min-h-12 min-w-0 items-center gap-2.5 rounded-xl border border-[var(--border)] bg-[color:rgba(9,11,10,0.72)] px-3 py-2.5 text-xs text-[var(--text)] sm:text-sm"
+              className="flex min-h-12 min-w-0 items-center gap-2.5 rounded-xl border border-[var(--border)] bg-[color:rgba(12,11,9,0.72)] px-3 py-2.5 text-xs text-[var(--text)] sm:text-sm"
             >
-              <span className="font-mono text-[10px] text-[var(--accent)]">
+              <span className="font-mono text-xs text-[var(--accent)]">
                 {String(index + 1).padStart(2, "0")}
               </span>
               <span>{label}</span>

@@ -11,7 +11,7 @@ export function EducationAchievements() {
 
         <div className="mt-10 grid gap-6 sm:mt-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-8">
           <div className="rounded-[1.75rem] border border-[var(--border)] bg-[var(--surface)] p-6 sm:p-8">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent)]">
+            <p className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">
               {education.graduation}
             </p>
             <div className="mt-3 flex items-center gap-3">
@@ -55,17 +55,16 @@ export function EducationAchievements() {
               Achievements
             </h3>
 
-            <ul className="mt-6 space-y-3">
+            <ul className="mt-4 divide-y divide-[var(--border)] border-y border-[var(--border)]">
               {achievements.map((achievement) => (
-                <li
-                  key={achievement.title}
-                  className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3.5"
-                >
-                  <p className="text-sm font-medium text-[var(--text)]">
+                <li key={achievement.title} className="py-4">
+                  <p className="text-base font-medium text-[var(--text)]">
                     {achievement.title}
                   </p>
-                  <p className="mt-1 text-xs text-[var(--muted)]">
-                    {achievement.issuer} · {achievement.year}
+                  <p className="mt-1 text-sm text-[var(--muted)]">
+                    {[achievement.issuer, achievement.status ?? achievement.year]
+                      .filter(Boolean)
+                      .join(" · ")}
                   </p>
                 </li>
               ))}

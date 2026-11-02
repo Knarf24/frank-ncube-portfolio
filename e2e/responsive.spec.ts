@@ -23,8 +23,9 @@ for (const width of [320, 375, 430, 768, 1024, 1440]) {
 // resume placeholder stay overflow-free.
 for (const route of [
   '/projects',
+  '/projects/shopaccess-ai',
   '/projects/triage360',
-  '/projects/commerce-platform',
+  '/projects/etenmall',
   '/projects/streetwise',
   '/resume',
 ]) {

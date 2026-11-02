@@ -13,29 +13,30 @@ describe("project ordering helpers", () => {
     const slugs = getOrderedProjects().map((project) => project.slug);
 
     expect(slugs).toEqual([
+      "shopaccess-ai",
       "triage360",
-      "streetwise",
       "horizon-desk",
-      "commerce-platform",
+      "etenmall",
+      "streetwise",
     ]);
     expect(getOrderedProjects().map((project) => project.slug)).toEqual(slugs);
   });
 
   it("returns previous and next neighbours", () => {
-    expect(getAdjacentProjects("streetwise")).toMatchObject({
-      previous: { slug: "triage360" },
+    expect(getAdjacentProjects("triage360")).toMatchObject({
+      previous: { slug: "shopaccess-ai" },
       next: { slug: "horizon-desk" },
     });
   });
 
   it("wraps around at both ends so every case study has both links", () => {
-    expect(getAdjacentProjects("triage360")).toMatchObject({
-      previous: { slug: "commerce-platform" },
-      next: { slug: "streetwise" },
-    });
-    expect(getAdjacentProjects("commerce-platform")).toMatchObject({
-      previous: { slug: "horizon-desk" },
+    expect(getAdjacentProjects("shopaccess-ai")).toMatchObject({
+      previous: { slug: "streetwise" },
       next: { slug: "triage360" },
+    });
+    expect(getAdjacentProjects("streetwise")).toMatchObject({
+      previous: { slug: "etenmall" },
+      next: { slug: "shopaccess-ai" },
     });
   });
 
@@ -45,9 +46,14 @@ describe("project ordering helpers", () => {
 });
 
 describe("case-study data accuracy guards", () => {
-  it("never labels a project as individual work until that is confirmed", () => {
+  it("labels a project as individual work only where the author confirmed it", () => {
+    // Confirmed solo entry: ShopAccess AI (author confirmation, Nov 2026).
+    const confirmedIndividual = ["shopaccess-ai"];
+
     for (const project of projects) {
-      expect(project.contribution?.mode).not.toBe("individual");
+      if (project.contribution?.mode === "individual") {
+        expect(confirmedIndividual).toContain(project.slug);
+      }
     }
   });
 
@@ -71,14 +77,22 @@ describe("case-study data accuracy guards", () => {
     expect(horizon?.devpostUrl).toBe("https://devpost.com/software/nexa-j9g8ys");
   });
 
-  it("keeps the private commerce project free of repository links and previews", () => {
-    const commerce = getProjectBySlug("commerce-platform");
+  it("keeps EtenMall private, in development, and free of identifiers or launch claims", () => {
+    const commerce = getProjectBySlug("etenmall");
 
     expect(commerce?.status).toBe("In development");
     expect(commerce?.githubUrl).toBeUndefined();
     expect(commerce?.liveUrl).toBeUndefined();
     expect(commerce?.preview).toBeUndefined();
-    expect(commerce?.architecture).toBeUndefined();
+    expect(commerce?.architecture?.visual).toBe("etenmall");
+
+    const text = JSON.stringify(commerce);
+
+    expect(text).not.toMatch(/github\.com|project-atlas|dpl_|zpjgz|supabase\.co|vercel\.app/i);
+    expect(text).not.toMatch(/service[_ ]role|secret|api[_ ]key|password/i);
+    expect(text).not.toMatch(/now live|(?<!not )launched commercially|(?<!not serving )paying merchants/i);
+    expect(text).toMatch(/not launched commercially/);
+    expect(text).toMatch(/Live payments are not authorized/);
   });
 
   it("describes Triage360 web-app retrieval as keyword-overlap, not TF-IDF", () => {
@@ -218,8 +232,53 @@ describe("Triage360 product walkthrough", () => {
 
   it("only Triage360 has a walkthrough, and no project uses the single header preview", () => {
     for (const project of projects) {
-      expect(Boolean(project.walkthrough)).toBe(project.slug === "triage360");
+      expect(Boolean(project.walkthrough)).toBe(
+        project.slug === "triage360" || project.slug === "shopaccess-ai",
+      );
       expect(project.preview).toBeUndefined();
     }
+  });
+});
+
+describe("ShopAccess AI case study", () => {
+  const shop = getProjectBySlug("shopaccess-ai");
+  const text = JSON.stringify(shop);
+
+  it("is featured first and keeps Streetwise out of the homepage set", () => {
+    expect(shop?.featuredOrder).toBe(1);
+    expect(getProjectBySlug("streetwise")?.featured).toBe(false);
+    expect(getProjectBySlug("streetwise")?.statusLabel).toBe("Archived prototype");
+  });
+
+  it("uses only screenshots and video poster files that exist", () => {
+    const files = [
+      shop!.cardImage!.src,
+      shop!.video!.poster.src,
+      ...shop!.walkthrough!.items.map((item) => item.src),
+    ];
+
+    for (const src of files) {
+      expect(src).toMatch(/^\/images\/projects\/shopaccess-ai\/.+\.webp$/);
+      expect(existsSync(join(process.cwd(), "public", src))).toBe(true);
+      expect(statSync(join(process.cwd(), "public", src)).size).toBeLessThan(150 * 1024);
+    }
+  });
+
+  it("links the video and labels the hosted demo as passphrase protected", () => {
+    expect(shop?.video?.url).toBe("https://youtu.be/p4ItKN35qSY");
+    expect(shop?.gatedDemoUrl).toBe("https://shopaccess-ai.onrender.com");
+    expect(shop?.liveUrl).toBeUndefined();
+  });
+
+  it("makes no unverified claims about awards or production payments, and states AI-assisted authorship", () => {
+    expect(text).not.toMatch(/\b(award|prize|winner|won|placed|finalist)\b/i);
+    expect(text).not.toMatch(/passphrase["\s:]+[A-Za-z0-9-]{8,}/);
+    expect(text).toMatch(/Production payments are not implemented/);
+    expect(shop?.contribution?.mode).toBe("individual");
+    expect(shop?.contribution?.summary).toMatch(/solo entry/);
+    expect(shop?.contribution?.summary).toMatch(/Claude Code/);
+    expect(shop?.contribution?.summary).toMatch(/Codex/);
+    expect(shop?.contribution?.summary).toMatch(/not manually write every line/);
+    expect(shop?.contribution?.team).toBeUndefined();
   });
 });

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { ProjectVisual } from "@/components/projects/project-visual";
 import { getProjectNumber } from "@/lib/project-utils";
@@ -8,7 +9,7 @@ type ProjectCardProps = {
   variant: "flagship" | "standard";
 };
 
-const linkClassName =
+export const linkClassName =
   "inline-flex min-h-11 items-center text-sm font-medium text-[var(--text)] underline decoration-[var(--border)] underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:[outline-color:var(--accent)]";
 
 export function ProjectCard({ project, variant }: ProjectCardProps) {
@@ -17,14 +18,39 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
   return (
     <article
       data-project-variant={variant}
-      className={`group rounded-[1.75rem] border border-[var(--border)] bg-[var(--surface)] p-4 transition-[border-color,transform] motion-safe:hover:-translate-y-1 motion-safe:hover:border-[color:rgba(116,247,154,0.38)] sm:p-5 ${
+      className={`group rounded-[1.75rem] border border-[var(--border)] bg-[var(--surface)] p-4 transition-[border-color,transform] motion-safe:hover:-translate-y-1 motion-safe:hover:border-[color:rgba(120,224,156,0.38)] sm:p-5 ${
         isFlagship
           ? "md:grid md:grid-cols-[1.05fr_.95fr] md:items-stretch md:gap-6 lg:p-7"
           : "flex h-full flex-col"
       }`}
     >
       <div className={isFlagship ? "order-2 mt-4 md:order-1 md:mt-0" : ""}>
-        <ProjectVisual slug={project.slug} />
+        {project.cardImage ? (
+          <>
+          <div className="relative aspect-[16/10] overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)]">
+            <Image
+              src={project.cardImage.src}
+              alt={project.cardImage.alt}
+              fill
+              sizes="(min-width: 1024px) 560px, (min-width: 768px) 45vw, 90vw"
+              className="object-cover"
+              style={{ objectPosition: project.cardImage.objectPosition }}
+            />
+          {project.cardImage.caption ? (
+            <span className="absolute left-3 top-3 hidden max-w-[calc(100%-1.5rem)] rounded-full bg-[color:rgba(12,11,9,0.82)] px-2.5 py-1 text-xs text-[var(--text)] sm:block">
+              {project.cardImage.caption}
+            </span>
+          ) : null}
+          </div>
+          {project.cardImage.caption ? (
+            <p className="mt-2 text-xs leading-5 text-[var(--muted)] sm:hidden">
+              {project.cardImage.caption}
+            </p>
+          ) : null}
+          </>
+        ) : (
+          <ProjectVisual slug={project.slug} />
+        )}
       </div>
 
       <div
@@ -34,11 +60,11 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
             : "px-1 pb-2 pt-6"
         }`}
       >
-        <div className="flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
           <span className="text-[var(--accent)]">
             {isFlagship ? "01" : String(getProjectNumber(project)).padStart(2, "0")}
           </span>
-          <span>{project.status}</span>
+          <span>{project.statusLabel ?? project.status}</span>
         </div>
 
         <h3
@@ -91,6 +117,17 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
               className={linkClassName}
             >
               {project.liveKind === "demo" ? "Live demo" : "Live project"} <span aria-hidden="true" className="ml-1">↗</span>
+            </a>
+          ) : null}
+          {project.gatedDemoUrl ? (
+            <a
+              href={project.gatedDemoUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Hosted demo (passphrase required) for ${project.title} (opens in a new tab)`}
+              className={linkClassName}
+            >
+              Hosted demo (passphrase required) <span aria-hidden="true" className="ml-1">↗</span>
             </a>
           ) : null}
           {project.devpostUrl ? (

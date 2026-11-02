@@ -2,29 +2,6 @@ import { SectionHeading } from "@/components/section-heading";
 import { TechLogoIcon, techLogos, type TechLogo } from "@/components/sections/tech-logos";
 import { skillGroups } from "@/data/skills";
 
-function normalize(value: string) {
-  return value.toLowerCase().replace(/[^a-z0-9]/g, "");
-}
-
-const logoNormalizedNames = techLogos.map((logo) => normalize(logo.name));
-
-function hasMatchingLogo(skill: string) {
-  const normalizedSkill = normalize(skill);
-  return logoNormalizedNames.some(
-    (logoName) =>
-      normalizedSkill.startsWith(logoName) || logoName.startsWith(normalizedSkill),
-  );
-}
-
-// Skills with no safe/appropriate brand-logo asset (e.g. AWS, VS Code — see
-// tech-logos.tsx) or no canonical brand mark at all (REST APIs, LLM
-// integration, TF-IDF, Retrieval, Prompt engineering) still need to stay
-// recruiter-visible, so they render as text derived straight from
-// `skillGroups` rather than being silently dropped.
-const additionalSkills = skillGroups
-  .flatMap((group) => group.skills)
-  .filter((skill) => !hasMatchingLogo(skill));
-
 const fadeMaskStyle = {
   maskImage:
     "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
@@ -73,15 +50,8 @@ export function TechnicalToolkit() {
       <div className="mx-auto w-full max-w-[var(--max-width)]">
         <SectionHeading eyebrow="Technical toolkit" title="Tools I build with" />
 
-        {/* Always available to assistive tech, independent of the motion-based visual below */}
-        <ul className="sr-only">
-          {techLogos.map((logo) => (
-            <li key={logo.name}>{logo.name}</li>
-          ))}
-        </ul>
-
         <div
-          className="mt-10 space-y-4 motion-reduce:hidden sm:mt-14"
+          className="mt-10 space-y-4 motion-reduce:hidden sm:mt-12"
           aria-hidden="true"
         >
           <MarqueeRow direction="left" durationSeconds={38} />
@@ -97,25 +67,33 @@ export function TechnicalToolkit() {
           ))}
         </div>
 
-        {additionalSkills.length > 0 ? (
-          <div className="mt-8 sm:mt-10">
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--muted)]">
-              Additional tools &amp; systems
-            </p>
-            <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--muted)] sm:text-base sm:leading-7">
-              {additionalSkills.join(" · ")}
-            </p>
+        <dl className="mt-10 divide-y divide-[var(--border)] border-y border-[var(--border)] sm:mt-14">
+          {skillGroups.map((group) => (
+            <div
+              key={group.label}
+              className="grid gap-2 py-4 sm:grid-cols-[14rem_minmax(0,1fr)] sm:gap-8 sm:py-5"
+            >
+              <dt className="text-sm font-medium text-[var(--text)]">
+                {group.label}
+              </dt>
+              <dd>
+                <ul className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-[var(--muted)] sm:text-base">
+                  {group.skills.map((skill) => (
+                    <li key={skill}>{skill}</li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          ))}
+          <div className="grid gap-2 py-4 sm:grid-cols-[14rem_minmax(0,1fr)] sm:gap-8 sm:py-5">
+            <dt className="text-sm font-medium text-[var(--accent)]">
+              Currently deepening
+            </dt>
+            <dd className="text-sm text-[var(--text)] sm:text-base">
+              Python engineering · Machine learning · System design
+            </dd>
           </div>
-        ) : null}
-
-        <div className="mt-6 rounded-2xl border border-[color:rgba(116,247,154,0.35)] bg-[var(--accent-soft)] px-5 py-5 sm:px-6">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent)]">
-            Currently deepening
-          </p>
-          <p className="mt-2 text-sm text-[var(--text)] sm:text-base">
-            Python engineering · Machine learning · System design
-          </p>
-        </div>
+        </dl>
       </div>
     </section>
   );

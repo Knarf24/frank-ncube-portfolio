@@ -5,12 +5,14 @@ import { ArchitectureFlow } from "@/components/case-study/architecture-flow";
 import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
 import { CaseStudySection } from "@/components/case-study/case-study-section";
 import { ContributionSection } from "@/components/case-study/contribution-section";
+import { EtenMallArchitecture } from "@/components/case-study/etenmall-architecture";
 import { EventSection } from "@/components/case-study/event-section";
 import { EngineeringDecisions } from "@/components/case-study/engineering-decisions";
 import { noBreakTerms } from "@/components/case-study/no-break-terms";
 import { ProductPreview } from "@/components/case-study/product-preview";
 import { ProductWalkthrough } from "@/components/case-study/product-walkthrough";
 import { ProjectGlance } from "@/components/case-study/project-glance";
+import { VideoLink } from "@/components/case-study/video-link";
 import { ScopeLimits } from "@/components/case-study/scope-limits";
 import { projects } from "@/data/projects";
 import { pageMetadata } from "@/lib/page-metadata";
@@ -64,7 +66,7 @@ export default async function ProjectCaseStudyPage(
           <span aria-hidden="true" className="mr-1">←</span> Back to projects
         </Link>
 
-        <h1 className="mt-8 text-4xl font-medium tracking-tight text-[var(--text)] md:text-5xl">
+        <h1 className="mt-8 font-serif text-5xl font-normal tracking-tight text-[var(--text)] md:text-7xl">
           {project.title}
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">
@@ -96,6 +98,17 @@ export default async function ProjectCaseStudyPage(
               {project.liveKind === "demo" ? "Live demo" : "Live project"} <span aria-hidden="true" className="ml-1">↗</span>
             </a>
           ) : null}
+          {project.gatedDemoUrl ? (
+            <a
+              href={project.gatedDemoUrl}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Hosted demo (passphrase required) for ${project.title} (opens in a new tab)`}
+              className={linkClassName}
+            >
+              Hosted demo (passphrase required) <span aria-hidden="true" className="ml-1">↗</span>
+            </a>
+          ) : null}
           {project.devpostUrl ? (
             <a
               href={project.devpostUrl}
@@ -109,6 +122,8 @@ export default async function ProjectCaseStudyPage(
           ) : null}
         </div>
 
+        <VideoLink video={project.video} />
+
         <ProductPreview preview={project.preview} />
 
         <div className="mt-14 space-y-12 sm:mt-16">
@@ -117,6 +132,7 @@ export default async function ProjectCaseStudyPage(
               key={section.heading}
               heading={section.heading}
               body={section.body}
+              items={section.items}
             />
           ))}
 
@@ -135,11 +151,30 @@ export default async function ProjectCaseStudyPage(
               <div className="mt-6 max-w-[var(--max-width)]">
                 <ArchitectureFlow labels={project.architecture.steps} />
               </div>
+              {project.architecture.visual === "etenmall" ? (
+                <EtenMallArchitecture />
+              ) : null}
             </div>
           ) : null}
 
           <EngineeringDecisions decisions={project.decisions} />
+          {project.evidence ? (
+            <CaseStudySection
+              heading={project.evidence.heading}
+              body={project.evidence.body}
+              items={project.evidence.items}
+            />
+          ) : null}
           <ScopeLimits limits={project.limits} />
+          {project.roadmap ? (
+            <CaseStudySection
+              heading="Future development roadmap"
+              body={[
+                "Planned work, not implemented functionality. Items and order may change.",
+              ]}
+              items={project.roadmap}
+            />
+          ) : null}
         </div>
 
         <CaseStudyFooter project={project} />

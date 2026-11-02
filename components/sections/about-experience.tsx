@@ -26,7 +26,7 @@ export function AboutExperience() {
         <div>
           <SectionHeading eyebrow="About" title="I build technology around real problems." />
 
-          <p className="mt-6 max-w-xl text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">
+          <p className="mt-6 max-w-xl text-lg leading-8 text-[var(--text)] sm:text-xl sm:leading-9">
             I build software, AI systems, and digital products end to end —
             from client-facing projects to my own ventures. I care about
             practical problem solving over theory, and I like taking an idea
@@ -59,7 +59,7 @@ export function AboutExperience() {
                 />
 
                 <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                  <span className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-2.5 py-0.5 font-mono text-[10px] uppercase tracking-[0.16em] text-[var(--accent)]">
+                  <span className="font-mono text-xs uppercase tracking-[0.16em] text-[var(--accent)]">
                     {kindLabel[item.kind]}
                   </span>
                   <span className="text-xs text-[var(--muted)]">{item.period}</span>

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { useSyncExternalStore, type ReactNode } from "react";
+import { useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 
 const subscribeToHydration = () => () => undefined;
 const getClientHydrationSnapshot = () => true;
@@ -14,7 +14,14 @@ export function Reveal({ children }: { children: ReactNode }) {
     getClientHydrationSnapshot,
     getServerHydrationSnapshot,
   );
-  const shouldReduceMotion = !hasHydrated || Boolean(reduceMotion);
+  // Failsafe: if the in-view observer never fires (print, full-page capture,
+  // an unusual scroller), show the content anyway after a short delay.
+  const [forceShow, setForceShow] = useState(false);
+  useEffect(() => {
+    const timer = window.setTimeout(() => setForceShow(true), 2500);
+    return () => window.clearTimeout(timer);
+  }, []);
+  const shouldReduceMotion = !hasHydrated || Boolean(reduceMotion) || forceShow;
 
   return (
     <motion.div

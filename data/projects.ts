@@ -1,6 +1,9 @@
 import type { Project } from "@/lib/portfolio-types";
+import { etenMall } from "@/data/etenmall";
+import { shopAccessAi } from "@/data/shopaccess-ai";
 
 export const projects: Project[] = [
+  shopAccessAi,
   {
     title: "Triage360",
     slug: "triage360",
@@ -18,7 +21,7 @@ export const projects: Project[] = [
       "TF-IDF",
     ],
     featured: true,
-    featuredOrder: 1,
+    featuredOrder: 2,
     status: "Completed",
     githubUrl: "https://github.com/Knarf24/support-triangle-agent",
     caseStudy: [
@@ -35,6 +38,14 @@ export const projects: Project[] = [
         ],
       },
     ],
+    cardImage: {
+      src: "/images/projects/triage360/triage360-escalation.webp",
+      alt: "Triage360 escalation result for a synthetic Visa fraud support ticket.",
+      width: 2880,
+      height: 1800,
+      objectPosition: "50% 0%",
+      caption: "Local screenshot, synthetic data",
+    },
     walkthrough: {
       heading: "Product walkthrough",
       intro:
@@ -85,36 +96,7 @@ export const projects: Project[] = [
       },
     ],
   },
-  {
-    title: "Commerce platform",
-    slug: "commerce-platform",
-    summary:
-      "Multi-tenant commerce infrastructure designed for small businesses and multi-branch retail operations.",
-    year: 2026,
-    categories: ["Software engineering", "Cloud", "Product"],
-    technologies: ["Next.js", "PostgreSQL", "Supabase", "Vercel"],
-    featured: true,
-    featuredOrder: 4,
-    status: "In development",
-    glance: [{ label: "Role", value: "Product & Software Development" }],
-    caseStudy: [
-      {
-        heading: "Problem",
-        body: [
-          "Small retailers need online storefronts, branch-aware inventory, staff access, orders, payments, and operational controls without maintaining separate systems for each business.",
-        ],
-      },
-      {
-        heading: "What I am building",
-        body: [
-          "A single-codebase multi-tenant platform with tenant-scoped commerce features and a product architecture designed to grow with multiple businesses.",
-        ],
-      },
-    ],
-    limits: [
-      "This is a private project that is still in development, so it is described at a high level. The capabilities above are goals for the platform, not a shipped product.",
-    ],
-  },
+  etenMall,
   {
     title: "Streetwise",
     slug: "streetwise",
@@ -123,8 +105,8 @@ export const projects: Project[] = [
     year: 2026,
     categories: ["AI / ML", "Product", "Web"],
     technologies: ["React", "TypeScript", "Supabase"],
-    featured: true,
-    featuredOrder: 2,
+    featured: false,
+    featuredOrder: 5,
     status: "Completed",
     statusLabel: "Archived prototype",
     githubUrl: "https://github.com/Knarf24/streetwise-offer-ai",
@@ -194,6 +176,14 @@ export const projects: Project[] = [
     //   liveKind: "demo",
     devpostUrl: "https://devpost.com/software/nexa-j9g8ys",
     statusLabel: "Completed prototype",
+    cardImage: {
+      src: "/images/projects/horizon-desk/horizon-desk-team.webp",
+      alt: "The three Horizon Desk team members standing with the event mascot in front of a large window.",
+      width: 1080,
+      height: 1434,
+      objectPosition: "50% 22%",
+      caption: "Team photo at SteelHacks XIII, not a product screenshot",
+    },
     glance: [
       { label: "Role", value: "Frontend + supporting backend" },
       { label: "Team", value: "3 developers" },

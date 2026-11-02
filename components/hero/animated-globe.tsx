@@ -190,7 +190,7 @@ export function AnimatedGlobe() {
 
         <div
           aria-hidden="true"
-          className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center font-mono text-[11px] uppercase leading-[1.45] tracking-[0.24em] text-[var(--text)] sm:text-xs"
+          className="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 flex-col items-center font-mono text-xs uppercase leading-[1.45] tracking-[0.24em] text-[var(--text)] sm:text-xs"
         >
           <span>Build</span>
           <span className="text-[var(--accent)]">Learn</span>
