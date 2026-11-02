@@ -144,8 +144,11 @@ describe("Reveal fallback timer", () => {
       </Reveal>,
     );
 
-    // Starts hidden, waiting to be scrolled into view.
-    expect(wrapperOf(container)).toHaveStyle({ opacity: "0" });
+    // Armed (hidden) once mounted, waiting to be scrolled into view. The
+    // style is applied on the next animation frame.
+    await vi.waitFor(() =>
+      expect(wrapperOf(container)).toHaveStyle({ opacity: "0" }),
+    );
 
     act(() => {
       vi.advanceTimersByTime(FALLBACK_MS);
@@ -165,7 +168,9 @@ describe("Reveal scroll behavior", () => {
         <Probe />
       </Reveal>,
     );
-    expect(wrapperOf(container)).toHaveStyle({ opacity: "0" });
+    await vi.waitFor(() =>
+      expect(wrapperOf(container)).toHaveStyle({ opacity: "0" }),
+    );
 
     act(() => {
       scrollIntoView();

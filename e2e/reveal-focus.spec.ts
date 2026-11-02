@@ -7,10 +7,10 @@ test('keyboard focus stays on the same link after the 2.5 second reveal fallback
 }) => {
   await page.goto('/')
 
-  // Wait until React has hydrated and armed the scroll reveal. The far-below
-  // contact section is hidden at that point, and nothing scrolls it into
-  // view. Hydration itself swaps each wrapper once, so focus is only checked
-  // after that has happened.
+  // Wait until React has hydrated and armed the scroll reveal, so the 2.5
+  // second failsafe is running. The far-below contact section is hidden at
+  // that point, and nothing scrolls it into view. Focus during hydration
+  // itself is covered by reveal-hydration.spec.ts.
   await expect(page.locator('#contact').locator('xpath=..')).toHaveCSS(
     'opacity',
     '0',
