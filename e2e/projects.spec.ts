@@ -38,7 +38,7 @@ test('AI / ML filter narrows the archive to matching projects', async ({
     page.getByRole('heading', { name: 'Streetwise' }),
   ).toBeVisible()
   await expect(
-    page.getByRole('heading', { name: 'Commerce platform' }),
+    page.getByRole('heading', { name: 'EtenMall' }),
   ).not.toBeVisible()
 })
 
@@ -81,25 +81,6 @@ test('the archive Case study link opens the Triage360 case study', async ({
   await expect(
     page.getByRole('heading', { level: 1, name: 'Triage360' }),
   ).toBeVisible()
-})
-
-test('Commerce platform renders only its existing case-study sections', async ({
-  page,
-}) => {
-  await page.goto('/projects/commerce-platform')
-
-  await expect(
-    page.getByRole('heading', { level: 1, name: 'Commerce platform' }),
-  ).toBeVisible()
-  await expect(
-    page.getByRole('heading', { name: 'Problem' }),
-  ).toBeVisible()
-  await expect(
-    page.getByRole('heading', { name: 'What I am building' }),
-  ).toBeVisible()
-  await expect(
-    page.getByRole('heading', { name: 'Architecture' }),
-  ).not.toBeVisible()
 })
 
 test('Streetwise renders only its existing case-study sections', async ({
@@ -226,7 +207,7 @@ test('homepage leads with ShopAccess AI and moves Streetwise to the archive', as
     'ShopAccess AI',
     'Triage360',
     'Horizon Desk',
-    'Commerce platform',
+    'EtenMall',
   ])
 
   await page.goto('/projects')

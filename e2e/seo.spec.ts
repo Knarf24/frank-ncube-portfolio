@@ -64,7 +64,7 @@ test('sitemap includes every current public content route', async ({
     '/resume',
     '/projects/shopaccess-ai',
     '/projects/triage360',
-    '/projects/commerce-platform',
+    '/projects/etenmall',
     '/projects/streetwise',
   ]) {
     expect(body).toContain(`${expectedSiteUrl}${path}`)
@@ -110,7 +110,7 @@ const pageMeta = [
   { path: '/projects/triage360', title: 'Triage360 | Frank Ncube' },
   { path: '/projects/streetwise', title: 'Streetwise | Frank Ncube' },
   { path: '/projects/horizon-desk', title: 'Horizon Desk | Frank Ncube' },
-  { path: '/projects/commerce-platform', title: 'Commerce platform | Frank Ncube' },
+  { path: '/projects/etenmall', title: 'EtenMall | Frank Ncube' },
   { path: '/resume', title: 'Resume | Frank Ncube' },
 ]
 

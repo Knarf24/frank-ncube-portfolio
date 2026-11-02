@@ -20,7 +20,7 @@ describe("SelectedWork", () => {
       "ShopAccess AI",
       "Triage360",
       "Horizon Desk",
-      "Commerce platform",
+      "EtenMall",
     ]);
     expect(
       within(section as HTMLElement).queryByRole("heading", {
@@ -29,7 +29,7 @@ describe("SelectedWork", () => {
     ).not.toBeInTheDocument();
     expect(
       within(section as HTMLElement).getByRole("heading", {
-        name: "Commerce platform",
+        name: "EtenMall",
       }),
     ).toBeInTheDocument();
     expect(

@@ -9,6 +9,8 @@ export type ProjectCategory =
 export type CaseStudySection = {
   heading: string;
   body: string[];
+  // Optional bullet list rendered after the paragraphs.
+  items?: string[];
 };
 
 export type GlanceItem = {
@@ -50,6 +52,8 @@ export type ProjectCardImage = {
   height: number;
   // CSS object-position for the cropped bento frame.
   objectPosition?: string;
+  // Visible label for images that are not product screenshots.
+  caption?: string;
 };
 
 export type ProjectVideo = {
@@ -81,6 +85,8 @@ export type ProjectEvent = {
 export type ProjectArchitecture = {
   caption: string;
   steps: string[];
+  // Named illustration rendered after the step flow.
+  visual?: "etenmall";
 };
 
 export type Project = {
@@ -119,6 +125,10 @@ export type Project = {
   // Real interface screenshots, shown in their own section before Architecture.
   walkthrough?: ProjectWalkthrough;
   limits?: string[];
+  // Development and testing evidence, shown after the engineering decisions.
+  evidence?: CaseStudySection;
+  // Planned work, shown after the limits. Not implemented functionality.
+  roadmap?: string[];
   caseStudy: CaseStudySection[];
 };
 
@@ -142,7 +152,9 @@ export type EducationRecord = {
 export type Achievement = {
   title: string;
   issuer: string;
-  year: number;
+  year?: number;
+  // e.g. "In progress" for training that is not complete.
+  status?: string;
 };
 
 export type SkillGroup = {

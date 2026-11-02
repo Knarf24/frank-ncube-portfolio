@@ -25,7 +25,7 @@ for (const route of [
   '/projects',
   '/projects/shopaccess-ai',
   '/projects/triage360',
-  '/projects/commerce-platform',
+  '/projects/etenmall',
   '/projects/streetwise',
   '/resume',
 ]) {

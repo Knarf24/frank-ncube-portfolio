@@ -189,7 +189,7 @@ describe("CaseStudyFooter", () => {
   it("links to neighbouring projects, the archive, and contact", () => {
     render(
       <CaseStudyFooter
-        project={{ ...baseProject, slug: "commerce-platform", title: "Commerce platform" }}
+        project={{ ...baseProject, slug: "etenmall", title: "EtenMall" }}
       />,
     );
 

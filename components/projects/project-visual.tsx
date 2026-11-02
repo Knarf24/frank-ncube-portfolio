@@ -153,7 +153,7 @@ export function ProjectVisual({ slug }: ProjectVisualProps) {
       <div className="absolute inset-0 bg-[linear-gradient(color-mix(in_srgb,var(--border)_32%,transparent)_1px,transparent_1px),linear-gradient(90deg,color-mix(in_srgb,var(--border)_32%,transparent)_1px,transparent_1px)] bg-[size:32px_32px] opacity-25" />
       <div className="relative h-full min-h-[250px]">
         {slug === "triage360" ? <TriageVisual /> : null}
-        {slug === "commerce-platform" ? <CommerceVisual /> : null}
+        {slug === "etenmall" ? <CommerceVisual /> : null}
         {slug === "streetwise" ? <StreetwiseVisual /> : null}
         {slug === "horizon-desk" ? <HorizonDeskVisual /> : null}
       </div>

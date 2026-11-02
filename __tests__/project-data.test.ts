@@ -16,7 +16,7 @@ describe("project ordering helpers", () => {
       "shopaccess-ai",
       "triage360",
       "horizon-desk",
-      "commerce-platform",
+      "etenmall",
       "streetwise",
     ]);
     expect(getOrderedProjects().map((project) => project.slug)).toEqual(slugs);
@@ -35,7 +35,7 @@ describe("project ordering helpers", () => {
       next: { slug: "triage360" },
     });
     expect(getAdjacentProjects("streetwise")).toMatchObject({
-      previous: { slug: "commerce-platform" },
+      previous: { slug: "etenmall" },
       next: { slug: "shopaccess-ai" },
     });
   });
@@ -72,14 +72,22 @@ describe("case-study data accuracy guards", () => {
     expect(horizon?.devpostUrl).toBe("https://devpost.com/software/nexa-j9g8ys");
   });
 
-  it("keeps the private commerce project free of repository links and previews", () => {
-    const commerce = getProjectBySlug("commerce-platform");
+  it("keeps EtenMall private, in development, and free of identifiers or launch claims", () => {
+    const commerce = getProjectBySlug("etenmall");
 
     expect(commerce?.status).toBe("In development");
     expect(commerce?.githubUrl).toBeUndefined();
     expect(commerce?.liveUrl).toBeUndefined();
     expect(commerce?.preview).toBeUndefined();
-    expect(commerce?.architecture).toBeUndefined();
+    expect(commerce?.architecture?.visual).toBe("etenmall");
+
+    const text = JSON.stringify(commerce);
+
+    expect(text).not.toMatch(/github\.com|project-atlas|dpl_|zpjgz|supabase\.co|vercel\.app/i);
+    expect(text).not.toMatch(/service[_ ]role|secret|api[_ ]key|password/i);
+    expect(text).not.toMatch(/now live|(?<!not )launched commercially|(?<!not serving )paying merchants/i);
+    expect(text).toMatch(/not launched commercially/);
+    expect(text).toMatch(/Live payments are not authorized/);
   });
 
   it("describes Triage360 web-app retrieval as keyword-overlap, not TF-IDF", () => {

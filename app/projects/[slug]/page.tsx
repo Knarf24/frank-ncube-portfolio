@@ -5,6 +5,7 @@ import { ArchitectureFlow } from "@/components/case-study/architecture-flow";
 import { CaseStudyFooter } from "@/components/case-study/case-study-footer";
 import { CaseStudySection } from "@/components/case-study/case-study-section";
 import { ContributionSection } from "@/components/case-study/contribution-section";
+import { EtenMallArchitecture } from "@/components/case-study/etenmall-architecture";
 import { EventSection } from "@/components/case-study/event-section";
 import { EngineeringDecisions } from "@/components/case-study/engineering-decisions";
 import { noBreakTerms } from "@/components/case-study/no-break-terms";
@@ -131,6 +132,7 @@ export default async function ProjectCaseStudyPage(
               key={section.heading}
               heading={section.heading}
               body={section.body}
+              items={section.items}
             />
           ))}
 
@@ -149,11 +151,30 @@ export default async function ProjectCaseStudyPage(
               <div className="mt-6 max-w-[var(--max-width)]">
                 <ArchitectureFlow labels={project.architecture.steps} />
               </div>
+              {project.architecture.visual === "etenmall" ? (
+                <EtenMallArchitecture />
+              ) : null}
             </div>
           ) : null}
 
           <EngineeringDecisions decisions={project.decisions} />
+          {project.evidence ? (
+            <CaseStudySection
+              heading={project.evidence.heading}
+              body={project.evidence.body}
+              items={project.evidence.items}
+            />
+          ) : null}
           <ScopeLimits limits={project.limits} />
+          {project.roadmap ? (
+            <CaseStudySection
+              heading="Future development roadmap"
+              body={[
+                "Planned work, not implemented functionality. Items and order may change.",
+              ]}
+              items={project.roadmap}
+            />
+          ) : null}
         </div>
 
         <CaseStudyFooter project={project} />

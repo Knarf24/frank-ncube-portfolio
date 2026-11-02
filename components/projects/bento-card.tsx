@@ -59,6 +59,11 @@ export function BentoCard({
             className="object-cover transition-transform duration-700 motion-safe:group-hover:scale-[1.02]"
             style={{ objectPosition: image.objectPosition }}
           />
+          {image.caption ? (
+            <span className="absolute bottom-3 left-3 max-w-[calc(100%-1.5rem)] rounded-full bg-[color:rgba(12,11,9,0.82)] px-3 py-1.5 text-xs text-[var(--text)]">
+              {image.caption}
+            </span>
+          ) : null}
         </div>
       ) : (
         <ProjectVisual slug={project.slug} />

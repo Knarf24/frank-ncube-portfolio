@@ -55,17 +55,16 @@ export function EducationAchievements() {
               Achievements
             </h3>
 
-            <ul className="mt-6 space-y-3">
+            <ul className="mt-4 divide-y divide-[var(--border)] border-y border-[var(--border)]">
               {achievements.map((achievement) => (
-                <li
-                  key={achievement.title}
-                  className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] px-4 py-3.5"
-                >
-                  <p className="text-sm font-medium text-[var(--text)]">
+                <li key={achievement.title} className="py-4">
+                  <p className="text-base font-medium text-[var(--text)]">
                     {achievement.title}
                   </p>
-                  <p className="mt-1 text-xs text-[var(--muted)]">
-                    {achievement.issuer} · {achievement.year}
+                  <p className="mt-1 text-sm text-[var(--muted)]">
+                    {[achievement.issuer, achievement.status ?? achievement.year]
+                      .filter(Boolean)
+                      .join(" · ")}
                   </p>
                 </li>
               ))}

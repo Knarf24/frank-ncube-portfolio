@@ -28,7 +28,7 @@ describe('ProjectFilter', () => {
 
     expect(
       screen.queryByRole('heading', {
-        name: 'Commerce platform',
+        name: 'EtenMall',
       }),
     ).not.toBeInTheDocument()
   })
@@ -40,7 +40,7 @@ describe('ProjectFilter', () => {
       screen.getByRole('heading', { name: 'Triage360' }),
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('heading', { name: 'Commerce platform' }),
+      screen.getByRole('heading', { name: 'EtenMall' }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', { name: 'Streetwise' }),
@@ -84,7 +84,7 @@ describe('ProjectFilter', () => {
 
     await user.click(screen.getByRole('button', { name: 'AI / ML' }))
     expect(
-      screen.queryByRole('heading', { name: 'Commerce platform' }),
+      screen.queryByRole('heading', { name: 'EtenMall' }),
     ).not.toBeInTheDocument()
 
     await user.click(screen.getByRole('button', { name: 'All' }))
@@ -93,7 +93,7 @@ describe('ProjectFilter', () => {
       screen.getByRole('heading', { name: 'Triage360' }),
     ).toBeInTheDocument()
     expect(
-      screen.getByRole('heading', { name: 'Commerce platform' }),
+      screen.getByRole('heading', { name: 'EtenMall' }),
     ).toBeInTheDocument()
     expect(
       screen.getByRole('heading', { name: 'Streetwise' }),

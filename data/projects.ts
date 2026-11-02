@@ -1,4 +1,5 @@
 import type { Project } from "@/lib/portfolio-types";
+import { etenMall } from "@/data/etenmall";
 import { shopAccessAi } from "@/data/shopaccess-ai";
 
 export const projects: Project[] = [
@@ -94,36 +95,7 @@ export const projects: Project[] = [
       },
     ],
   },
-  {
-    title: "Commerce platform",
-    slug: "commerce-platform",
-    summary:
-      "Multi-tenant commerce infrastructure designed for small businesses and multi-branch retail operations.",
-    year: 2026,
-    categories: ["Software engineering", "Cloud", "Product"],
-    technologies: ["Next.js", "PostgreSQL", "Supabase", "Vercel"],
-    featured: true,
-    featuredOrder: 4,
-    status: "In development",
-    glance: [{ label: "Role", value: "Product & Software Development" }],
-    caseStudy: [
-      {
-        heading: "Problem",
-        body: [
-          "Small retailers need online storefronts, branch-aware inventory, staff access, orders, payments, and operational controls without maintaining separate systems for each business.",
-        ],
-      },
-      {
-        heading: "What I am building",
-        body: [
-          "A single-codebase multi-tenant platform with tenant-scoped commerce features and a product architecture designed to grow with multiple businesses.",
-        ],
-      },
-    ],
-    limits: [
-      "This is a private project that is still in development, so it is described at a high level. The capabilities above are goals for the platform, not a shipped product.",
-    ],
-  },
+  etenMall,
   {
     title: "Streetwise",
     slug: "streetwise",
@@ -209,6 +181,7 @@ export const projects: Project[] = [
       width: 1080,
       height: 1434,
       objectPosition: "50% 22%",
+      caption: "Team photo at SteelHacks XIII, not a product screenshot",
     },
     glance: [
       { label: "Role", value: "Frontend + supporting backend" },

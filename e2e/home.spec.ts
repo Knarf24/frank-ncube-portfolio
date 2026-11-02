@@ -179,7 +179,7 @@ test('homepage lists projects in the recruiter-facing order', async ({
     'ShopAccess AI',
     'Triage360',
     'Horizon Desk',
-    'Commerce platform',
+    'EtenMall',
   ])
 })
 
