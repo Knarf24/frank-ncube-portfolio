@@ -94,7 +94,6 @@ describe("Reveal hydration", () => {
     document.body.appendChild(container);
     container.innerHTML = renderToString(tree());
     const link = container.querySelector("a") as HTMLAnchorElement;
-    link.focus();
 
     await act(async () => {
       hydrateRoot(container, tree());
@@ -108,11 +107,62 @@ describe("Reveal hydration", () => {
       vi.advanceTimersByTime(2600);
     });
 
-    // Revealed, with the very same wrapper, link and focus.
+    // Revealed, with the very same wrapper and link (a section that holds
+    // no focus is hidden and revealed as before).
     await vi.waitFor(() => expect(wrapper).toHaveStyle({ opacity: "1" }));
     expect(container.firstElementChild).toBe(wrapper);
     expect(container.querySelector("a")).toBe(link);
-    expect(document.activeElement).toBe(link);
     expect(lifecycle.unmounts).toBe(0);
+  });
+
+  it("never hides a section that already holds keyboard focus", async () => {
+    const container = document.createElement("div");
+    document.body.appendChild(container);
+    container.innerHTML = renderToString(tree());
+    const link = container.querySelector("a") as HTMLAnchorElement;
+    link.focus();
+
+    await act(async () => {
+      hydrateRoot(container, tree());
+    });
+    const wrapper = container.firstElementChild as HTMLElement;
+
+    // Give motion several frames to apply any hidden style, then past the
+    // failsafe: it must stay fully visible the whole time.
+    for (let i = 0; i < 5; i++) {
+      await act(async () => {
+        await new Promise((resolve) => requestAnimationFrame(() => resolve(null)));
+      });
+      expect(wrapper).not.toHaveStyle({ opacity: "0" });
+    }
+    act(() => {
+      vi.advanceTimersByTime(2600);
+    });
+    expect(wrapper).toHaveStyle({ opacity: "1" });
+    expect(document.activeElement).toBe(link);
+  });
+
+  it("shows a hidden section the moment focus enters it, without waiting for the failsafe", async () => {
+    const container = document.createElement("div");
+    document.body.appendChild(container);
+    container.innerHTML = renderToString(tree());
+    const link = container.querySelector("a") as HTMLAnchorElement;
+
+    await act(async () => {
+      hydrateRoot(container, tree());
+    });
+    const wrapper = container.firstElementChild as HTMLElement;
+    await vi.waitFor(() => expect(wrapper).toHaveStyle({ opacity: "0" }));
+
+    // Focus arrives later, with the 2.5 second timer still pending.
+    act(() => {
+      link.focus();
+    });
+
+    // Visible in the same task as the focus event: no waiting for a frame.
+    expect(wrapper).toHaveStyle({ opacity: "1" });
+    expect(wrapper).toHaveStyle({ transform: "none" });
+    expect(link.isConnected).toBe(true);
+    expect(document.activeElement).toBe(link);
   });
 });

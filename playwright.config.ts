@@ -21,6 +21,8 @@ export default defineConfig({
       ? "npm run start -- --hostname 127.0.0.1 --port 3100"
       : "npm run dev -- --hostname 127.0.0.1 --port 3100",
     url: baseURL,
+    // Prints the server's own startup log, so CI output shows which server ran.
+    stdout: "pipe",
     reuseExistingServer: !process.env.CI,
   },
 });

@@ -27,6 +27,10 @@ const TRANSITION = { duration: 0.45, ease: "easeOut" } as const;
 // fires (print, full-page capture, an unusual scroller). Reduced motion keeps
 // it visible throughout.
 //
+// Focus always wins: a section that holds keyboard focus is never hidden, and
+// focus arriving in a hidden section shows it at once, so a focus ring is
+// never invisible or half-faded.
+//
 // This is ONE stable element for its whole life: nothing here may change a
 // `key` or the element type, because that would replace the server-rendered
 // children with new DOM nodes and drop keyboard focus during hydration.
@@ -38,6 +42,7 @@ export function Reveal({ children }: { children: ReactNode }) {
   const inView = useInView(ref, { once: true, amount: 0.18 });
   const [timedOut, setTimedOut] = useState(false);
   const shouldShow = inView || timedOut;
+  const controls = useRef<ReturnType<typeof animate>[]>([]);
 
   // Arm the hidden state once the page is interactive (never on the server,
   // and never for reduced motion).
@@ -47,6 +52,9 @@ export function Reveal({ children }: { children: ReactNode }) {
       y.set(0);
       return;
     }
+    // Focus was set before hydration (or before this effect ran): leave the
+    // section visible instead of hiding the focused element.
+    if (ref.current?.contains(document.activeElement)) return;
     opacity.set(0);
     y.set(HIDDEN_OFFSET);
   }, [reduceMotion, opacity, y]);
@@ -58,15 +66,30 @@ export function Reveal({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (reduceMotion || !shouldShow) return;
-    const controls = [
+    controls.current = [
       animate(opacity, 1, TRANSITION),
       animate(y, 0, TRANSITION),
     ];
-    return () => controls.forEach((control) => control.stop());
+    return () => controls.current.forEach((control) => control.stop());
   }, [reduceMotion, shouldShow, opacity, y]);
 
+  // Focus entering the section (React's onFocus bubbles, like focusin): show
+  // it immediately, cancelling any fade that is still running.
+  const showNow = () => {
+    controls.current.forEach((control) => control.stop());
+    opacity.set(1);
+    y.set(0);
+    // motion applies the values on the next animation frame. Write the visible
+    // style now as well, so the focused element is never hidden for even one
+    // frame (browsers can delay frames). It matches what motion renders next.
+    if (ref.current) {
+      ref.current.style.opacity = "1";
+      ref.current.style.transform = "none";
+    }
+  };
+
   return (
-    <motion.div ref={ref} style={{ opacity, y }}>
+    <motion.div ref={ref} style={{ opacity, y }} onFocus={showNow}>
       {children}
     </motion.div>
   );
