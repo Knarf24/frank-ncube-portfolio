@@ -1,5 +1,8 @@
 # Frank Ncube portfolio v1 design
 
+> **Historical document (August 2026).** This is the original v1 design. It was superseded by the November 2026 redesign (ShopAccess AI as the flagship, editorial bento homepage, EtenMall case study, new résumé). Where it disagrees with the code or the README, the code and README win. Kept for reference only.
+
+
 **Status:** Approved for implementation  
 **Date:** 2026-08-19
 

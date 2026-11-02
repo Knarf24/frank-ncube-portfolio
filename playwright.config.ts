@@ -15,8 +15,14 @@ export default defineConfig({
     { name: "webkit", use: { ...devices["Desktop Safari"] } },
   ],
   webServer: {
-    command: "npm run dev -- --hostname 127.0.0.1 --port 3100",
+    // CI builds first (see .github/workflows/ci.yml) and tests the production
+    // server, so what ships is what is tested. Local runs use the dev server.
+    command: process.env.CI
+      ? "npm run start -- --hostname 127.0.0.1 --port 3100"
+      : "npm run dev -- --hostname 127.0.0.1 --port 3100",
     url: baseURL,
+    // Prints the server's own startup log, so CI output shows which server ran.
+    stdout: "pipe",
     reuseExistingServer: !process.env.CI,
   },
 });

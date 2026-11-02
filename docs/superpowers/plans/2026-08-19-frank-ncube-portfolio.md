@@ -1,5 +1,8 @@
 # Frank Ncube portfolio v1 implementation plan
 
+> **Historical document (August 2026).** This is the original v1 implementation plan. It was superseded by the November 2026 redesign (ShopAccess AI as the flagship, editorial bento homepage, EtenMall case study, new résumé). Where it disagrees with the code or the README, the code and README win. Kept for reference only.
+
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Build and deploy the approved recruiter-facing Frank Ncube portfolio with an animated hero, curated project case studies, responsive presentation, accessibility safeguards, and production testing.

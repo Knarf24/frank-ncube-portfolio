@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Play } from "lucide-react";
+import { ImageCaption, ImageLabel } from "@/components/projects/image-caption";
 import { ProjectVisual } from "@/components/projects/project-visual";
 import { linkClassName } from "@/components/projects/project-card";
 import type { Project } from "@/lib/portfolio-types";
@@ -60,17 +61,9 @@ export function BentoCard({
             className="object-cover transition-transform duration-700 motion-safe:group-hover:scale-[1.02]"
             style={{ objectPosition: image.objectPosition }}
           />
-          {image.caption ? (
-            <span className="absolute left-3 top-3 hidden max-w-[calc(100%-1.5rem)] rounded-full bg-[color:rgba(12,11,9,0.82)] px-2.5 py-1 text-xs text-[var(--text)] sm:block">
-              {image.caption}
-            </span>
-          ) : null}
+          <ImageLabel caption={image.caption} />
         </div>
-        {image.caption ? (
-          <p className="mt-2 text-xs leading-5 text-[var(--muted)] sm:hidden">
-            {image.caption}
-          </p>
-        ) : null}
+        <ImageCaption caption={image.caption} />
         </>
       ) : (
         <ProjectVisual slug={project.slug} />

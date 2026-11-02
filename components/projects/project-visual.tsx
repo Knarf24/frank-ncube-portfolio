@@ -4,45 +4,7 @@ type ProjectVisualProps = {
   slug: Project["slug"];
 };
 
-const triageSteps = [
-  "Incoming ticket",
-  "Classification",
-  "Retrieval",
-  "Risk evaluation",
-  "Response",
-];
-
 const commerceSystems = ["Orders", "Inventory", "Payments", "Analytics"];
-
-function TriageVisual() {
-  return (
-    <div className="relative flex h-full w-full items-center p-5 sm:p-7">
-      <div className="w-full">
-        <div className="mb-7 flex items-center gap-3 font-mono text-xs uppercase tracking-[0.2em] text-[var(--muted)]">
-          <span className="h-2 w-2 rounded-full bg-[var(--accent)] shadow-[0_0_14px_var(--accent)]" />
-          Support routing pipeline
-        </div>
-
-        <ol className="grid gap-3 sm:grid-cols-5 sm:gap-2">
-          {triageSteps.map((step, index) => (
-            <li
-              key={step}
-              className="relative flex min-h-12 items-center rounded-xl border border-[var(--border)] bg-[color:rgba(12,11,9,0.72)] px-3 py-2.5 text-xs leading-4 text-[var(--text)] sm:min-h-20 sm:justify-center sm:px-2 sm:text-center sm:text-xs"
-            >
-              <span className="mr-3 font-mono text-xs text-[var(--accent)] sm:absolute sm:left-2.5 sm:top-2 sm:mr-0">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <span>{step}</span>
-              {index < triageSteps.length - 1 ? (
-                <span className="absolute -bottom-3 left-6 h-3 w-px bg-[var(--accent)] opacity-45 sm:-right-2 sm:bottom-auto sm:left-auto sm:top-1/2 sm:h-px sm:w-2" />
-              ) : null}
-            </li>
-          ))}
-        </ol>
-      </div>
-    </div>
-  );
-}
 
 function CommerceVisual() {
   return (
@@ -113,37 +75,6 @@ function StreetwiseVisual() {
   );
 }
 
-function HorizonDeskVisual() {
-  const steps = [
-    "Synthetic customer data",
-    "Eligibility checks",
-    "AI-drafted outreach",
-    "Human banker review",
-  ];
-
-  return (
-    <div className="relative flex h-full w-full items-center p-5 sm:p-7">
-      <ol className="mx-auto grid w-full max-w-sm gap-5">
-        {steps.map((step, index) => (
-          <li
-            key={step}
-            className={`relative rounded-xl border px-4 py-3 text-center text-xs ${
-              index === 1 || index === 3
-                ? "border-[color:rgba(120,224,156,0.42)] bg-[var(--accent-soft)] text-[var(--text)]"
-                : "border-[var(--border)] bg-[color:rgba(12,11,9,0.7)] text-[var(--muted)]"
-            }`}
-          >
-            {step}
-            {index < steps.length - 1 ? (
-              <span className="absolute -bottom-5 left-1/2 h-5 w-px -translate-x-1/2 bg-[var(--accent)] opacity-45" />
-            ) : null}
-          </li>
-        ))}
-      </ol>
-    </div>
-  );
-}
-
 export function ProjectVisual({ slug }: ProjectVisualProps) {
   return (
     <div
@@ -152,10 +83,8 @@ export function ProjectVisual({ slug }: ProjectVisualProps) {
     >
       <div className="absolute inset-0 bg-[linear-gradient(color-mix(in_srgb,var(--border)_32%,transparent)_1px,transparent_1px),linear-gradient(90deg,color-mix(in_srgb,var(--border)_32%,transparent)_1px,transparent_1px)] bg-[size:32px_32px] opacity-25" />
       <div className="relative h-full min-h-[250px]">
-        {slug === "triage360" ? <TriageVisual /> : null}
         {slug === "etenmall" ? <CommerceVisual /> : null}
         {slug === "streetwise" ? <StreetwiseVisual /> : null}
-        {slug === "horizon-desk" ? <HorizonDeskVisual /> : null}
       </div>
     </div>
   );
