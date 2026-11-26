@@ -66,7 +66,7 @@ export default async function ProjectCaseStudyPage(
           <span aria-hidden="true" className="mr-1">←</span> Back to projects
         </Link>
 
-        <h1 className="mt-8 font-serif text-5xl font-normal tracking-tight text-[var(--text)] md:text-7xl">
+        <h1 className="mt-8 text-5xl font-semibold tracking-tight text-[var(--text)] md:text-7xl">
           {project.title}
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">

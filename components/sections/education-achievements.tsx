@@ -5,12 +5,12 @@ import { SectionHeading } from "@/components/section-heading";
 
 export function EducationAchievements() {
   return (
-    <section className="scroll-mt-24 px-5 py-20 sm:py-28 md:px-8 md:py-24">
+    <section id="education" className="scroll-mt-24 px-5 py-16 sm:py-24 md:px-8">
       <div className="mx-auto w-full max-w-[var(--max-width)]">
         <SectionHeading eyebrow="Education" title="Education & achievements" />
 
         <div className="mt-10 grid gap-6 sm:mt-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-8">
-          <div className="rounded-[1.75rem] border border-[var(--border)] bg-[var(--surface)] p-6 sm:p-8">
+          <div className="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--card-shadow)] sm:p-8">
             <p className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--accent)]">
               {education.graduation}
             </p>
@@ -50,12 +50,12 @@ export function EducationAchievements() {
             </ul>
           </div>
 
-          <div>
+          <div className="rounded-3xl border border-[var(--border)] bg-[var(--surface)] p-6 shadow-[var(--card-shadow)] sm:p-8">
             <h3 className="text-sm font-medium uppercase tracking-[0.2em] text-[var(--muted)]">
               Achievements
             </h3>
 
-            <ul className="mt-4 divide-y divide-[var(--border)] border-y border-[var(--border)]">
+            <ul className="mt-4 divide-y divide-[var(--border)]">
               {achievements.map((achievement) => (
                 <li key={achievement.title} className="py-4">
                   <p className="text-base font-medium text-[var(--text)]">

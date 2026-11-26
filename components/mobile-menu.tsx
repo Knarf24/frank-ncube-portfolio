@@ -3,13 +3,9 @@
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { siteConfig } from "@/lib/site-config";
+import { sectionLinks } from "@/components/section-nav";
 
-const links = [
-  ["Work", "/#work"],
-  ["About", "/#about"],
-  ["Experience", "/#experience"],
-  ["Contact", "/#contact"],
-] as const;
 
 export function MobileMenu() {
   const [open, setOpen] = useState(false);
@@ -22,7 +18,7 @@ export function MobileMenu() {
         aria-controls="mobile-navigation"
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
-        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-[var(--border)] text-[var(--text)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--accent)]"
+        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full bg-[color:rgba(30,27,75,0.88)] text-white shadow-lg shadow-black/10 backdrop-blur-xl transition-colors hover:bg-[color:rgba(49,46,129,0.95)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--accent)]"
       >
         {open ? (
           <X aria-hidden="true" size={18} strokeWidth={1.75} />
@@ -38,7 +34,7 @@ export function MobileMenu() {
           className="absolute left-4 right-4 top-20 z-50 rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)] p-3 shadow-2xl shadow-black/30"
         >
           <ul className="space-y-1">
-            {links.map(([label, href]) => (
+            {sectionLinks.map(([label, href]) => (
               <li key={href}>
                 <Link
                   href={href}
@@ -49,6 +45,17 @@ export function MobileMenu() {
                 </Link>
               </li>
             ))}
+            <li>
+              <a
+                href={siteConfig.projectHub}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setOpen(false)}
+                className="flex min-h-11 items-center rounded-xl px-3 py-2 text-base font-semibold text-[var(--accent)] transition-colors hover:bg-[var(--accent-soft)]"
+              >
+                Project Hub <span aria-hidden="true" className="ml-1">↗</span>
+              </a>
+            </li>
           </ul>
         </nav>
       ) : null}

@@ -54,7 +54,7 @@ function Column({
             key={item.name}
             className={`rounded-xl border px-4 py-3 ${
               accent
-                ? "border-[color:rgba(120,224,156,0.4)] bg-[var(--accent-soft)]"
+                ? "border-[var(--accent-line)] bg-[var(--accent-soft)]"
                 : "border-[var(--border)] bg-[var(--surface-elevated)]"
             }`}
           >

@@ -1,44 +1,42 @@
 import Link from "next/link";
 import { MobileMenu } from "@/components/mobile-menu";
+import { SectionNav } from "@/components/section-nav";
+import { siteConfig } from "@/lib/site-config";
 
-const links = [
-  ["Work", "/#work"],
-  ["About", "/#about"],
-  ["Experience", "/#experience"],
-  ["Contact", "/#contact"],
-] as const;
-
+// Name on the left, a floating pill menu in the middle that highlights the
+// section being read, and the Project Hub on the right.
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-transparent bg-[color:rgba(12,11,9,0.84)] backdrop-blur-xl">
-      <div className="mx-auto flex max-w-[var(--max-width)] items-center justify-between px-5 py-4 md:px-8">
+    <header className="pointer-events-none sticky top-0 z-50">
+      <div className="mx-auto flex max-w-[var(--max-width)] items-center justify-between gap-4 px-5 py-3 md:px-8">
         <Link
           href="/#top"
-          className="inline-flex min-h-11 min-w-11 items-center font-medium tracking-wide text-[var(--text)] transition-colors hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--accent)]"
+          className="pointer-events-auto inline-flex min-h-11 items-center gap-2.5 rounded-full bg-[color:rgba(30,27,75,0.88)] py-1.5 pl-1.5 pr-4 font-bold tracking-tight text-white shadow-lg shadow-black/10 backdrop-blur-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:#67e8f9]"
         >
-          FN
+          <span
+            aria-hidden="true"
+            className="grid h-8 w-8 place-items-center rounded-full bg-[linear-gradient(135deg,#818cf8,#67e8f9)] text-xs font-extrabold text-[#1e1b4b]"
+          >
+            FN
+          </span>
+          Frank Ncube
         </Link>
 
-        <nav aria-label="Primary navigation" className="hidden md:block">
-          <ul className="flex items-center gap-4 text-sm text-[var(--muted)] lg:gap-6">
-            {links.map(([label, href]) => (
-              <li key={href}>
-                <Link
-                  className="inline-flex min-h-11 items-center px-1 transition-colors hover:text-[var(--text)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--accent)]"
-                  href={href}
-                >
-                  {label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
+        <SectionNav />
 
-        <div className="hidden rounded-full border border-[var(--border)] px-3 py-1.5 text-xs text-[var(--muted)] md:block">
-          Open to internships
+        <a
+          href={siteConfig.projectHub}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Project Hub (opens in a new tab)"
+          className="pointer-events-auto hidden min-h-11 items-center rounded-full bg-[color:rgba(30,27,75,0.88)] px-4 text-sm font-semibold text-white shadow-lg shadow-black/10 backdrop-blur-xl transition-colors hover:bg-[color:rgba(49,46,129,0.95)] lg:inline-flex"
+        >
+          Project Hub <span aria-hidden="true" className="ml-1">↗</span>
+        </a>
+
+        <div className="pointer-events-auto md:hidden">
+          <MobileMenu />
         </div>
-
-        <MobileMenu />
       </div>
     </header>
   );

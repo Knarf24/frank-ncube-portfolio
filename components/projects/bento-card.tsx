@@ -37,7 +37,7 @@ export function BentoCard({
   return (
     <article
       data-project-variant={variant}
-      className={`group rounded-[1.75rem] border border-[var(--border)] bg-[var(--surface)] p-4 transition-[border-color,background-color] duration-300 motion-safe:hover:border-[color:rgba(120,224,156,0.4)] sm:p-5 ${spans[variant]}`}
+      className={`group rounded-[1.75rem] border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--card-shadow)] transition-[border-color,background-color] duration-300 motion-safe:hover:border-[var(--accent-line)] sm:p-5 ${spans[variant]}`}
     >
       {isStrip ? (
         <div className="lg:col-span-5">
@@ -83,8 +83,8 @@ export function BentoCard({
         </p>
 
         <h3
-          className={`mt-4 font-serif font-normal tracking-tight text-[var(--text)] ${
-            isFlagship ? "text-5xl sm:text-6xl" : "text-4xl"
+          className={`mt-4 font-semibold tracking-tight text-[var(--text)] ${
+            isFlagship ? "text-4xl sm:text-6xl" : "text-3xl sm:text-4xl"
           }`}
         >
           {project.title}

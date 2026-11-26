@@ -38,7 +38,7 @@ test('hero portrait renders with meaningful alt text', async ({ page }) => {
   await expect(portrait).toBeVisible()
   await expect(portrait).toHaveAttribute(
     'src',
-    /frank-ncube-portrait\.png/,
+    /frank-ncube-portrait-cutout\.webp/,
   )
 })
 
@@ -79,7 +79,7 @@ test('header navigation from a non-home route returns to homepage sections', asy
 }) => {
   await page.goto('/projects')
 
-  await page.getByRole('link', { name: 'Work', exact: true }).click()
+  await page.getByRole('link', { name: 'Projects', exact: true }).click()
   await expect(page).toHaveURL(/\/#work$/)
   await expect(page.locator('#work')).toBeAttached()
 
@@ -174,12 +174,18 @@ test('homepage lists projects in the recruiter-facing order', async ({
 }) => {
   await page.goto('/')
 
-  await expect(page.locator('section#work h3')).toHaveText([
+  // The six strongest: three case studies, then three live apps. The rest
+  // are on the Project Hub.
+  const headings = await page.locator('section#work h3').allTextContents()
+  expect(headings).toHaveLength(6)
+  expect(headings.slice(0, 3)).toEqual([
     'ShopAccess AI',
     'Triage360',
     'Horizon Desk',
-    'EtenMall',
   ])
+  await expect(
+    page.locator('#work').getByRole('link', { name: /See all projects on the Project Hub/ }),
+  ).toHaveAttribute('href', 'https://knarf24.github.io/project-hub/')
 })
 
 test('experience entries show their dates', async ({ page }) => {

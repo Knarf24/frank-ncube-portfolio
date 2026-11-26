@@ -3,7 +3,7 @@ import { expect, test } from '@playwright/test'
 test('project archive is reachable from the homepage', async ({ page }) => {
   await page.goto('/')
 
-  const link = page.getByRole('link', { name: /View all projects/i })
+  const link = page.getByRole('link', { name: /View all case studies/i })
 
   await expect(link).toBeVisible()
   await expect(link).toHaveAttribute('href', '/projects')
@@ -203,11 +203,11 @@ test('homepage leads with ShopAccess AI and moves Streetwise to the archive', as
   const work = page.locator('#work')
   const titles = await work.getByRole('heading', { level: 3 }).allTextContents()
 
-  expect(titles).toEqual([
+  // The live apps from the Project Hub follow the three case studies.
+  expect(titles.slice(0, 3)).toEqual([
     'ShopAccess AI',
     'Triage360',
     'Horizon Desk',
-    'EtenMall',
   ])
 
   await page.goto('/projects')

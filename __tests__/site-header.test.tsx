@@ -6,10 +6,10 @@ import { SiteHeader } from "@/components/site-header";
 afterEach(cleanup);
 
 describe("SiteHeader", () => {
-  it("links the FN mark home and exposes the approved primary navigation", () => {
+  it("links the name mark home and exposes the primary navigation and Project Hub", () => {
     render(<SiteHeader />);
 
-    expect(screen.getByRole("link", { name: "FN" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Frank Ncube" })).toHaveAttribute(
       "href",
       "/#top",
     );
@@ -18,10 +18,17 @@ describe("SiteHeader", () => {
       name: "Primary navigation",
     });
 
-    expect(within(navigation).getByRole("link", { name: "Work" })).toHaveAttribute(
+    expect(within(navigation).getByRole("link", { name: "Home" })).toHaveAttribute(
+      "href",
+      "/#top",
+    );
+    expect(within(navigation).getByRole("link", { name: "Projects" })).toHaveAttribute(
       "href",
       "/#work",
     );
+    expect(
+      within(navigation).getByRole("link", { name: "Education" }),
+    ).toHaveAttribute("href", "/#education");
     expect(within(navigation).getByRole("link", { name: "About" })).toHaveAttribute(
       "href",
       "/#about",
@@ -32,6 +39,9 @@ describe("SiteHeader", () => {
     expect(
       within(navigation).getByRole("link", { name: "Contact" }),
     ).toHaveAttribute("href", "/#contact");
+    expect(
+      screen.getByRole("link", { name: "Project Hub (opens in a new tab)" }),
+    ).toHaveAttribute("href", "https://knarf24.github.io/project-hub/");
   });
 
   it("updates the mobile menu state and closes after navigation", async () => {
@@ -53,7 +63,7 @@ describe("SiteHeader", () => {
     const mobileNavigation = screen.getByRole("navigation", {
       name: "Mobile navigation",
     });
-    await user.click(within(mobileNavigation).getByRole("link", { name: "Work" }));
+    await user.click(within(mobileNavigation).getByRole("link", { name: "Projects" }));
 
     expect(
       screen.queryByRole("navigation", { name: "Mobile navigation" }),

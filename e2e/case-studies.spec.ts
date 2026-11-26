@@ -145,8 +145,10 @@ test('Horizon Desk lists all three teammates and no GitHub or live-demo link', a
     ),
   ).toBeVisible()
 
-  await expect(page.getByRole('link', { name: /GitHub/i })).toHaveCount(0)
-  await expect(page.getByRole('link', { name: /live/i })).toHaveCount(0)
+  // Scoped to the page content: the site header has a "Live apps" link.
+  const content = page.getByRole('main')
+  await expect(content.getByRole('link', { name: /GitHub/i })).toHaveCount(0)
+  await expect(content.getByRole('link', { name: /live/i })).toHaveCount(0)
   await expect(page.locator('a[href*="netlify"]')).toHaveCount(0)
   await expect(page.getByText(/142/)).toHaveCount(0)
 

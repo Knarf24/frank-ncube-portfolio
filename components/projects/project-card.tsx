@@ -19,7 +19,7 @@ export function ProjectCard({ project, variant }: ProjectCardProps) {
   return (
     <article
       data-project-variant={variant}
-      className={`group rounded-[1.75rem] border border-[var(--border)] bg-[var(--surface)] p-4 transition-[border-color,transform] motion-safe:hover:-translate-y-1 motion-safe:hover:border-[color:rgba(120,224,156,0.38)] sm:p-5 ${
+      className={`group rounded-[1.75rem] border border-[var(--border)] bg-[var(--surface)] p-4 shadow-[var(--card-shadow)] transition-[border-color,transform] motion-safe:hover:-translate-y-1 motion-safe:hover:border-[var(--accent-line)] sm:p-5 ${
         isFlagship
           ? "md:grid md:grid-cols-[1.05fr_.95fr] md:items-stretch md:gap-6 lg:p-7"
           : "flex h-full flex-col"

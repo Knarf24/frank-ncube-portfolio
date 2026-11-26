@@ -57,7 +57,8 @@ test('keyboard focus set before hydration survives hydration and the 2.5 second 
   const nextLinkLabel = await page.evaluate(
     () => document.activeElement?.getAttribute('aria-label') ?? null,
   )
-  expect(nextLinkLabel).toMatch(/demo video/i)
+  // The next stop in the card is its summary toggle.
+  expect(nextLinkLabel).toMatch(/summary of ShopAccess AI/i)
   await page.evaluate(() => {
     ;(document.activeElement as HTMLElement).dataset.focusProbe = 'original-node'
   })
