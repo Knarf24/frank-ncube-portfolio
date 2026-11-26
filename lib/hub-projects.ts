@@ -32,6 +32,7 @@ const SCREENSHOTS = new Set([
   "gesture-kiosk",
   "security-watch",
   "smart-crosswalk-monitor",
+  "trafficflow",
   "voice-helper",
   "weather-brief",
 ]);
@@ -128,7 +129,7 @@ export function toHubProjects(repos: HubRepo[]): HubProject[] {
       const writeup = hubWriteups[repo.name] ?? null;
       return {
         slug: repo.name,
-        title: titleFromSlug(repo.name),
+        title: writeup?.title ?? titleFromSlug(repo.name),
         description: repo.description ?? "",
         demoUrl: repo.homepage as string,
         codeUrl: repo.html_url,

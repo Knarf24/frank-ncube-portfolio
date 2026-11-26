@@ -16,6 +16,7 @@ const hubData = {
   repos: [
     app("voice-helper", "2026-11-25T00:00:00Z"),
     app("security-watch", "2026-11-01T00:00:00Z"),
+    app("trafficflow", "2026-10-15T00:00:00Z"),
     {
       name: "brain-games-arcade",
       description: "Four brain games in one page.",
@@ -55,15 +56,15 @@ describe("SelectedWork", () => {
     const section = await renderWork();
 
     const headings = within(section).getAllByRole("heading", { level: 3 });
-    // Security Watch is chosen; Brand Monitor and Driver Drowsiness Alert are
-    // missing from this hub data, so the next hub apps fill their places.
+    // TrafficFlow and Security Watch are chosen, in that order; Brand Monitor
+    // is missing from this hub data, so the next hub app fills its place.
     expect(headings.map((heading) => heading.textContent)).toEqual([
       "ShopAccess AI",
       "Triage360",
       "Horizon Desk",
+      "TrafficFlow",
       "Security Watch",
       "Brain Games Arcade",
-      "Voice Helper",
     ]);
     for (const name of ["Streetwise", "EtenMall", "New Idea"]) {
       expect(within(section).queryByRole("heading", { name })).not.toBeInTheDocument();

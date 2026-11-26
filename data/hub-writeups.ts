@@ -3,6 +3,8 @@
 // without an entry here still gets a page, built from its GitHub description.
 
 export type HubWriteup = {
+  // Display name when it differs from the title made from the repo name.
+  title?: string;
   category: string;
   // Month the app went live, shown as a chip on its card.
   date: string;
@@ -170,6 +172,26 @@ export const hubWriteups: Record<string, HubWriteup> = {
     ],
     combines: ["Pedestrian Detection", "Vehicle Detection in a Video frame", "Detect and Recognize Car License Plate", "Background subtraction", "Extract Frames"],
     note: "A data-gathering tool: detections can be wrong, so its output should not be used on its own to accuse anyone.",
+  },
+  trafficflow: {
+    title: "TrafficFlow",
+    category: "Python · ML",
+    date: "Nov 2026",
+    builtWith: "Python (standard library, NumPy and OpenCV) in the browser with Pyodide; models trained with scikit-learn",
+    problem:
+      "Drive-throughs, parking-lot exits and pickup lanes back up onto the street at rush hour, and managers have to guess how many staff each shift needs.",
+    overview:
+      "Simulate a vehicle queue car by car, forecast arrivals with machine learning, plan staff for each shift and count cars from a video. All of the Python runs in the browser, so nothing is uploaded.",
+    features: [
+      "Car-by-car simulation with a fixed number of waiting spaces, so a full lane blocks the stage behind it and real waiting times are measured",
+      "Compare a current and a proposed setup on exactly the same random customers, repeated 10 to 60 times",
+      "Arrival forecast for every 15 minutes: on held-out test weeks the random forest had 7.6% less error than a 4-week average (day-ahead) and 24% less than \"same time last week\" (next 15 minutes)",
+      "Staff planner that simulates every allowed option for each shift against the forecast, tested on 14 held-out days",
+      "Car counter that detects, tracks and counts vehicles in a video with a pretrained NanoDet-Plus model",
+      "Live weather for any city from Open-Meteo",
+    ],
+    combines: ["Vehicle Detection in a Video frame", "Scraping Weather Data"],
+    note: "The forecasting data is synthetic (14 weeks from a documented, made-up process). The scores show the method works on held-out data, not how accurate it would be at a real site. Planning from the ML forecast was not yet cheaper than planning from last week's counts.",
   },
   "voice-helper": {
     category: "Python · Speech",
