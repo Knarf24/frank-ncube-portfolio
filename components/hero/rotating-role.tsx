@@ -41,7 +41,7 @@ export function RotatingRole({
 
   if (shouldReduceMotion) {
     return (
-      <span className="text-[var(--accent)]">
+      <span className="font-semibold text-[#67e8f9]">
         {roles[0]}
         {suffix}
       </span>
@@ -49,7 +49,7 @@ export function RotatingRole({
   }
 
   return (
-    <span className="relative inline-grid min-w-[16ch] align-bottom text-[var(--accent)]">
+    <span className="relative inline-grid min-w-[16ch] align-bottom font-semibold text-[#67e8f9]">
       <AnimatePresence mode="wait" initial={false}>
         <motion.span
           key={roles[index]}

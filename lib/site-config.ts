@@ -8,6 +8,7 @@ export const siteConfig = {
   github: "https://github.com/Knarf24",
   linkedin: "https://www.linkedin.com/in/frank-ncube-417a52338",
   devpost: "https://devpost.com/Knarf24",
+  projectHub: "https://knarf24.github.io/project-hub/",
   sourceRepo: "https://github.com/Knarf24/frank-ncube-portfolio",
   location: "Salisbury, North Carolina",
 } as const;

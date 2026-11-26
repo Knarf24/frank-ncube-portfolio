@@ -6,7 +6,7 @@ export function ImageLabel({ caption }: { caption?: string }) {
   if (!caption) return null;
 
   return (
-    <span className="absolute left-3 top-3 hidden max-w-[calc(100%-1.5rem)] rounded-full bg-[color:rgba(12,11,9,0.82)] px-2.5 py-1 text-xs text-[var(--text)] sm:block">
+    <span className="absolute left-3 top-3 hidden max-w-[calc(100%-1.5rem)] rounded-full bg-[color:rgba(17,24,39,0.82)] px-2.5 py-1 text-xs text-white sm:block">
       {caption}
     </span>
   );

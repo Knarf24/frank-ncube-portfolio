@@ -3,9 +3,11 @@
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
+import { siteConfig } from "@/lib/site-config";
 
 const links = [
   ["Work", "/#work"],
+  ["Live apps", "/#live-apps"],
   ["About", "/#about"],
   ["Experience", "/#experience"],
   ["Contact", "/#contact"],
@@ -22,7 +24,7 @@ export function MobileMenu() {
         aria-controls="mobile-navigation"
         aria-expanded={open}
         onClick={() => setOpen((value) => !value)}
-        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-[var(--border)] text-[var(--text)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--accent)]"
+        className="inline-flex min-h-11 min-w-11 items-center justify-center rounded-full border border-white/30 text-white transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--accent)]"
       >
         {open ? (
           <X aria-hidden="true" size={18} strokeWidth={1.75} />
@@ -49,6 +51,17 @@ export function MobileMenu() {
                 </Link>
               </li>
             ))}
+            <li>
+              <a
+                href={siteConfig.projectHub}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => setOpen(false)}
+                className="flex min-h-11 items-center rounded-xl px-3 py-2 text-base font-semibold text-[var(--accent)] transition-colors hover:bg-[var(--accent-soft)]"
+              >
+                Project Hub <span aria-hidden="true" className="ml-1">↗</span>
+              </a>
+            </li>
           </ul>
         </nav>
       ) : null}

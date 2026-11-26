@@ -10,7 +10,7 @@ const linkClassName =
   "inline-flex min-h-11 items-center text-sm font-medium text-[var(--text)] underline decoration-[var(--border)] underline-offset-4 transition-colors hover:text-[var(--accent)] hover:decoration-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:[outline-color:var(--accent)]";
 
 const neighborClassName =
-  "group flex min-h-11 flex-col rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)] px-5 py-4 transition-[border-color] hover:border-[color:rgba(120,224,156,0.38)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--accent)]";
+  "group flex min-h-11 flex-col rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)] px-5 py-4 transition-[border-color] hover:border-[var(--accent-line)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--accent)]";
 
 export function CaseStudyFooter({ project }: CaseStudyFooterProps) {
   const adjacent = getAdjacentProjects(project.slug);

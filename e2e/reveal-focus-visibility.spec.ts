@@ -202,7 +202,8 @@ for (const vp of VIEWPORTS) {
       )
 
       let landedAt = -1
-      for (let i = 0; i < 8 && landedAt < 0; i++) {
+      // Allows for the Project Hub cards that sit between the two sections.
+      for (let i = 0; i < 40 && landedAt < 0; i++) {
         await page.keyboard.press(nextKey)
         landedAt = await page.evaluate(() => {
           const v = (window as unknown as { __v: Sampler }).__v

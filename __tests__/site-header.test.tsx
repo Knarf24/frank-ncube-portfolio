@@ -6,10 +6,10 @@ import { SiteHeader } from "@/components/site-header";
 afterEach(cleanup);
 
 describe("SiteHeader", () => {
-  it("links the FN mark home and exposes the approved primary navigation", () => {
+  it("links the name mark home and exposes the primary navigation and Project Hub", () => {
     render(<SiteHeader />);
 
-    expect(screen.getByRole("link", { name: "FN" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: "Frank Ncube" })).toHaveAttribute(
       "href",
       "/#top",
     );
@@ -32,6 +32,12 @@ describe("SiteHeader", () => {
     expect(
       within(navigation).getByRole("link", { name: "Contact" }),
     ).toHaveAttribute("href", "/#contact");
+    expect(
+      within(navigation).getByRole("link", { name: "Live apps" }),
+    ).toHaveAttribute("href", "/#live-apps");
+    expect(
+      screen.getByRole("link", { name: "Project Hub (opens in a new tab)" }),
+    ).toHaveAttribute("href", "https://knarf24.github.io/project-hub/");
   });
 
   it("updates the mobile menu state and closes after navigation", async () => {

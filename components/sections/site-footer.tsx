@@ -12,6 +12,17 @@ export function SiteFooter() {
         <p>{siteConfig.location}</p>
         <p>
           <a
+            href={siteConfig.projectHub}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Project Hub (opens in a new tab)"
+            className="inline-flex min-h-11 items-center font-medium text-[var(--accent)] hover:underline"
+          >
+            Project Hub ↗
+          </a>
+        </p>
+        <p>
+          <a
             href={siteConfig.sourceRepo}
             target="_blank"
             rel="noreferrer"

@@ -1,8 +1,10 @@
 import Link from "next/link";
 import { MobileMenu } from "@/components/mobile-menu";
+import { siteConfig } from "@/lib/site-config";
 
 const links = [
   ["Work", "/#work"],
+  ["Live apps", "/#live-apps"],
   ["About", "/#about"],
   ["Experience", "/#experience"],
   ["Contact", "/#contact"],
@@ -10,21 +12,27 @@ const links = [
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-50 border-b border-transparent bg-[color:rgba(12,11,9,0.84)] backdrop-blur-xl">
-      <div className="mx-auto flex max-w-[var(--max-width)] items-center justify-between px-5 py-4 md:px-8">
+    <header className="sticky top-0 z-50 bg-[color:rgba(30,27,75,0.9)] text-white backdrop-blur-xl">
+      <div className="mx-auto flex max-w-[var(--max-width)] items-center justify-between px-5 py-3 md:px-8">
         <Link
           href="/#top"
-          className="inline-flex min-h-11 min-w-11 items-center font-medium tracking-wide text-[var(--text)] transition-colors hover:text-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--accent)]"
+          className="inline-flex min-h-11 items-center gap-2.5 font-bold tracking-tight text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:#67e8f9]"
         >
-          FN
+          <span
+            aria-hidden="true"
+            className="grid h-8 w-8 place-items-center rounded-[0.6rem] bg-[linear-gradient(135deg,#818cf8,#67e8f9)] text-xs font-extrabold text-[#1e1b4b]"
+          >
+            FN
+          </span>
+          Frank Ncube
         </Link>
 
         <nav aria-label="Primary navigation" className="hidden md:block">
-          <ul className="flex items-center gap-4 text-sm text-[var(--muted)] lg:gap-6">
+          <ul className="flex items-center gap-4 text-sm font-medium text-white/80 lg:gap-6">
             {links.map(([label, href]) => (
               <li key={href}>
                 <Link
-                  className="inline-flex min-h-11 items-center px-1 transition-colors hover:text-[var(--text)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:var(--accent)]"
+                  className="inline-flex min-h-11 items-center px-1 transition-colors hover:text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:#67e8f9]"
                   href={href}
                 >
                   {label}
@@ -34,9 +42,15 @@ export function SiteHeader() {
           </ul>
         </nav>
 
-        <div className="hidden rounded-full border border-[var(--border)] px-3 py-1.5 text-xs text-[var(--muted)] md:block">
-          Open to internships
-        </div>
+        <a
+          href={siteConfig.projectHub}
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Project Hub (opens in a new tab)"
+          className="hidden min-h-9 items-center rounded-full border border-white/25 bg-white/10 px-4 text-sm font-medium text-white transition-colors hover:bg-white/20 md:inline-flex"
+        >
+          Project Hub <span aria-hidden="true" className="ml-1">↗</span>
+        </a>
 
         <MobileMenu />
       </div>

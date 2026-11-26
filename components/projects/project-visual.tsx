@@ -14,7 +14,7 @@ function CommerceVisual() {
           {['Tenant A', 'Tenant B'].map((tenant) => (
             <div
               key={tenant}
-              className="rounded-lg border border-[var(--border)] bg-[color:rgba(12,11,9,0.7)] px-3 py-3 text-center font-mono text-xs text-[var(--muted)]"
+              className="rounded-lg border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-3 text-center font-mono text-xs text-[var(--muted)]"
             >
               {tenant}
             </div>
@@ -30,7 +30,7 @@ function CommerceVisual() {
           <path d="m27 43 5 5-5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
 
-        <div className="rounded-xl border border-[color:rgba(120,224,156,0.42)] bg-[var(--accent-soft)] px-3 py-5 text-center text-sm font-medium text-[var(--text)]">
+        <div className="rounded-xl border border-[var(--accent-line)] bg-[var(--accent-soft)] px-3 py-5 text-center text-sm font-medium text-[var(--text)]">
           Shared platform
         </div>
       </div>
@@ -39,7 +39,7 @@ function CommerceVisual() {
         {commerceSystems.map((system) => (
           <div
             key={system}
-            className="rounded-lg border border-[var(--border)] bg-[color:rgba(12,11,9,0.62)] px-2 py-2 text-center font-mono text-xs text-[var(--muted)]"
+            className="rounded-lg border border-[var(--border)] bg-[var(--surface-elevated)] px-2 py-2 text-center font-mono text-xs text-[var(--muted)]"
           >
             {system}
           </div>
@@ -60,8 +60,8 @@ function StreetwiseVisual() {
             key={step}
             className={`relative rounded-xl border px-4 py-3 text-center text-xs ${
               index === 1
-                ? "border-[color:rgba(120,224,156,0.42)] bg-[var(--accent-soft)] text-[var(--text)]"
-                : "border-[var(--border)] bg-[color:rgba(12,11,9,0.7)] text-[var(--muted)]"
+                ? "border-[var(--accent-line)] bg-[var(--accent-soft)] text-[var(--text)]"
+                : "border-[var(--border)] bg-[var(--surface-elevated)] text-[var(--muted)]"
             }`}
           >
             {step}

@@ -43,7 +43,11 @@ npm run test:e2e
 
 ## Current implementation (November 2026 redesign)
 
-The site follows the November 2026 redesign, an editorial bento layout with a warm near-black palette and a restrained green accent. The August 2026 specification and plan under `docs/superpowers/` are historical (see `AGENTS.md`).
+The site follows the November 2026 redesign, an editorial bento layout. Its "Hub Match" look (indigo-to-teal hero, light cards, Inter, automatic dark mode) is shared with the [Project Hub](https://knarf24.github.io/project-hub/).
+
+### Project Hub connection
+
+The homepage's **Live from my Project Hub** section and the live-app count in the hero stats come from the hub's `projects.json` (`lib/hub-projects.ts`), re-fetched at most every 6 hours (falling back to the GitHub API, then to just the hub link). An app appears when its GitHub repo is public, has a description and a Website URL; the `featured` topic puts it first and `hide-from-showcase` hides it. Screenshots live in `public/images/hub/<repo>.webp`; apps without one get a gradient title tile. Set `HUB_DATA_URL` to point at a local copy for offline development. The August 2026 specification and plan under `docs/superpowers/` are historical (see `AGENTS.md`).
 
 ### Routes
 
