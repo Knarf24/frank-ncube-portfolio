@@ -21,7 +21,7 @@ export function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute -right-48 -top-48 h-[36rem] w-[36rem] rounded-full bg-[radial-gradient(circle,rgba(103,232,249,0.25),transparent_65%)]"
       />
-      <div className="mx-auto grid w-full max-w-[var(--max-width)] items-center gap-8 sm:gap-14 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] lg:gap-8 xl:gap-14">
+      <div className="mx-auto grid w-full max-w-[var(--max-width)] items-center gap-8 lg:items-stretch sm:gap-14 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] lg:gap-8 xl:gap-14">
         <div className="relative z-10 max-w-3xl">
           <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-white/85">
             <span aria-hidden="true" className="h-2 w-2 rounded-full bg-[#4ade80] shadow-[0_0_0_4px_rgba(74,222,128,0.25)]" />
@@ -79,7 +79,10 @@ export function Hero() {
           </ul>
         </div>
 
-        <div className="relative z-0 mx-auto w-full max-w-[220px] sm:max-w-[300px] lg:max-w-[380px] lg:-translate-x-4 lg:justify-self-center xl:max-w-[420px] xl:-translate-x-6">
+        {/* On large screens this column stretches to the text's height; the
+            bottom padding equals the profile row under the divider, so the
+            photo ends on the divider line. */}
+        <div className="relative z-0 mx-auto w-full max-w-[260px] sm:max-w-[340px] lg:mx-0 lg:max-w-[460px] lg:self-stretch lg:justify-self-end lg:pt-1.5 lg:pb-[calc(2.75rem+1px)]">
           <HeroPortrait />
         </div>
       </div>

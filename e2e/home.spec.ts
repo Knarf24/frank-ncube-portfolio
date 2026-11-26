@@ -38,7 +38,7 @@ test('hero portrait renders with meaningful alt text', async ({ page }) => {
   await expect(portrait).toBeVisible()
   await expect(portrait).toHaveAttribute(
     'src',
-    /frank-ncube-portrait\.png/,
+    /frank-ncube-portrait-cutout\.webp/,
   )
 })
 
