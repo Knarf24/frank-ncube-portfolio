@@ -18,10 +18,17 @@ describe("SiteHeader", () => {
       name: "Primary navigation",
     });
 
-    expect(within(navigation).getByRole("link", { name: "Work" })).toHaveAttribute(
+    expect(within(navigation).getByRole("link", { name: "Home" })).toHaveAttribute(
+      "href",
+      "/#top",
+    );
+    expect(within(navigation).getByRole("link", { name: "Projects" })).toHaveAttribute(
       "href",
       "/#work",
     );
+    expect(
+      within(navigation).getByRole("link", { name: "Education" }),
+    ).toHaveAttribute("href", "/#education");
     expect(within(navigation).getByRole("link", { name: "About" })).toHaveAttribute(
       "href",
       "/#about",
@@ -32,9 +39,6 @@ describe("SiteHeader", () => {
     expect(
       within(navigation).getByRole("link", { name: "Contact" }),
     ).toHaveAttribute("href", "/#contact");
-    expect(
-      within(navigation).getByRole("link", { name: "Live apps" }),
-    ).toHaveAttribute("href", "/#live-apps");
     expect(
       screen.getByRole("link", { name: "Project Hub (opens in a new tab)" }),
     ).toHaveAttribute("href", "https://knarf24.github.io/project-hub/");
@@ -59,7 +63,7 @@ describe("SiteHeader", () => {
     const mobileNavigation = screen.getByRole("navigation", {
       name: "Mobile navigation",
     });
-    await user.click(within(mobileNavigation).getByRole("link", { name: "Work" }));
+    await user.click(within(mobileNavigation).getByRole("link", { name: "Projects" }));
 
     expect(
       screen.queryByRole("navigation", { name: "Mobile navigation" }),

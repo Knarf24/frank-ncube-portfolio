@@ -1,14 +1,15 @@
 import { Hero } from "@/components/hero/hero";
+import { HeroStats } from "@/components/hero/hero-stats";
 import { SelectedWork } from "@/components/projects/selected-work";
-import { AboutExperience } from "@/components/sections/about-experience";
+import { AboutSection } from "@/components/sections/about-section";
 import { EducationAchievements } from "@/components/sections/education-achievements";
+import { ExperienceSection } from "@/components/sections/experience-section";
 import { TechnicalToolkit } from "@/components/sections/technical-toolkit";
 import { ContactSection } from "@/components/sections/contact-section";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { Reveal } from "@/components/reveal";
-import { HubApps } from "@/components/sections/hub-apps";
-import { HeroStats } from "@/components/hero/hero-stats";
 
+// Order follows the menu: Home, About, Education, Experience, Projects, Contact.
 export default function Home() {
   return (
     <>
@@ -16,16 +17,16 @@ export default function Home() {
         <Hero />
         <HeroStats />
         <Reveal>
-          <SelectedWork />
-        </Reveal>
-        <Reveal>
-          <HubApps />
-        </Reveal>
-        <Reveal>
-          <AboutExperience />
+          <AboutSection />
         </Reveal>
         <Reveal>
           <EducationAchievements />
+        </Reveal>
+        <Reveal>
+          <ExperienceSection />
+        </Reveal>
+        <Reveal>
+          <SelectedWork />
         </Reveal>
         <Reveal>
           <TechnicalToolkit />

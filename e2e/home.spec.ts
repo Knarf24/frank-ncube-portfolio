@@ -79,7 +79,7 @@ test('header navigation from a non-home route returns to homepage sections', asy
 }) => {
   await page.goto('/projects')
 
-  await page.getByRole('link', { name: 'Work', exact: true }).click()
+  await page.getByRole('link', { name: 'Projects', exact: true }).click()
   await expect(page).toHaveURL(/\/#work$/)
   await expect(page.locator('#work')).toBeAttached()
 
@@ -174,7 +174,10 @@ test('homepage lists projects in the recruiter-facing order', async ({
 }) => {
   await page.goto('/')
 
-  await expect(page.locator('section#work h3')).toHaveText([
+  // Case studies come first in the approved order; live apps from the
+  // Project Hub follow them in the same grid.
+  const headings = await page.locator('section#work h3').allTextContents()
+  expect(headings.slice(0, 4)).toEqual([
     'ShopAccess AI',
     'Triage360',
     'Horizon Desk',

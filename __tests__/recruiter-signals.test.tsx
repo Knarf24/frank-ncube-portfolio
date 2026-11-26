@@ -5,7 +5,7 @@ import { generateMetadata } from "@/app/projects/[slug]/page";
 import { generateMetadata as projectsMetadata } from "@/app/projects/page";
 import { generateMetadata as resumeMetadata } from "@/app/resume/page";
 import { ProjectCard } from "@/components/projects/project-card";
-import { AboutExperience } from "@/components/sections/about-experience";
+import { ExperienceSection } from "@/components/sections/experience-section";
 import { SiteFooter } from "@/components/sections/site-footer";
 import { experience } from "@/data/experience";
 import { projects } from "@/data/projects";
@@ -33,7 +33,7 @@ describe("experience entries", () => {
   });
 
   it("renders the dates on the homepage", () => {
-    render(<AboutExperience />);
+    render(<ExperienceSection />);
 
     expect(screen.getByText("2024 — Present")).toBeInTheDocument();
     expect(screen.getAllByText("2026 — Present").length).toBeGreaterThanOrEqual(1);

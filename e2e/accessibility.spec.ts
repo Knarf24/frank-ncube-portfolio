@@ -153,7 +153,7 @@ test("mobile menu toggle is keyboard operable and exposes aria-expanded", async 
   const nav = page.locator("#mobile-navigation");
   await expect(nav).toBeVisible();
 
-  const workLink = nav.getByRole("link", { name: "Work", exact: true });
+  const workLink = nav.getByRole("link", { name: "Projects", exact: true });
   const linkBox = await workLink.boundingBox();
   expect(linkBox!.height).toBeGreaterThanOrEqual(44);
 

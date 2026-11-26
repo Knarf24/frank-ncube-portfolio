@@ -203,7 +203,8 @@ test('homepage leads with ShopAccess AI and moves Streetwise to the archive', as
   const work = page.locator('#work')
   const titles = await work.getByRole('heading', { level: 3 }).allTextContents()
 
-  expect(titles).toEqual([
+  // The live apps from the Project Hub follow the four case studies.
+  expect(titles.slice(0, 4)).toEqual([
     'ShopAccess AI',
     'Triage360',
     'Horizon Desk',

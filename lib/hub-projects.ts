@@ -3,6 +3,7 @@
 // projects.json every 6 hours from the GitHub repos' About fields, so a new
 // project appears here without editing this repository.
 
+import { hubWriteups, type HubWriteup } from "@/data/hub-writeups";
 import { siteConfig } from "@/lib/site-config";
 
 export const HUB_URL = siteConfig.projectHub;
@@ -30,7 +31,9 @@ const SCREENSHOTS = new Set([
   "face-attendance",
   "gesture-kiosk",
   "security-watch",
+  "smart-crosswalk-monitor",
   "voice-helper",
+  "weather-brief",
 ]);
 
 // Topics that describe the platform rather than the app; not shown as tags.
@@ -53,6 +56,7 @@ export type HubRepo = {
   language?: string | null;
   html_url: string;
   pushed_at?: string;
+  created_at?: string;
 };
 
 export type HubProject = {
@@ -64,7 +68,18 @@ export type HubProject = {
   tags: string[];
   featured: boolean;
   image: string | null;
+  category: string;
+  date: string;
+  writeup: HubWriteup | null;
 };
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function monthYear(iso: string | undefined): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  return Number.isNaN(d.getTime()) ? "" : `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+}
 
 function titleFromSlug(slug: string): string {
   return slug
@@ -110,6 +125,7 @@ export function toHubProjects(repos: HubRepo[]): HubProject[] {
         .filter((topic) => !HIDDEN_TOPICS.has(topic))
         .slice(0, 3)
         .map((topic) => topic.replace(/-/g, " "));
+      const writeup = hubWriteups[repo.name] ?? null;
       return {
         slug: repo.name,
         title: titleFromSlug(repo.name),
@@ -121,6 +137,9 @@ export function toHubProjects(repos: HubRepo[]): HubProject[] {
         image: SCREENSHOTS.has(repo.name)
           ? `/images/hub/${repo.name}.webp`
           : null,
+        category: writeup?.category ?? (tags[0] ? tags[0].replace(/\b\w/g, (c) => c.toUpperCase()) : "Live app"),
+        date: writeup?.date ?? monthYear(repo.created_at ?? repo.pushed_at),
+        writeup,
       };
     });
 }
@@ -150,4 +169,8 @@ export async function getHubProjects(): Promise<HubProject[]> {
       return [];
     }
   }
+}
+
+export async function getHubProject(slug: string): Promise<HubProject | undefined> {
+  return (await getHubProjects()).find((project) => project.slug === slug);
 }

@@ -8,7 +8,7 @@ export async function HeroStats() {
   const liveApps = (await getHubProjects()).length;
   const stats = [
     ...(liveApps > 0
-      ? [{ value: String(liveApps), label: "live apps on my Project Hub", href: "#live-apps" }]
+      ? [{ value: String(liveApps), label: "live apps on my Project Hub", href: "#work" }]
       : []),
     { value: String(getFeaturedProjects().length), label: "in-depth case studies", href: "#work" },
     { value: education.gpa.split(" ")[0], label: "GPA, B.S. Computer Information Sciences" },
