@@ -5,11 +5,26 @@ import { SectionHeading } from "@/components/section-heading";
 import { getHubProjects, HUB_URL } from "@/lib/hub-projects";
 import { getFeaturedProjects } from "@/lib/project-utils";
 
-// Every project in one grid: the case studies first, in the approved order,
-// then the live apps from the Project Hub (featured first, newest next).
+// The homepage shows only the strongest work: three case studies and three
+// live apps. The full catalogue lives on the Project Hub.
+const SHOWCASE_CASE_STUDIES = ["shopaccess-ai", "triage360", "horizon-desk"];
+const SHOWCASE_APPS = ["security-watch", "brand-monitor", "driver-drowsiness-alert"];
+const SHOWCASE_SIZE = 6;
+
 export async function SelectedWork() {
-  const caseStudies = getFeaturedProjects();
-  const hubApps = await getHubProjects();
+  const caseStudies = getFeaturedProjects().filter((project) =>
+    SHOWCASE_CASE_STUDIES.includes(project.slug),
+  );
+  const allApps = await getHubProjects();
+  // The chosen apps in the order above, topped up from the rest of the hub
+  // if one of them is ever missing from the hub's data.
+  const chosen = SHOWCASE_APPS.flatMap((slug) =>
+    allApps.filter((app) => app.slug === slug),
+  );
+  const hubApps = [
+    ...chosen,
+    ...allApps.filter((app) => !SHOWCASE_APPS.includes(app.slug)),
+  ].slice(0, Math.max(0, SHOWCASE_SIZE - caseStudies.length));
 
   const items: { item: WorkItem; slug?: string }[] = [
     ...caseStudies.map((project) => ({
@@ -70,33 +85,22 @@ export async function SelectedWork() {
           ))}
         </div>
 
-        <div className="mt-8 flex flex-col items-start justify-between gap-5 rounded-2xl bg-[image:var(--hub-gradient)] px-6 py-6 text-white sm:flex-row sm:items-center sm:px-8">
-          <div>
-            <p className="text-lg font-semibold">
-              Browse everything on my Project Hub
-            </p>
-            <p className="mt-1 text-sm text-white/80">
-              Search, filter by category and open any live demo. New apps appear
-              here on their own.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <Link
-              href="/projects"
-              className="inline-flex min-h-11 items-center rounded-xl border border-white/30 px-5 text-sm font-semibold text-white hover:bg-white/10"
-            >
-              View all projects
-            </Link>
-            <a
-              href={HUB_URL}
-              target="_blank"
-              rel="noreferrer"
-              aria-label="Open the Project Hub (opens in a new tab)"
-              className="inline-flex min-h-11 shrink-0 items-center rounded-xl bg-white px-5 text-sm font-semibold text-[#312e81] transition-transform hover:-translate-y-0.5"
-            >
-              Open Project Hub <span aria-hidden="true" className="ml-1">↗</span>
-            </a>
-          </div>
+        <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+          <a
+            href={HUB_URL}
+            target="_blank"
+            rel="noreferrer"
+            aria-label="See all projects on the Project Hub (opens in a new tab)"
+            className="inline-flex min-h-12 items-center justify-center rounded-xl bg-[image:var(--hub-gradient)] px-7 text-sm font-semibold text-white shadow-[var(--card-shadow)] transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
+          >
+            See all projects <span aria-hidden="true" className="ml-1.5">↗</span>
+          </a>
+          <Link
+            href="/projects"
+            className="inline-flex min-h-12 items-center justify-center rounded-xl border border-[var(--border)] bg-[var(--surface)] px-6 text-sm font-semibold text-[var(--text)] transition-colors hover:border-[var(--accent-line)] hover:text-[var(--accent)]"
+          >
+            View all case studies
+          </Link>
         </div>
       </div>
     </section>

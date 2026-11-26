@@ -3,8 +3,19 @@ import userEvent from "@testing-library/user-event";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { SelectedWork } from "@/components/projects/selected-work";
 
+const app = (name: string, pushed_at: string) => ({
+  name,
+  description: `The ${name} app.`,
+  homepage: `https://knarf24.github.io/${name}/`,
+  topics: [],
+  html_url: `https://github.com/Knarf24/${name}`,
+  pushed_at,
+});
+
 const hubData = {
   repos: [
+    app("voice-helper", "2026-11-25T00:00:00Z"),
+    app("security-watch", "2026-11-01T00:00:00Z"),
     {
       name: "brain-games-arcade",
       description: "Four brain games in one page.",
@@ -40,21 +51,36 @@ async function renderWork() {
 }
 
 describe("SelectedWork", () => {
-  it("lists the case studies first, in the approved order, then the hub apps", async () => {
+  it("shows six projects: three case studies, the chosen apps, then the rest of the hub", async () => {
     const section = await renderWork();
 
     const headings = within(section).getAllByRole("heading", { level: 3 });
+    // Security Watch is chosen; Brand Monitor and Driver Drowsiness Alert are
+    // missing from this hub data, so the next hub apps fill their places.
     expect(headings.map((heading) => heading.textContent)).toEqual([
       "ShopAccess AI",
       "Triage360",
       "Horizon Desk",
-      "EtenMall",
+      "Security Watch",
       "Brain Games Arcade",
-      "New Idea",
+      "Voice Helper",
     ]);
+    for (const name of ["Streetwise", "EtenMall", "New Idea"]) {
+      expect(within(section).queryByRole("heading", { name })).not.toBeInTheDocument();
+    }
+  });
+
+  it("links to every project on the Project Hub and to the case studies", async () => {
+    const section = await renderWork();
+
     expect(
-      within(section).queryByRole("heading", { name: "Streetwise" }),
-    ).not.toBeInTheDocument();
+      within(section).getByRole("link", {
+        name: "See all projects on the Project Hub (opens in a new tab)",
+      }),
+    ).toHaveAttribute("href", "https://knarf24.github.io/project-hub/");
+    expect(
+      within(section).getByRole("link", { name: "View all case studies" }),
+    ).toHaveAttribute("href", "/projects");
   });
 
   it("links case studies and hub apps to their own pages, with chips", async () => {
@@ -68,11 +94,11 @@ describe("SelectedWork", () => {
       within(section).getByRole("link", { name: "Brain Games Arcade: read more and try it" }),
     ).toHaveAttribute("href", "/apps/brain-games-arcade");
 
-    const newIdea = within(section)
-      .getByRole("link", { name: "New Idea: read more and try it" })
+    const security = within(section)
+      .getByRole("link", { name: "Security Watch: read more and try it" })
       .closest("article") as HTMLElement;
-    expect(within(newIdea).getByText("Python")).toBeInTheDocument();
-    expect(within(newIdea).getByText("Dec 2026")).toBeInTheDocument();
+    expect(within(security).getByText("Python · Computer vision")).toBeInTheDocument();
+    expect(within(security).getByText("Nov 2026")).toBeInTheDocument();
   });
 
   it("expands a card's summary in place", async () => {

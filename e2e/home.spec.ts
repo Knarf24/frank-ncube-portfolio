@@ -174,15 +174,18 @@ test('homepage lists projects in the recruiter-facing order', async ({
 }) => {
   await page.goto('/')
 
-  // Case studies come first in the approved order; live apps from the
-  // Project Hub follow them in the same grid.
+  // The six strongest: three case studies, then three live apps. The rest
+  // are on the Project Hub.
   const headings = await page.locator('section#work h3').allTextContents()
-  expect(headings.slice(0, 4)).toEqual([
+  expect(headings).toHaveLength(6)
+  expect(headings.slice(0, 3)).toEqual([
     'ShopAccess AI',
     'Triage360',
     'Horizon Desk',
-    'EtenMall',
   ])
+  await expect(
+    page.locator('#work').getByRole('link', { name: /See all projects on the Project Hub/ }),
+  ).toHaveAttribute('href', 'https://knarf24.github.io/project-hub/')
 })
 
 test('experience entries show their dates', async ({ page }) => {
