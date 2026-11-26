@@ -50,4 +50,11 @@ describe("toHubProjects", () => {
     expect(project.image).toBe("/images/hub/brain-games-arcade.webp");
     expect(toHubProjects([repo({ name: "new-thing" })])[0].image).toBeNull();
   });
+
+  it("uses the write-up's title when the repo name can't spell it", () => {
+    const [project] = toHubProjects([repo({ name: "trafficflow" })]);
+    expect(project.title).toBe("TrafficFlow");
+    expect(project.image).toBe("/images/hub/trafficflow.webp");
+    expect(project.writeup?.note).toMatch(/synthetic/);
+  });
 });

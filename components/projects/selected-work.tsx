@@ -8,7 +8,7 @@ import { getFeaturedProjects } from "@/lib/project-utils";
 // The homepage shows only the strongest work: three case studies and three
 // live apps. The full catalogue lives on the Project Hub.
 const SHOWCASE_CASE_STUDIES = ["shopaccess-ai", "triage360", "horizon-desk"];
-const SHOWCASE_APPS = ["security-watch", "brand-monitor", "driver-drowsiness-alert"];
+const SHOWCASE_APPS = ["trafficflow", "security-watch", "brand-monitor"];
 const SHOWCASE_SIZE = 6;
 
 export async function SelectedWork() {
