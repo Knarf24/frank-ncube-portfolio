@@ -192,8 +192,8 @@ test('experience entries show their dates', async ({ page }) => {
   await page.goto('/')
 
   const experience = page.locator('#experience')
-  await expect(experience.getByText('2024 — Present')).toBeVisible()
-  await expect(experience.getByText('2026 — Present').first()).toBeVisible()
+  await expect(experience.getByText('May 2024 — Present')).toBeVisible()
+  await expect(experience.getByText('Feb 2026 — Present')).toBeVisible()
 })
 
 test('the footer links to the portfolio source repository', async ({ page }) => {

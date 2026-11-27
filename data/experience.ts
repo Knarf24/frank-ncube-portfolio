@@ -10,18 +10,19 @@ export const experience: ExperienceItem[] = [
       "Designing and building software products, AI systems, websites, and production-facing digital experiences.",
   },
   {
-    title: "Wi-Fi hotspot founder & operator",
-    organization: "Community hotspot business",
+    title: "Founder & operator, Frank WiFi",
+    organization: "Starlink-powered community internet service",
     location: "Gweru, Zimbabwe",
-    period: "2024 — Present",
+    period: "May 2024 — Present",
     kind: "Entrepreneurship",
     summary:
-      "Worked on network deployment, voucher-based access, operations, and monitoring, while coordinating approximately 30 people across sales, marketing, installation, and maintenance to support community connectivity.",
+      "Founded and operate a voucher-based internet service for 100–200 households in an underserved community, coordinating a team of about 30 people across sales, installation, marketing, and maintenance and troubleshooting the network remotely.",
   },
   {
     title: "Math & science tutor",
-    organization: "Livingstone College",
-    period: "2026 — Present",
+    organization: "Livingstone College Academic Support",
+    location: "Salisbury, NC",
+    period: "Feb 2026 — Present",
     kind: "Campus",
     summary:
       "Supporting students through academic problem-solving, structured explanations, and one-on-one learning.",
