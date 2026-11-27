@@ -21,13 +21,16 @@ const parent = Promise.resolve({
 
 describe("experience entries", () => {
   it("carry the résumé dates and the résumé's team-size wording", () => {
-    const hotspot = experience.find((item) => item.title.includes("Wi-Fi"));
+    const hotspot = experience.find((item) => item.title.includes("Frank WiFi"));
     const tutor = experience.find((item) => item.title.includes("tutor"));
 
-    expect(hotspot?.period).toBe("2024 — Present");
-    expect(tutor?.period).toBe("2026 — Present");
+    expect(hotspot?.period).toBe("May 2024 — Present");
+    expect(tutor?.period).toBe("Feb 2026 — Present");
     expect(hotspot?.summary).toContain(
-      "approximately 30 people across sales, marketing, installation, and maintenance",
+      "100–200 households",
+    );
+    expect(hotspot?.summary).toContain(
+      "about 30 people across sales, installation, marketing, and maintenance",
     );
     expect(hotspot?.summary).not.toMatch(/employees/i);
   });
@@ -35,8 +38,8 @@ describe("experience entries", () => {
   it("renders the dates on the homepage", () => {
     render(<ExperienceSection />);
 
-    expect(screen.getByText("2024 — Present")).toBeInTheDocument();
-    expect(screen.getAllByText("2026 — Present").length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText("May 2024 — Present")).toBeInTheDocument();
+    expect(screen.getByText("Feb 2026 — Present")).toBeInTheDocument();
   });
 });
 

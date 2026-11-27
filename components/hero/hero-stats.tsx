@@ -12,7 +12,7 @@ export async function HeroStats() {
       : []),
     { value: String(getFeaturedProjects().length), label: "in-depth case studies", href: "#work" },
     { value: education.gpa.split(" ")[0], label: "GPA, B.S. Computer Information Sciences" },
-    { value: "~30", label: "people coordinated in my hotspot business", href: "#experience" },
+    { value: "~30", label: "people coordinated at Frank WiFi", href: "#experience" },
   ];
 
   return (
