@@ -17,6 +17,7 @@ const hubData = {
     app("voice-helper", "2026-11-25T00:00:00Z"),
     app("security-watch", "2026-11-01T00:00:00Z"),
     app("trafficflow", "2026-10-15T00:00:00Z"),
+    app("research-compass", "2026-10-01T00:00:00Z"),
     {
       name: "brain-games-arcade",
       description: "Four brain games in one page.",
@@ -56,17 +57,17 @@ describe("SelectedWork", () => {
     const section = await renderWork();
 
     const headings = within(section).getAllByRole("heading", { level: 3 });
-    // TrafficFlow and Security Watch are chosen, in that order; Brand Monitor
-    // is missing from this hub data, so the next hub app fills its place.
+    // Research Compass, TrafficFlow and Security Watch are chosen, in that
+    // order, ahead of newer and featured hub apps.
     expect(headings.map((heading) => heading.textContent)).toEqual([
       "ShopAccess AI",
       "Triage360",
       "Horizon Desk",
+      "Research Compass",
       "TrafficFlow",
       "Security Watch",
-      "Brain Games Arcade",
     ]);
-    for (const name of ["Streetwise", "EtenMall", "New Idea"]) {
+    for (const name of ["Streetwise", "EtenMall", "New Idea", "Brain Games Arcade"]) {
       expect(within(section).queryByRole("heading", { name })).not.toBeInTheDocument();
     }
   });
@@ -92,8 +93,8 @@ describe("SelectedWork", () => {
       "/projects/triage360",
     );
     expect(
-      within(section).getByRole("link", { name: "Brain Games Arcade: read more and try it" }),
-    ).toHaveAttribute("href", "/apps/brain-games-arcade");
+      within(section).getByRole("link", { name: "Research Compass: read more and try it" }),
+    ).toHaveAttribute("href", "/apps/research-compass");
 
     const security = within(section)
       .getByRole("link", { name: "Security Watch: read more and try it" })

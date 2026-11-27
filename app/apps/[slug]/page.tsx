@@ -157,23 +157,27 @@ export default async function HubAppPage(props: PageProps<"/apps/[slug]">) {
                     </>
                   ) : null}
 
-                  <h2 className="mt-10 text-xl font-semibold text-[var(--text)]">
-                    Built by combining
-                  </h2>
-                  <p className="mt-3 leading-7 text-[var(--muted)]">
-                    {writeup.combines.length} GeeksforGeeks Python projects, turned into one
-                    app that solves a real problem:
-                  </p>
-                  <ul className="mt-3 flex flex-wrap gap-2">
-                    {writeup.combines.map((source) => (
-                      <li
-                        key={source}
-                        className="rounded-full border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-1.5 text-sm text-[var(--muted)]"
-                      >
-                        {source}
-                      </li>
-                    ))}
-                  </ul>
+                  {writeup.combines.length > 0 ? (
+                    <>
+                      <h2 className="mt-10 text-xl font-semibold text-[var(--text)]">
+                        Built by combining
+                      </h2>
+                      <p className="mt-3 leading-7 text-[var(--muted)]">
+                        {writeup.combines.length} GeeksforGeeks Python projects, turned into one
+                        app that solves a real problem:
+                      </p>
+                      <ul className="mt-3 flex flex-wrap gap-2">
+                        {writeup.combines.map((source) => (
+                          <li
+                            key={source}
+                            className="rounded-full border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-1.5 text-sm text-[var(--muted)]"
+                          >
+                            {source}
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  ) : null}
 
                   {writeup.note ? (
                     <p className="mt-10 rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)] px-5 py-4 text-sm leading-6 text-[var(--muted)]">
