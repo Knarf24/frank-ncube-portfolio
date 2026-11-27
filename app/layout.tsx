@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Geist_Mono, Inter } from "next/font/google";
 import { SiteHeader } from "@/components/site-header";
 import { siteConfig } from "@/lib/site-config";
@@ -38,6 +40,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       >
         <SiteHeader />
         {children}
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
