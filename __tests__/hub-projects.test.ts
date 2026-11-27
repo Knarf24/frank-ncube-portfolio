@@ -57,4 +57,13 @@ describe("toHubProjects", () => {
     expect(project.image).toBe("/images/hub/trafficflow.webp");
     expect(project.writeup?.note).toMatch(/synthetic/);
   });
+
+  it("links Research Compass to its own domain, not the GitHub Pages address", () => {
+    const [project] = toHubProjects([
+      repo({ name: "research-compass", homepage: "https://knarf24.github.io/research-compass/" }),
+    ]);
+    expect(project.title).toBe("Research Compass");
+    expect(project.demoUrl).toBe("https://research-compass.studentlabs.me/");
+    expect(project.image).toBe("/images/hub/research-compass.webp");
+  });
 });

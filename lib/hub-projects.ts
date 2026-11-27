@@ -30,6 +30,7 @@ const SCREENSHOTS = new Set([
   "driver-drowsiness-alert",
   "face-attendance",
   "gesture-kiosk",
+  "research-compass",
   "security-watch",
   "smart-crosswalk-monitor",
   "trafficflow",
@@ -131,7 +132,8 @@ export function toHubProjects(repos: HubRepo[]): HubProject[] {
         slug: repo.name,
         title: writeup?.title ?? titleFromSlug(repo.name),
         description: repo.description ?? "",
-        demoUrl: repo.homepage as string,
+        // A write-up can pin the public address (e.g. a custom domain).
+        demoUrl: writeup?.demoUrl ?? (repo.homepage as string),
         codeUrl: repo.html_url,
         tags,
         featured: topics.includes("featured"),

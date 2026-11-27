@@ -5,6 +5,8 @@
 export type HubWriteup = {
   // Display name when it differs from the title made from the repo name.
   title?: string;
+  // Public address to link to instead of the repo's About website.
+  demoUrl?: string;
   category: string;
   // Month the app went live, shown as a chip on its card.
   date: string;
@@ -13,7 +15,8 @@ export type HubWriteup = {
   overview: string;
   features: string[];
   howItWorks?: string[];
-  // GeeksforGeeks Python projects that were combined into this app.
+  // GeeksforGeeks Python projects that were combined into this app (empty
+  // for apps built from scratch).
   combines: string[];
   note?: string;
 };
@@ -172,6 +175,27 @@ export const hubWriteups: Record<string, HubWriteup> = {
     ],
     combines: ["Pedestrian Detection", "Vehicle Detection in a Video frame", "Detect and Recognize Car License Plate", "Background subtraction", "Extract Frames"],
     note: "A data-gathering tool: detections can be wrong, so its output should not be used on its own to accuse anyone.",
+  },
+  "research-compass": {
+    category: "Python · Data",
+    date: "Nov 2026",
+    demoUrl: "https://research-compass.studentlabs.me/",
+    builtWith: "Python (standard library) in the browser with Pyodide, a weekly GitHub Actions data refresh, and a small Vercel function for the optional Google Gemini email writer",
+    problem:
+      "Paid undergraduate research in the US is spread over hundreds of campus pages, agency sites and directories. Students don't know where to look, which programs they actually qualify for, or how to approach a professor, and deadlines slip by.",
+    overview:
+      "A free research-opportunity finder for US undergraduates: set up a short profile and it ranks open research programs, explains why each one fits, finds professors with funded research in your area, drafts the cold email and tracks every deadline. Free, with no sign-up.",
+    features: [
+      "NSF REU summer sites, university-run summer programs and national lab and agency programs (DOE, NASA, NIST, NOAA and more), refreshed every Monday by a GitHub Action from the NSF Award Search API, with expired listings removed",
+      "Rule-based match score for each program with the reasons it fits and warnings such as \"US citizens only\" or \"deadline in 5 days\"",
+      "Professor finder: researchers at US universities with an active NSF grant, matched to your interests from their grant summaries, linking to the public award page",
+      "HBCU badges and filters, and a yes, no or check label on every listing for international students",
+      "Email writer (Google Gemini free tier through a small Vercel function, with a built-in template fallback) and résumé upload that fills in the profile",
+      "Paste-a-link submissions that are checked automatically and published only after the owner approves them",
+      "Tracker with stages, follow-up reminders and a calendar file of every deadline",
+    ],
+    combines: [],
+    note: "An independent student project, not affiliated with NSF or any program listed. Always confirm details on the official page before applying.",
   },
   trafficflow: {
     title: "TrafficFlow",
