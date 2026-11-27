@@ -12,7 +12,7 @@ const profileItems = [
 ];
 
 const secondaryLinkClassName =
-  "inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-white/30 bg-white/5 px-5 py-3 text-sm font-semibold text-white transition-[background-color,transform] hover:-translate-y-0.5 hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:#67e8f9] sm:w-auto";
+  "inline-flex min-h-11 w-full items-center justify-center rounded-xl border border-white/30 bg-white/5 px-2 py-3 text-sm font-semibold text-white transition-[background-color,transform] hover:-translate-y-0.5 hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:#67e8f9] sm:w-auto sm:px-5";
 
 export function Hero() {
   return (
@@ -39,15 +39,18 @@ export function Hero() {
             many of them are live for you to try below.
           </p>
 
-          <div className="mt-6 grid grid-cols-2 gap-3 sm:mt-9 sm:flex sm:flex-wrap">
+          <div className="mt-6 grid grid-cols-3 gap-3 sm:mt-9 sm:flex sm:flex-wrap">
             <a
               href="#work"
-              className="col-span-2 inline-flex min-h-11 items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-[#312e81] transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:#67e8f9] sm:col-span-1"
+              className="col-span-3 inline-flex min-h-11 items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-semibold text-[#312e81] transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:[outline-color:#67e8f9] sm:col-span-1"
             >
               View my work
             </a>
             <a href={siteConfig.github} className={secondaryLinkClassName}>
               GitHub
+            </a>
+            <a href={siteConfig.linkedin} className={secondaryLinkClassName}>
+              LinkedIn
             </a>
             <a href="/resume" className={secondaryLinkClassName}>
               Resume
