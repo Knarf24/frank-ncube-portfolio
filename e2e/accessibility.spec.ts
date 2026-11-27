@@ -22,7 +22,7 @@ test("narrow hero gives the primary call to action its own row", async ({
   await page.goto("/");
   await page.evaluate(() => document.fonts.ready);
 
-  const [primary, github, resume] = await page.locator("main").evaluate(
+  const [primary, github, linkedin, resume] = await page.locator("main").evaluate(
     (main) => {
       const links = Array.from(main.querySelectorAll("a"));
       const getBox = (label: string) => {
@@ -34,7 +34,12 @@ test("narrow hero gives the primary call to action its own row", async ({
         return { x, y, width, height };
       };
 
-      return [getBox("View my work"), getBox("GitHub"), getBox("Resume")];
+      return [
+        getBox("View my work"),
+        getBox("GitHub"),
+        getBox("LinkedIn"),
+        getBox("Resume"),
+      ];
     },
   );
 
@@ -42,7 +47,14 @@ test("narrow hero gives the primary call to action its own row", async ({
   expect(github).not.toBeNull();
   expect(resume).not.toBeNull();
   expect(primary!.y).toBeLessThan(github!.y);
+  expect(linkedin).not.toBeNull();
+  expect(github!.y).toBe(linkedin!.y);
   expect(github!.y).toBe(resume!.y);
+  expect(linkedin!.height).toBeGreaterThanOrEqual(44);
+  // Each secondary button keeps its label on one line.
+  for (const box of [github!, linkedin!, resume!]) {
+    expect(box.height).toBeLessThan(60);
+  }
   expect(primary!.height).toBeGreaterThanOrEqual(44);
   expect(github!.height).toBeGreaterThanOrEqual(44);
   expect(resume!.height).toBeGreaterThanOrEqual(44);
